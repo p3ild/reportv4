@@ -1,0 +1,18 @@
+{
+    "vi": {
+        "folderName": {
+            "dev": "dev",
+            "core": "Báo cáo cốt lõi",
+            "other": "Khác"
+        },
+        "report": {}
+    },
+    "en": {
+        "folderName": {
+            "dev": "dev reports",
+            "core": "general reports",
+            "other": "Other reports"
+        },
+        "report": {}
+    }
+}

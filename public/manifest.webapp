@@ -1,0 +1,25 @@
+{
+  "description": "nhic",
+  "appType": "APP",
+  "developer": {
+    "name": "nhic",
+    "url": "http://unknow.p2ild.vn"
+  },
+  "default_locale": "en",
+  "activities": {
+    "dhis": {
+      "href": "*"
+    }
+  },
+  "version": "1.0.0",
+  "name": "Báo cáo tổng hợp",
+  "launch_path": "/index.html",
+  "short_name": "Báo cáo tổng hợp",
+  "key": "reportv4",
+  "icons": {
+    "16": "logo128.png",
+    "48": "logo128.png",
+    "128": "logo128.png"
+  },
+  "authorities": []
+}

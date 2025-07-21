@@ -1,0 +1,72 @@
+{
+    "orgPicker": "Đơn vị",
+    "selectOrg": "Chọn đơn vị",
+    "selectMoreOptions": "Tuỳ chọn khác",
+    "required": "Bắt buộc",
+    "periodPicker": {
+        "selectType": {
+            "date": "Ngày",
+            "date2": "Ngày tới ngày",
+            "month": "Tháng",
+            "month2": "Tháng tới tháng",
+            "week": "Tuần",
+            "week2": "Tuần tới Tuần",
+            "year": "Năm",
+            "year2": "Năm tới năm",
+            "sixMonth": "6 tháng 1 lần",
+            "biWeek": "2 tuần 1 lần"
+        },
+        "title": "Thời điểm",
+        "select": "chọn",
+        "from": "từ",
+        "to": "tới",
+        "six_month": "6 tháng 1 lần",
+        "biWeek": "2 tuần 1 lần",
+        "month": "tháng",
+        "week": "tuần",
+        "day": "ngày",
+        "year": "năm"
+    },
+    "globalProgress": {
+        "title": "Đang khởi tạo dữ liệu",
+        "systemsData": "Dữ liệu hệ thống ",
+        "usersData": "Dữ liệu người dùng"
+    },
+    "months": {
+        "t1": "Tháng 1",
+        "t2": "Tháng 2",
+        "t3": "Tháng 3",
+        "t4": "Tháng 4",
+        "t5": "Tháng 5",
+        "t6": "Tháng 6",
+        "t7": "Tháng 7",
+        "t8": "Tháng 8",
+        "t9": "Tháng 9",
+        "t10": "Tháng 10",
+        "t11": "Tháng 11",
+        "t12": "Tháng 12"
+    },
+    "headers": {
+        "period": "Kỳ báo cáo",
+        "org": "Đơn vị",
+        "stt": "STT",
+        "orgName": "Tên đơn vị",
+        "reporting_unit": "Đơn vị báo cáo"
+    },
+    "button": {
+        "back": "Quay lại danh sách báo cáo",
+        "changeFilter": "Chọn đơn vị và thời điểm",
+        "excel": "Xuất excel",
+        "close": "Đóng",
+        "loadReport": "Xuất báo cáo",
+        "printReport": "In báo cáo"
+    },
+    "corePicker": {
+        "title": "Đơn vị và Thời điểm"
+    },
+    "reportList-baocao": "Danh sách báo cáo phần mềm thống kê y tế",
+    "reportList": "Danh sách báo cáo",
+    "reportListBreadcumb": "Báo cáo",
+    "selectLanguage": "Chọn ngôn ngữ",
+    "prepareData": "Chuẩn bị dữ liệu báo cáo"
+}
