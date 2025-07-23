@@ -10,6 +10,7 @@ import { CustomCard } from "../../utils/customCard";
 import CustomPickerElement from "../CustomPickerElement";
 import './orgpicker.css';
 import { compareString } from '@core/utils/stringutils';
+import { wait } from '@core/network';
 
 export function useOrgTreeByUser() {
     const [
@@ -38,8 +39,6 @@ export function useOrgTreeByUser() {
                 state.actions.setCorePicker,
             ])));
 
-
-    let [orgTreeData, setOrgTreeData] = useState();
     const generateEachOrgData = useCallback(({
         orgTarget,
         ORG_TREE_DEEP
@@ -58,8 +57,6 @@ export function useOrgTreeByUser() {
                 return undefined
             }
         }
-
-
 
         orgTarget['title'] = generateOrgTitle(orgTarget)
         orgTarget['label'] = generateOrgTitle(orgTarget)
@@ -90,9 +87,10 @@ export function useOrgTreeByUser() {
             return orgTitle.join(' ');
         }
     })
-    const prepareData = () => {
-        if (!me?.orgViewData) return
-        orgTreeData = cloneDeep(me?.orgViewData)?.map(e => {
+
+    const orgTreeData = useMemo(() => {
+        if (!me?.orgViewData) return undefined
+        const tree = cloneDeep(me?.orgViewData)?.map(e => {
             return e?.organisationUnits.map(x => {
                 let orgMapped = generateEachOrgData({
                     orgTarget: x
@@ -100,27 +98,15 @@ export function useOrgTreeByUser() {
                 return orgMapped
             });
         }).filter(e => e != undefined);
-        let resultOrgTree = flatten(orgTreeData).filter(e => e);
+        let resultOrgTree = flatten(tree).filter(e => e);
         if (!resultOrgTree || resultOrgTree.length == 0) {
             setCorePicker({
                 orgSelected: undefined
             })
         }
-        // if (overrideOrgTreeDataAfterConverted) orgTreeData = overrideOrgTreeDataAfterConverted({ orgTreeData, me })
         return resultOrgTree
-    }
+    }, [me?.orgViewData, orgPickerConfig])
 
-    useEffect(
-        () => {
-            if (!me?.orgViewData) return;
-            if (networkUtils && me?.orgViewData) {
-                let orgTreeDt = prepareData();
-                setOrgTreeData(orgTreeDt);
-            }
-        }, [
-        me?.orgViewData,
-        orgPickerConfig
-    ]);
 
     return { orgTreeData, setCorePicker, networkUtils, corePicker }
 }
@@ -136,7 +122,7 @@ export default (props) => {
         state.orgPickerConfig,
     ])))
 
-    const getDefaultValue = () => {
+    const getDefaultValue = useCallback(() => {
         if (!orgTreeData?.[0]) {
             return 'Không có đơn vị hỗ trợ xuất báo cáo'
         }
@@ -166,16 +152,24 @@ export default (props) => {
 
         if (foundOrg) {
             foundOrg.path = targetPath
-            setCorePicker({ orgSelected: foundOrg })
-            setCurrentPath(targetPath)
+            //Prevent setState when renderring
+            wait(150).then(() => {
+                setCorePicker({ orgSelected: foundOrg })
+                setCurrentPath(targetPath)
+            })
+
             return targetPath
         } else {
             rootOrg.path = rootPath;
-            setCorePicker({ orgSelected: rootOrg })
-            setCurrentPath(rootPath)
+            //Prevent setState when renderring
+            wait(150).then(() => {
+                setCorePicker({ orgSelected: rootOrg })
+                setCurrentPath(rootPath)
+            })
+
             return rootPath
         }
-    }
+    }, [orgTreeData, expandedKeys, corePicker?.orgSelected?.path])
 
     const filter = (inputValue, path) => {
         const cleanInput = compareString.cleanStr(inputValue)
@@ -212,10 +206,10 @@ export default (props) => {
                 {
                     label.map((e, idx, arrLabel) => {
                         const orgWithID = e?.split('_');
-                        return <>
+                        return <p key={idx}>
                             <span>{orgWithID.length > 1 ? orgWithID[1] : orgWithID[0]}</span>
                             <span className="text-red-300 font-bold">{idx == arrLabel.length - 1 ? '' : '>'}</span>
-                        </>
+                        </p>
                     })
                 }
             </div>
@@ -226,10 +220,9 @@ export default (props) => {
                     label.map((e, idx, arrLabel) => {
                         const orgWithID = e?.split('_');
                         let orgDisplay = orgWithID.length > 1 ? orgWithID[1] : orgWithID[0];
-                        return <span key={idx}>
+                        return <p key={idx}>
                             {`${'\t'.repeat(idx)} ${orgDisplay}`}
-                        </span>
-                        {/* <span className="text-red-300 font-bold ">{idx == arrLabel.length - 1 ? '' : '/'}</span> */ }
+                        </p>
 
 
                     })
@@ -263,9 +256,11 @@ export default (props) => {
                 />
             </div>
         },
-        [JSON.stringify([
-            orgTreeData, orgPickerConfig?.orgGroupVisible, currentPath
-        ])]
+        [
+            orgTreeData,
+            orgPickerConfig?.orgGroupVisible?.join('|'),
+            currentPath.join('|')
+        ]
     )
 
     return <CustomCard
@@ -280,7 +275,8 @@ export default (props) => {
                         <div className="rounded-lg border border-1 border-black/20">
                             {TreeSelectMemo}
                         </div>
-                    </CustomPickerElement> : <Spin />}
+                    </CustomPickerElement> :
+                    <Spin />}
             </>
         }
         }

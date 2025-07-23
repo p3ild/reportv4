@@ -52,7 +52,7 @@
 
 
 		let allApps = await fetch(`${host}/api/apps`).then(e => e.json()).then(e => (e));
-		let reportApp = allApps.find(e => e.folderName.includes('reportv2'));
+		let reportApp = allApps.find(e => e.folderName.includes('reportv4'));
 
 		const urlApp = `${reportApp?.launchUrl}#/home`
 		const urlReport = `${reportApp?.launchUrl}#/report?id=${reportUID}`

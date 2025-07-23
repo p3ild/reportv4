@@ -5,21 +5,20 @@ import { min, toArray } from "lodash";
 import { useResizeDetector } from 'react-resize-detector';
 import tableBuilder from "./tableUtils/tableBuilder";
 import './tableUtils/table.css'
-export const TableData = function ({
-    reportName,
-    reportCode,
-    orgReportName,
-    dhis2Period,
+export const TableData = function (props) {
+    let {
+        reportName,
+        reportCode,
+        orgReportName,
+        dhis2Period,
 
-    ReportHeader,
+        ReportHeader,
 
-    width,
-    style,
-
-    customData,
-    data,
-    errors
-}) {
+        width,
+        style,
+        data,
+        errors
+    } = props
 
     let tableClassName = ``, tableStyle = {};
     if (width) tableClassName = width ? `!w-[${width}]` : ''
@@ -97,7 +96,7 @@ export const TableData = function ({
         {
             data?.map((e, tableIndex) => {
                 let table_id = `table-${tableIndex}`;
-                return <div key={e.key} >
+                return <div key={tableIndex} >
                     {e.SectionHeader ? <div className="my-5">{e.SectionHeader}</div> : <div className="m-5"></div>}
 
                     <table
