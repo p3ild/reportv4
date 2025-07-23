@@ -29,17 +29,15 @@ export default function ProgressNotificationBuilder({ NOTIFICATION_KEY, label, i
         </Flex>;
         notification.open({
             ...notificationConfig,
-            description: <Flex vertical gap={10}>
+            description: <div className="flex flex-col gap-2">
                 {
-                    Object.values(taskStatus).map(e => {
-                        return (<>
-                            <Flex align={"center"} justify={"space-between"} gap={20}>
-                                {e.title} {!e.status ? <Spin /> : <CheckCircleFilled className="text-success text-green-500 text-lg" />}
-                            </Flex>
-                        </>)
+                    Object.values(taskStatus).map((e, index) => {
+                        return <div key={index} className="flex flex-row gap-2">
+                            {e.title} {!e.status ? <Spin /> : <CheckCircleFilled className="text-success text-green-500 text-lg" />}
+                        </div>
                     })
                 }
-            </Flex>
+            </div>
         });
         if (isAllDone) {
             notificationConfig = TEMP_CONFIG;
