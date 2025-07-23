@@ -56,38 +56,40 @@ export const TableData = function ({
         <div className="sticky left-0 !w-full">
             {
                 <table style={{ border: 0 }} className=' mb-5 sticky left-0'>
-                    {reportCode && <tr>
-                        <td style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
-                            <p>{reportCode || ''}</p>
-                        </td>
-                    </tr>}
-                    <tr>
-                        <td
-                            colSpan={totalCol}
-                            style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
-                            <p>Đơn vị báo cáo: {orgReportName}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td
-                            colSpan={totalCol}
-                            data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
-                            <p>{reportName?.toUpperCase()}</p></td>
-                    </tr>
-                    <tr>
-                        <td
-                            colSpan={totalCol}
-                            data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
-                            <p>Báo cáo {dhis2Period}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td
-                            colSpan={totalCol}
-                            data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
-                            <p className="italic">Ngày kết xuất dữ liệu cho báo cáo: {format(new Date(), 'dd/MM/yyyy')} - Nguồn dữ liệu: Phần mềm Thống kê Y tế</p>
-                        </td>
-                    </tr>
+                    <tbody>
+                        {reportCode && <tr>
+                            <td style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
+                                <p>{reportCode || ''}</p>
+                            </td>
+                        </tr>}
+                        <tr>
+                            <td
+                                colSpan={totalCol}
+                                style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
+                                <p>Đơn vị báo cáo: {orgReportName}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                colSpan={totalCol}
+                                data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
+                                <p>{reportName?.toUpperCase()}</p></td>
+                        </tr>
+                        <tr>
+                            <td
+                                colSpan={totalCol}
+                                data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
+                                <p>Báo cáo {dhis2Period}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                colSpan={totalCol}
+                                data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
+                                <p className="italic">Ngày kết xuất dữ liệu cho báo cáo: {format(new Date(), 'dd/MM/yyyy')} - Nguồn dữ liệu: Phần mềm Thống kê Y tế</p>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             }
         </div>

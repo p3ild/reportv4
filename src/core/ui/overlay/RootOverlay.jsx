@@ -85,7 +85,7 @@ export default (props) => {
             <div ref={refDialog} className="fixed inset-0 z-10 w-screen overflow-y-auto ">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                     <div className={`relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8  ${type?.key == ROOT_OVERLAY_TEMPLATE.DEFAULT.key ? 'bg-opacity-0' : 'shadow-xl bg-opacity-90'}`}>
-                        <div gap={10} id={'flex-content flex flex-row'} ref={refContent} className="w-fit">
+                        <div gap={10} id={'flex-content flex flex-row'} ref={refContent} className="w-fit min-w-[50vw]">
                             {(title || globalOverlay.closeable) &&
                                 <div className="p-2 flex items-center justify-between flex-row w-full border-b-1 border-gray-400 bg-gray-600">
                                     {title && <h3 className="p-2 text-white"> {title}</h3>}

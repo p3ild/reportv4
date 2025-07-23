@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import { ORG_GROUP } from "../p2ild/common/constant";
 import { getCoreMetaStateByPath, useCoreMetaState } from "@core/stateManage/metadataState";
 import { useShallow } from "zustand/react/shallow";
-const _get = getCoreMetaStateByPath('actions._get')
+import { useCustomReportState } from "@core/stateManage/customState";
+import { wait } from "@core/network";
 export default () => {
 
     const {
@@ -19,7 +20,14 @@ export default () => {
     } = useCorePickerState(useShallow(state => ({
         corePicker: state.corePicker
     })))
+    const {
+        customData, customReportStateAction
+    } = useCustomReportState(useShallow(state => ({
+        customData: state.customData,
+        customReportStateAction: state.actions
+    })))
 
+    // ----- Report Config -----
     useEffect(() => {
         getPickerStateByPath('actions.setAllowPeriodTypes')([
             PERIOD_TYPE.month,
@@ -41,25 +49,51 @@ export default () => {
         );
     }, []);
 
+
+
+    // ----- On user pick complete -----
     useEffect(() => {
-        console.log(firstLoadApp)
-        if (firstLoadApp) {
+        if (corePicker.pickCompleted) {
+            //Use global overlay to show loading
+            getCoreMetaStateByPath('actions.setGlobalOverlay')({
+                isOpen: true,
+            })
+            wait(2000).then(() => {
+                getCoreMetaStateByPath('actions.setGlobalOverlay')({
+                    isOpen: false
+                })
+            })
+
+            console.log(corePicker.periodSelected)
+            console.log(corePicker.orgSelected.name)
             _get('/api/me').then(e => {
                 console.log(e.name)
             })
         }
     },
-        [firstLoadApp]
-    )
-    useEffect(() => {
-        console.log(corePicker.periodSelected)
-        console.log(corePicker.orgSelected.name)
-        _get('/api/me').then(e => {
-            console.log(e.name)
-        })
-    },
         [corePicker.pickCompleted]
     )
+
+
+
+    // ----- Use custom report state -----
+    useEffect(() => {
+        if (firstLoadApp) {
+            _get('/api/me').then(e => {
+                customReportStateAction.addValue('me.name', e.name)
+                customReportStateAction.addValue('me.displayName', e.displayName)
+            })
+
+        }
+    }, [firstLoadApp])
+
+    useEffect(() => {
+        console.log({
+            customData
+        })
+    }, [
+        customData
+    ])
 
 
     return <div className="report-container">

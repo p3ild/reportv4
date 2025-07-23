@@ -90,38 +90,37 @@ export function useOrgTreeByUser() {
             return orgTitle.join(' ');
         }
     })
-    const prepareData =
-        () => {
-            if (!me?.orgViewData) return
-            orgTreeData = cloneDeep(me?.orgViewData)?.map(e => {
-                return e?.organisationUnits.map(x => {
-                    let orgMapped = generateEachOrgData({
-                        orgTarget: x
-                    });
-                    return orgMapped
+    const prepareData = () => {
+        if (!me?.orgViewData) return
+        orgTreeData = cloneDeep(me?.orgViewData)?.map(e => {
+            return e?.organisationUnits.map(x => {
+                let orgMapped = generateEachOrgData({
+                    orgTarget: x
                 });
-            }).filter(e => e != undefined);
-            let resultOrgTree = flatten(orgTreeData).filter(e => e);
-            if (!resultOrgTree || resultOrgTree.length == 0) {
-                setCorePicker({
-                    orgSelected: undefined
-                })
-            }
-            // if (overrideOrgTreeDataAfterConverted) orgTreeData = overrideOrgTreeDataAfterConverted({ orgTreeData, me })
-            return resultOrgTree
+                return orgMapped
+            });
+        }).filter(e => e != undefined);
+        let resultOrgTree = flatten(orgTreeData).filter(e => e);
+        if (!resultOrgTree || resultOrgTree.length == 0) {
+            setCorePicker({
+                orgSelected: undefined
+            })
         }
+        // if (overrideOrgTreeDataAfterConverted) orgTreeData = overrideOrgTreeDataAfterConverted({ orgTreeData, me })
+        return resultOrgTree
+    }
 
-    useEffect(() => {
-        if (!me?.orgViewData) return;
-        (async () => {
+    useEffect(
+        () => {
+            if (!me?.orgViewData) return;
             if (networkUtils && me?.orgViewData) {
                 let orgTreeDt = prepareData();
                 setOrgTreeData(orgTreeDt);
             }
-        })();
-    },
-        [me?.orgViewData, orgPickerConfig]
-    );
+        }, [
+        me?.orgViewData,
+        orgPickerConfig
+    ]);
 
     return { orgTreeData, setCorePicker, networkUtils, corePicker }
 }
@@ -187,13 +186,6 @@ export default (props) => {
     }
 
 
-    const treeDefaultExpandedKeys = (() => {
-        return []
-        const rs = corePicker?.orgSelected ? corePicker?.orgSelected?.path : []
-        return rs
-    })
-
-
     const onChange = (selectedKeys, info, extra) => {
         let orgTarget = info[info.length - 1];
         setValue(selectedKeys[selectedKeys.length - 1])
@@ -252,26 +244,21 @@ export default (props) => {
         () => {
             return <div className={'min-w-[20vw] py-1'}>
                 <Cascader
-                    {
-                    ...{
+                    {...{
                         key: currentPath.join('_'),
                         className: "w-full custom-org-select h-fit",
                         variant: 'borderless',
                         defaultValue: getDefaultValue(),
-                        switcherIcon: <DownOutlined />,
                         autoClearSearchValue: true,
                         allowClear: true,
                         showSearch: { filter },
                         changeOnSelect: true,
                         size: "small",
-                        dropdownHeight: '70vh',
-                        treeDefaultExpandedKeys: treeDefaultExpandedKeys(),
                         onChange,
                         maxTagTextLength: 1,
                         maxTagCount: 1,
                         options: orgTreeData,
                         displayRender,
-
                     }}
                 />
             </div>
