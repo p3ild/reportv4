@@ -22,7 +22,7 @@ export default () => {
                     <Select
                         placeholder={trans('common:selectLanguage')}
                         onChange={(val) => {
-                            i18n.changeLanguage(val); 
+                            i18n.changeLanguage(val);
                             setLanguage(val)
                         }}
                         defaultValue={language}

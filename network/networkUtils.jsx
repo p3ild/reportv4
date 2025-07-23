@@ -184,7 +184,7 @@ class NetworkUtils {
             auth: this.INIT_AUTH || auth,
             method: 'GET'
         });
-        let versionApp = pullVersionApp.data.find(e => e.folderName.includes('reportv2'))?.version
+        let versionApp = pullVersionApp.data.find(e => e.folderName.includes(import.meta.env.VITE_GLOBAL_KEY_APP))?.version
         let versionDhis = pullVersionDhis?.data?.version
         return {
             versionDhis,
