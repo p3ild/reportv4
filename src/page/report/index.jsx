@@ -76,8 +76,8 @@ export const Report = (metadata) => {
 
     const NavBar = () => {
         return <Affix offsetTop={50}>
-            <Flex className="no-print" vertical >
-                <Flex >
+            <div className="no-print flex flex-col" >
+                <div className='flex flex-row'>
                     <button className="btn-primary flex space-x-2" onClick={() => {
                         navigate(`/`);
                         setGlobalOverlay({
@@ -103,9 +103,9 @@ export const Report = (metadata) => {
 
                     }}><CloudDownloadOutlined /> <span>{trans("common:button.excel")}</span></button>
 
-                </Flex>
+                </div>
                 <Breadcumb />
-            </Flex>
+            </div>
 
         </Affix>
     }

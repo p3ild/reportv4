@@ -1,4 +1,5 @@
 import { useCorePickerState } from "@core/stateManage/corePickerState";
+import { getCustomReportStateByPath } from "@core/stateManage/customState";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { setDefaultNameSpace, trans } from "@core/translation/i18n";
 import { notification } from "antd";
@@ -122,7 +123,7 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
                 }
             }
 
-
+            getCustomReportStateByPath('actions.reset')();
             reportImport && setReportTarget(
                 {
                     ...reportImport,
@@ -130,6 +131,8 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
                     // reportName: listReport
                 }
             );
+
+
             setLoaded(true)
 
         })();

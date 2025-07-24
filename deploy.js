@@ -30,6 +30,11 @@ class DeployApp {
                 directFolderPath: './dist',
             }
         ];
+
+        this.axiosInstance = axios.create({
+            auth: this.listInstanceTarget[0].auth
+        })
+
     }
 
     run = () => {
@@ -61,7 +66,7 @@ class DeployApp {
         let postData = new FormData();
         postData.append("appReload", "true");
 
-        axios
+        this.axiosInstance
             .post(`${instanceTarget.baseUrl}/api/maintenance`, postData, {
                 headers: postData.getHeaders(),
                 auth: instanceTarget.auth,
@@ -76,30 +81,28 @@ class DeployApp {
 
     prepareManifestFile = async function (props) {
         let { folderBuildPath } = props;
-        let
-            buildManifestFile,
-            buildManifestFilePath = `${folderBuildPath}/manifest.webapp`;
-
+        let buildManifestFilePath = `${folderBuildPath}/manifest.webapp`;
+        let buildManifestFile
 
         // Check for manifest files in order of preference
-        let checkManifestFile = [
-            buildManifestFilePath
-        ].some((path) => {
-            try {
-                buildManifestFile = JSON.parse(fs.readFileSync(path, "utf8"));
-                console.log(`** Manifest found: ${path}`);
-                return true;
-            } catch (e) {
-                console.log(`** Manifest not found: ${path}`);
-                return false;
-            }
-        });
+        try {
+            buildManifestFile = JSON.parse(fs.readFileSync(buildManifestFilePath, "utf8"));
+            console.log(`** Manifest found: ${buildManifestFilePath}`);
+        } catch (e) {
+            console.log(`** Manifest not found: ${buildManifestFilePath}`);
+        }
+
 
         // Generate new version number
-        let newVersion = "1.0.0";
+        let currentVersion = await this.axiosInstance({
+            url: `${props.instanceTarget.baseUrl}/api/apps`
+        }).then(listApp => {
+            return listApp.data.find(e => e.folderName.includes(this.getEnvByKey('VITE_GLOBAL_KEY_APP')))?.version
+        })
+        let newVersion = currentVersion || "1.0.0";
         try {
-            newVersion = parseInt(buildManifestFile.version.replace(/\./g, "")) + 1;
-            newVersion = (newVersion + "").match(/.{1,1}/g).join(".");
+            newVersion = parseInt(newVersion.replace(/\./g, "")) + 1;
+            newVersion = (newVersion + '').match(/.{1,1}/g).join(".");
         } catch (e) {
             console.log(`Version generation error: ${e.message}`);
         }
@@ -138,7 +141,7 @@ class DeployApp {
         )
 
         return {
-            msg: `Manifest injected! Previous: ${buildManifestFile.version} → New: ${newVersion}`,
+            msg: `Manifest injected! Previous: ${currentVersion} → New: ${newVersion}`,
             newVersion
         }
     };
@@ -183,7 +186,7 @@ class DeployApp {
                             }
                         );
                         console.log('Post:: ', instanceTarget.baseUrl + "/api/apps");
-                        axios
+                        this.axiosInstance
                             .create({
                                 auth: instanceTarget.auth,
                                 headers: form.getHeaders(),

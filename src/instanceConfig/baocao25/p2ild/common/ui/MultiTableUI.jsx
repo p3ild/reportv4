@@ -5,21 +5,20 @@ import { min, toArray } from "lodash";
 import { useResizeDetector } from 'react-resize-detector';
 import tableBuilder from "./tableUtils/tableBuilder";
 import './tableUtils/table.css'
-export const TableData = function ({
-    reportName,
-    reportCode,
-    orgReportName,
-    dhis2Period,
+export const TableData = function (props) {
+    let {
+        reportName,
+        reportCode,
+        orgReportName,
+        dhis2Period,
 
-    ReportHeader,
+        ReportHeader,
 
-    width,
-    style,
-
-    customData,
-    data,
-    errors
-}) {
+        width,
+        style,
+        data,
+        errors
+    } = props
 
     let tableClassName = ``, tableStyle = {};
     if (width) tableClassName = width ? `!w-[${width}]` : ''
@@ -56,38 +55,40 @@ export const TableData = function ({
         <div className="sticky left-0 !w-full">
             {
                 <table style={{ border: 0 }} className=' mb-5 sticky left-0'>
-                    {reportCode && <tr>
-                        <td style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
-                            <p>{reportCode || ''}</p>
-                        </td>
-                    </tr>}
-                    <tr>
-                        <td
-                            colSpan={totalCol}
-                            style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
-                            <p>Đơn vị báo cáo: {orgReportName}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td
-                            colSpan={totalCol}
-                            data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
-                            <p>{reportName?.toUpperCase()}</p></td>
-                    </tr>
-                    <tr>
-                        <td
-                            colSpan={totalCol}
-                            data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
-                            <p>Báo cáo {dhis2Period}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td
-                            colSpan={totalCol}
-                            data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
-                            <p className="italic">Ngày kết xuất dữ liệu cho báo cáo: {format(new Date(), 'dd/MM/yyyy')} - Nguồn dữ liệu: Phần mềm Thống kê Y tế</p>
-                        </td>
-                    </tr>
+                    <tbody>
+                        {reportCode && <tr>
+                            <td style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
+                                <p>{reportCode || ''}</p>
+                            </td>
+                        </tr>}
+                        <tr>
+                            <td
+                                colSpan={totalCol}
+                                style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
+                                <p>Đơn vị báo cáo: {orgReportName}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                colSpan={totalCol}
+                                data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
+                                <p>{reportName?.toUpperCase()}</p></td>
+                        </tr>
+                        <tr>
+                            <td
+                                colSpan={totalCol}
+                                data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
+                                <p>Báo cáo {dhis2Period}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                colSpan={totalCol}
+                                data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
+                                <p className="italic">Ngày kết xuất dữ liệu cho báo cáo: {format(new Date(), 'dd/MM/yyyy')} - Nguồn dữ liệu: Phần mềm Thống kê Y tế</p>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             }
         </div>
@@ -95,7 +96,7 @@ export const TableData = function ({
         {
             data?.map((e, tableIndex) => {
                 let table_id = `table-${tableIndex}`;
-                return <div key={e.key} >
+                return <div key={tableIndex} >
                     {e.SectionHeader ? <div className="my-5">{e.SectionHeader}</div> : <div className="m-5"></div>}
 
                     <table
