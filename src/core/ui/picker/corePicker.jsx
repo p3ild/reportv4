@@ -1,7 +1,5 @@
 
 import { useCorePickerState } from "@core/stateManage/corePickerState"
-import { FaCircleCheck } from "react-icons/fa6";
-import { PiWarningCircleFill } from "react-icons/pi";
 
 import { BsCalendar2WeekFill } from "react-icons/bs";
 import { LiaGlobeSolid } from "react-icons/lia";
@@ -12,6 +10,7 @@ import { upperFirst } from "lodash";
 import { useShallow } from "zustand/react/shallow";
 import Orgpicker from "./orgPicker/orgpicker";
 import GroupPeriodPicker from "./periodpicker/GroupPeriodPicker";
+import { IndicatorIcon, NoticeBox } from "./notice";
 
 export default () => {
 
@@ -28,7 +27,7 @@ export default () => {
             <PreviewSelected />
             {customPicker && customPicker}
         </div>
-       
+
     </div>
 }
 
@@ -57,14 +56,9 @@ export const PreviewSelected = (props) => {
         : undefined
     const isSelectedCore = orgDisplay && periodDisplay;
 
-    const indicatorIcon = (b) => {
-        return <span className={`flex flex-row items-center gap-1 ${b ? 'text-green-500' : 'text-red-500'}`}>
-            {b}
-            {b ? <FaCircleCheck className="h-3 w-3 " strokeWidth={2} /> : <PiWarningCircleFill className="h-4 w-4" strokeWidth={2.2} />}
-        </span>
-    }
+
     return (
-        
+
         <div className="bg-white rounded-lg p-3 flex flex-col gap-y-5 text-gray-800 shadow-lg border border-gray-200">
             <div className="mb-2">
                 <div className="flex items-center gap-2 mb-1 bg-gray-300 px-2 py-1 rounded-md">
@@ -72,7 +66,6 @@ export const PreviewSelected = (props) => {
                     <h3 className="text-base text-gray-900 font-bold">{trans('common:orgPicker')}</h3>
                 </div>
                 <Orgpicker required />
-                {/* <p className="text-gray-800 text-sm leading-tight px-2 py-1 font-medium"> {orgName} </p> */}
             </div>
 
             <div className="mb-2">
@@ -88,12 +81,23 @@ export const PreviewSelected = (props) => {
                     <PiNotebookFill className="w-[1.5rem] h-[1.5rem]" />
                     <h3 className="text-base text-gray-900 font-bold">Lưu ý</h3>
                 </div>
-                <div className={`text-sm leading-tight px-2 py-1 font-semibold flex flex-col gap-2`}>
-                    <p className="flex flex-row items-center gap-1">{'Đơn vị: '}{indicatorIcon(orgDisplay)}</p>
-                    <p className="flex flex-row items-center gap-1">{'Thời điểm: '} {indicatorIcon(periodDisplay)}</p>
-                    {
-                        !isSelectedCore && `Vui lòng chọn đủ thời gian và địa điểm`
-                    }
+                <div className={`text-sm leading-tight px-2 py-1 font-semibold grid grid-cols-3 gap-2`}>
+                    <p className="items-center gap-1">{'Đơn vị: '}</p>
+                    <p className="items-center gap-1 col-span-2">{<IndicatorIcon>{orgDisplay}</IndicatorIcon>}</p>
+                    <p className="items-center gap-1 mb-2">{'Thời điểm: '}</p>
+                    <p className="items-center gap-1 mb-2 col-span-2"> <IndicatorIcon>{periodDisplay}</IndicatorIcon></p>
+                    <div className="col-span-3">
+                        {
+                            !isSelectedCore
+                                ? <NoticeBox type="error">
+                                    Vui lòng chọn đầy đủ đơn vị và thời điểm để xuất báo cáo.
+                                </NoticeBox>
+                                : <NoticeBox type="success">
+                                    Đã chọn đầy đủ đơn vị và thời điểm. Bạn có thể xuất báo cáo.
+                                </NoticeBox>
+                        }
+                    </div>
+
                 </div>
             </div>
 

@@ -72,6 +72,7 @@ export const Home = () => {
 
     const convertApiDataToDataAsTree = () => {
         let uiDataConverted = cloneDeep(listFolder).map(e => {
+            !e.child && (e.child = [])
             e.labelText = t(`folderName.${e.key}`, {
                 ns: "INSTANCE_TRANS",
                 defaultValue: e.labelText || e.label

@@ -10,17 +10,6 @@ class Base {
         return domain
     })();
 
-    getTransInstance = async () => {
-        let trans = {}
-        try {
-            trans = await require('./locale.json');
-        } catch (e) {
-            console.log(`Translation for instance doesn't exists`)
-        }
-
-        return trans;
-    }
-
     getListReport = async ({ networkUtils, instanceTarget }) => {
         let pulledReportDataList = await networkUtils.getListReport({})
             .then(e => e.reports);
@@ -61,6 +50,7 @@ class Base {
                 let reportFolderKey = (reportConfig.folder || []).map(e => e.key)
                 let isReportInFolder = reportFolderKey.some(folderKey => folder.key === folderKey);
                 if (isReportInFolder && reportConfig.value) {
+                    !folder.child && (folder.child = [])
                     folder.child.push(reportConfig)
                 }
             });

@@ -2,8 +2,11 @@ import { Button, Space } from "antd"
 import { useState } from "react"
 import ReactJson from "react-json-view"
 import { useListParam } from "../../../page/report/report.hook";
+import { CustomCard } from "./customCard";
+import React from 'react'
+import { RiErrorWarningFill } from "react-icons/ri";
 
-export const JsonViewDebug = (data) => {
+export const JsonViewDebug = (data, force = false) => {
     const [show, setShow] = useState(false);
     let listParam = useListParam()
 
@@ -11,20 +14,37 @@ export const JsonViewDebug = (data) => {
         {listParam &&
             (
                 process.env.NODE_ENV !== 'production' ||
-                listParam.debug == "true")
-            && <Space direction="vertical">
-
-                <Button type="primary" danger onClick={() => {
-                    setShow((pre) => !pre)
-                }}>Show/Hide debug data</Button>
+                listParam.debug == "true" ||
+                force
+            )
+            && <div className="flex flex-col gap-4 items-center">
+                <RiErrorWarningFill className="w-20 h-20 text-red-500 mb-4" />
+                <div className="text-2xl font-bold text-red-500 mb-2">Có lỗi xảy ra</div>
+                <Button type="primary"
+                    className="w-fit"
+                    danger onClick={() => {
+                        setShow((pre) => !pre)
+                    }}>Chi tiết lỗi</Button>
                 {
-                    show && <>
-                        This section only show on debug environment
-                        <ReactJson style={{ background: '#ff00004d', padding: '10px', overflow: 'auto', height: data.height || '50vh' }}
-                            {...data} />
-                    </>
+                    show &&
+                    <CustomCard >
+                        <div className="text-left self-center w-[40vw]">
+                            <ReactJson
+                                name={false}
+                                style={{
+                                    padding: '10px',
+                                    overflow: 'auto',
+                                    height: data.height || '50vh',
+                                    fontSize: '0.7rem'
+                                }}
+                                src={
+                                    data || {}
+                                } />
+                        </div>
+                    </CustomCard>
+
                 }
-            </Space>
+            </div>
         }
     </>
 }

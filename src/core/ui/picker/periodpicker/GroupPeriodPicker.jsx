@@ -134,7 +134,7 @@ export default () => {
             label={
                 upperFirst(('Chọn ' + trans('common:periodPicker.title')).toLowerCase())
             }>
-            <div className="flex flex-row px-3 gap-3 rounded-lg border border-1 border-black/20 w-fit">
+            <div className="flex flex-row px-3 gap-3 rounded-lg border border-1 border-black/20 w-fit flex-wrap md:flex-nowrap justify-center">
                 <SelectType setCurrentPeriodType={setCurrentPeriodType} />
                 <KeepAlive
                     cacheKey={currentPeriodType}
@@ -213,29 +213,27 @@ const SelectType = ({ setCurrentPeriodType }) => {
     }
 
 
-    return <div className="flex flex-row gap-1 items-center ">
-        <Select
-            key={JSON.stringify({ currentPeriodType, types })}
-            className="min-w-[150px] ml-[-5px]"
-            onClick={(e) => e.stopPropagation()}
-            placeholder={'Kỳ dữ liệu'}
-            variant='borderless'
-            // variant='filled'
-            options={
-                types.map((type, index) => {
-                    let opts = {
-                        key: index,
-                        value: index,
-                        label: useTrans(`common:periodPicker.selectType.${type}`)
-                    }
-                    return opts
-                })
-            }
-            defaultValue={(() => {
-                return useTrans(`common:periodPicker.selectType.${currentPeriodType || types[0]}`)
-            })()}
-            onChange={onChange}
-        />
-        <Divider type={"vertical"} className="!p-0 h-[20px] !border-[1.5px]" />
-    </div>
+    return <Select
+        key={JSON.stringify({ currentPeriodType, types })}
+        className="min-w-[150px] ml-[-5px]"
+        onClick={(e) => e.stopPropagation()}
+        placeholder={'Kỳ dữ liệu'}
+        variant='borderless'
+        // variant='filled'
+        options={
+            types.map((type, index) => {
+                let opts = {
+                    key: index,
+                    value: index,
+                    label: useTrans(`common:periodPicker.selectType.${type}`)
+                }
+                return opts
+            })
+        }
+        defaultValue={(() => {
+            return useTrans(`common:periodPicker.selectType.${currentPeriodType || types[0]}`)
+        })()}
+        onChange={onChange}
+    />
+
 }
