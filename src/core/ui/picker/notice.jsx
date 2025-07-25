@@ -27,12 +27,12 @@ const typeConfig = {
     }
 }
 
-export function NoticeBox({ children, type = 'warning' }) {
+export function NoticeBox({ children, type = 'warning', className }) {
     const cfg = typeConfig[type] || typeConfig.warning
     return (
-        <div className={`${cfg.bg} border-l-4 ${cfg.border} p-3 my-2 flex`}>
+        <div className={`${cfg.bg} flex flex-row items-center border-l-4 ${cfg.border} p-3 my-2  ${className}`}>
             <span className={`${cfg.iconColor} mr-2`}>{cfg.icon}</span>
-            <div className={`text-sm ${cfg.text}`}>{children}</div>
+            <div className={`${cfg.text} text-sm`}>{children}</div>
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { useCoreMetaState } from "../../stateManage/metadataState";
 import CorePicker from "../picker/corePicker";
 import { useCorePickerState } from "@core/stateManage/corePickerState";
 import { trans } from "@core/translation/i18n";
+import { RiCloseLine } from "react-icons/ri";
 
 export const OVERLAY_TYPE = {
     LOADING: {
@@ -39,14 +40,7 @@ export default (props) => {
 
         state.actions.setGlobalOverlay])));
 
-    const [
-        corePicker,
-        setCorePicker] = useCorePickerState(useShallow(state => ([
-            state.corePicker,
-            state.actions.setCorePicker
-        ])));
 
-    const { orgSelected, periodSelected } = corePicker
     const type = globalOverlay?.type || ROOT_OVERLAY_TEMPLATE.DEFAULT
     const title = globalOverlay.title || type.title
 
@@ -77,60 +71,39 @@ export default (props) => {
         };
     }, [globalOverlay?.isOpen]);
 
-    return <>
-        {<div className={(globalOverlay?.isOpen ? "relative z-10" : "w-[0px] h-[0px] hidden")}
-            aria-labelledby="modal-title" role="dialog" aria-modal="true"
-        >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-            <div ref={refDialog} className="w-screen fixed inset-0 z-10 ">
-                <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                    <div className={`w-[400px] desktopLow:w-[500px] relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8  ${type?.key == ROOT_OVERLAY_TEMPLATE.DEFAULT.key ? 'bg-opacity-0' : 'shadow-xl bg-opacity-90'}`}>
-                        <div gap={10} id={'flex-content flex flex-row'} ref={refContent} >
-                            {(title || globalOverlay.closeable) &&
-                                <div className="p-2 flex items-center justify-between flex-row w-full border-b-1 border-gray-400 bg-gray-600">
-                                    {title && <h3 className="p-2 text-white"> {title}</h3>}
-                                    {globalOverlay?.closeable &&
-                                        <div >
-                                            <button className="text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none"
-                                                onClick={() => {
-                                                    setGlobalOverlay({
-                                                        ...globalOverlay,
-                                                        isOpen: false
-                                                    })
-                                                }}>
-                                                <span className="[&>svg]:h-6 [&>svg]:w-6 text-white">
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="currentColor"
-                                                        viewBox="0 0 24 24"
-                                                        strokeWidth="1.5"
-                                                        stroke="currentColor">
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    }
-                                </div>
-                            }
+    return <div className={(globalOverlay?.isOpen ? "relative z-10" : "w-[0px] h-[0px] hidden")} aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 bg-gray-500/80 backdrop-blur-sm transition-opacity"></div>
+        <div ref={refDialog} className="w-screen fixed inset-0 z-10 ">
+            <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div className={`w-[500px] desktopLow:w-[800px] relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8  ${type?.key == ROOT_OVERLAY_TEMPLATE.DEFAULT.key ? 'bg-opacity-0' : 'shadow-xl bg-opacity-90'}`}>
+                    <div gap={10} id={'flex-content flex flex-row'} ref={refContent} >
+                        {(title || globalOverlay.closeable) &&
+                            <div className="p-2 flex items-center justify-between flex-row w-full border-b-1 border-gray-400 bg-gray-800">
+                                {title && <h3 className="p-1 text-white"> {title}</h3>}
+                                {globalOverlay?.closeable &&
+                                    <RiCloseLine className="text-white w-7 h-7 hover:text-red-500" onClick={() => {
+                                        setGlobalOverlay({
+                                            ...globalOverlay,
+                                            isOpen: false
+                                        })
+                                    }} />
+                                }
+                            </div>
+                        }
 
-                            {
-                                type.key == 'corePicker' && <CorePicker />
-                            }
+                        {
+                            type.key == 'corePicker' && <CorePicker />
+                        }
 
-                            {
-                                <div className={type.key != 'corePicker' ? "" : "hidden"}>
-                                    {type?.content}
-                                </div>
-                            }
+                        {
+                            <div className={type.key != 'corePicker' ? "" : "hidden"}>
+                                {type?.content}
+                            </div>
+                        }
 
-                        </div>
                     </div>
                 </div>
             </div>
-        </div>}
-    </>
+        </div>
+    </div>
 }

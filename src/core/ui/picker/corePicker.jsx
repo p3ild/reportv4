@@ -1,7 +1,7 @@
 
 import { useCorePickerState } from "@core/stateManage/corePickerState"
 
-import { BsCalendar2WeekFill } from "react-icons/bs";
+import { BsCalendar2WeekFill, BsThreeDots } from "react-icons/bs";
 import { LiaGlobeSolid } from "react-icons/lia";
 import { PiNotebookFill } from "react-icons/pi";
 
@@ -10,7 +10,8 @@ import { upperFirst } from "lodash";
 import { useShallow } from "zustand/react/shallow";
 import Orgpicker from "./orgPicker/orgpicker";
 import GroupPeriodPicker from "./periodpicker/GroupPeriodPicker";
-import { IndicatorIcon, NoticeBox } from "./notice";
+import { NoticeBox } from "./notice";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 export default () => {
 
@@ -83,29 +84,40 @@ export const PreviewSelected = (props) => {
                     <PiNotebookFill className="w-[1.5rem] h-[1.5rem]" />
                     <h3 className="text-base text-gray-900 font-bold">Lưu ý</h3>
                 </div>
-                <div className={`text-sm leading-tight px-2 py-1 font-semibold grid grid-cols-3 gap-2`}>
-                    <p className="items-center gap-1">{'Đơn vị: '}</p>
-                    <p className="items-center gap-1 col-span-2">{<IndicatorIcon>{orgDisplay}</IndicatorIcon>}</p>
-                    <p className="items-center gap-1 mb-2">{'Thời điểm: '}</p>
-                    <p className="items-center gap-1 mb-2 col-span-2"> <IndicatorIcon>{periodDisplay}</IndicatorIcon></p>
-                    <div className="col-span-3">
+
+                <div className={`flex flex-col leading-tight justify-center px-2 py-1 font-semibold`}>
+                    <NoticeBox type={orgDisplay ? "success" : 'error'} className={'my-[1px]'}>
+                        <p>
+                            Đơn vị: {orgDisplay || 'Chưa chọn'}
+                        </p>
+                    </NoticeBox>
+                    <NoticeBox type={periodDisplay ? "success" : 'error'} className={'my-[1px]'}>
+                        <p>
+                            Thời điểm: {periodDisplay || 'Chưa chọn'}
+                        </p>
+                    </NoticeBox>
+
+
+                    <div className="mt-5">
                         {
                             !isSelectedCore
-                                ? <NoticeBox type="error">
+                                ? <NoticeBox type="error" className={'my-[1px]'}>
                                     Vui lòng chọn đầy đủ đơn vị và thời điểm để xuất báo cáo.
                                 </NoticeBox>
-                                : <NoticeBox type="success">
+                                : <NoticeBox type="success" className={'my-[1px]'}>
                                     <div className="flex flex-col gap-2">
                                         <p>
-                                            Đã chọn đầy đủ đơn vị và thời điểm. Bạn có thể xuất báo cáo.
+                                            Đã chọn đầy đủ đơn vị và thời điểm.
                                         </p>
-                                        <button className="btn-primary w-fit bg-green-600 hover:bg-green-500 text-white"
-                                            onClick={() => setCorePicker({ pickCompleted: Math.random() })}>{trans('common:button.loadReport')}</button>
+                                        <button className="btn-primary w-fit bg-green-600 hover:bg-green-600/90 text-white gap-2"
+                                            onClick={() => setCorePicker({ pickCompleted: Math.random() })}>
+                                            {trans('common:button.loadReport')}
+                                            <FaArrowRightLong className="text-normal" />
+                                        </button>
                                     </div>
                                 </NoticeBox>
                         }
                     </div>
-
                 </div>
             </div>
 
