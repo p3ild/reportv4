@@ -145,27 +145,36 @@ export default () => {
                             locale,
                             variant: 'borderless'
                         }}
-                        onChange={({ fromTo, start, end, result }) => {
+                        onChange={(props) => {
+                            let { fromTo, start, end, result } = props || {};
                             let dataConverted = {
-                                periodSelected: {
-                                    type: typeTaget,
-
-                                    startDate: start.outputFormat,
-                                    labelStartDate: start.labelFormat,
-
-                                    endDate: end?.outputFormat,
-                                    labelEndDate: end?.labelFormat,
-
-                                    outputDataDhis2: result?.outputFormat || `${start.outputFormat}${end?.outputFormat ? ('...' + end?.outputFormat) : ''}`,
-
-                                    fromTo,
-                                    errors: undefined,
-                                },
-
-                            };
-
+                                periodSelected: undefined
+                            }
                             dataConverted.dataPeriodByType = corePicker?.dataPeriodByType || {};
                             dataConverted.dataPeriodByType[currentPeriodType] = dataConverted.periodSelected;
+                            if (props) {
+                                dataConverted = {
+                                    periodSelected: {
+                                        type: typeTaget,
+
+                                        startDate: start.outputFormat,
+                                        labelStartDate: start.labelFormat,
+
+                                        endDate: end?.outputFormat,
+                                        labelEndDate: end?.labelFormat,
+
+                                        outputDataDhis2: result?.outputFormat || `${start.outputFormat}${end?.outputFormat ? ('...' + end?.outputFormat) : ''}`,
+
+                                        fromTo,
+                                        errors: undefined,
+                                    },
+
+                                };
+
+                                dataConverted.dataPeriodByType = corePicker?.dataPeriodByType || {};
+                                dataConverted.dataPeriodByType[currentPeriodType] = dataConverted.periodSelected;
+                            }
+
 
                             setCorePicker(dataConverted);
                         }}

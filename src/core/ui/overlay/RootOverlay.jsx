@@ -126,52 +126,6 @@ export default (props) => {
                                     {type?.content}
                                 </div>
                             }
-                            {
-                                type.key == 'corePicker' && <div className="flex flex-row items-center justify-center px-5 py-2">
-                                    <button className="btn-primary " onClick={() => {
-                                        let errors = [];
-                                        if (!orgSelected) {
-                                            errors.push('Chưa chọn đơn vị')
-                                        }
-                                        if (
-                                            !periodSelected?.outputDataDhis2
-                                        ) {
-                                            errors.push('Chưa chọn thời điểm')
-                                        }
-
-                                        if (periodSelected?.errors) errors = [...errors, ...periodSelected.errors];
-
-                                        if (periodSelected?.fromTo) {
-
-                                            if (!periodSelected.startDate) errors.push('Vui lòng chọn ngày bắt đầu');
-                                            if (!periodSelected.endDate) errors.push('Vui lòng chọn ngày kết thúc');
-                                        }
-
-                                        errors.forEach((e) => {
-                                            notification.error(
-                                                {
-                                                    message: e,
-                                                    placement: "top",
-                                                }
-                                            )
-                                        })
-                                        if (errors.length == 0) {
-                                            setCorePicker({ pickCompleted: Math.random() });
-                                            setGlobalOverlay({ isOpen: false });
-                                        } else {
-
-                                        }
-                                        // setCorePicker({ pickCompleted: Math.random() });
-                                        // setGlobalOverlay({ isOpen: false });
-                                    }}>{trans('common:button.loadReport')}</button>
-
-                                    <button className="btn-danger"
-                                        onClick={() => {
-                                            setGlobalOverlay({ isOpen: false });
-                                        }}
-                                    >{trans('common:button.close')}</button>
-                                </div>
-                            }
 
                         </div>
                     </div>

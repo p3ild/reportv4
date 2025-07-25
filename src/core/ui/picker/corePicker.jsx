@@ -34,9 +34,11 @@ export default () => {
 export const PreviewSelected = (props) => {
     const [
         corePicker,
+        setCorePicker
     ] = useCorePickerState(useShallow(state => (
         [
             state.corePicker,
+            state.actions.setCorePicker,
         ]
     )))
 
@@ -93,7 +95,13 @@ export const PreviewSelected = (props) => {
                                     Vui lòng chọn đầy đủ đơn vị và thời điểm để xuất báo cáo.
                                 </NoticeBox>
                                 : <NoticeBox type="success">
-                                    Đã chọn đầy đủ đơn vị và thời điểm. Bạn có thể xuất báo cáo.
+                                    <div className="flex flex-col gap-2">
+                                        <p>
+                                            Đã chọn đầy đủ đơn vị và thời điểm. Bạn có thể xuất báo cáo.
+                                        </p>
+                                        <button className="btn-primary w-fit bg-green-600 hover:bg-green-500 text-white"
+                                            onClick={() => setCorePicker({ pickCompleted: Math.random() })}>{trans('common:button.loadReport')}</button>
+                                    </div>
                                 </NoticeBox>
                         }
                     </div>

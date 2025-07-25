@@ -30,16 +30,16 @@ const typeConfig = {
 export function NoticeBox({ children, type = 'warning' }) {
     const cfg = typeConfig[type] || typeConfig.warning
     return (
-        <div className={`${cfg.bg} border-l-4 ${cfg.border} p-3 my-2 flex items-center`}>
+        <div className={`${cfg.bg} border-l-4 ${cfg.border} p-3 my-2 flex`}>
             <span className={`${cfg.iconColor} mr-2`}>{cfg.icon}</span>
-            <span className={`text-sm ${cfg.text}`}>{children}</span>
+            <div className={`text-sm ${cfg.text}`}>{children}</div>
         </div>
     )
 }
 
 export const IndicatorIcon = ({ children }) => {
-    return <span className={`flex flex-row items-center gap-1 ${children ? 'text-green-600' : 'text-red-600'}`}>
-        {!children  && <RiCheckboxCircleFill className="h-4 w-4 " />}
-        {children }
+    return <span className={`flex flex-row gap-1 ${children ? 'text-green-600' : 'text-red-600'}`}>
+        {!children && <RiCheckboxCircleFill className="h-4 w-4 " />}
+        {children}
     </span>
 }
