@@ -9,11 +9,9 @@ class Config extends Base {
     // Server configuration
     BASE_URL = 'https://dev.tkyt.vn/bc25';
 
-    init = async () => {
-        getPickerStateByPath('actions.setAllowPeriodTypes')([
-            PERIOD_TYPE.year
-        ]);
-    }
+  init = async () => {
+    getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.year]);
+  };
 
     listFolder = {
         core: {
@@ -27,46 +25,45 @@ class Config extends Base {
          }
     }
 
-    listReport = [
-        {
-            key: "test",
-            folder: [this.listFolder.core],
-            displayName: 'test',
-            getReportInstance: async () => await import('./demo')
-        },
-        {
-            key: "eOlFpQQhgL4",
-            folder: [this.listFolder.core],
-            displayName: 'Thông tin chung',
-            getReportInstance: async () => await import('./p2ild/ttc')
-        },
-        {
-            folder: [this.listFolder.core],
-            key: "mMx0kzgX6Uv",
-            displayName: 'Hoạt động chăm sóc bà mẹ',
-            getReportInstance: async () => await import('./p2ild/bmte_b4')
-        },
-        {
-            folder: [this.listFolder.core],
-            key: "ctoSw0XuKp7",
-            displayName: 'TÌNH HÌNH MẮC VÀ TỬ VONG DO TAI BIẾN SẢN KHOA',
-            getReportInstance: async () => await import('./p2ild/bmte_b5')
-        },
-        {
-            folder: [this.listFolder.core],
-            key: "r2gK5JEiaxW",
-            displayName: 'HOẠT ĐỘNG KHÁM, CHỮA PHỤ KHOA VÀ SÀNG LỌC UNG THƯ CỔ TỬ CUNG',
-            getReportInstance: async () => await import('./p2ild/bmte_b6')
-        },
-        {
-            folder: [this.listFolder.core],
-            key: "xsJNZLJHG6u",
-            displayName: 'HOẠT ĐỘNG KHHGĐ VÀ PHÁ THAI',
-            getReportInstance: async () => await import('./p2ild/bmte_b7')
-        },
-    ];
-
-
+  listReport = [
+    {
+      key: "test",
+      folder: [this.listFolder.core],
+      displayName: "test",
+      getReportInstance: async () => await import("./demo"),
+    },
+    {
+      key: "eOlFpQQhgL4",
+      folder: [this.listFolder.core],
+      displayName: "Thông tin chung",
+      getReportInstance: async () => await import("./p2ild/ttc"),
+    },
+    {
+      folder: [this.listFolder.core],
+      key: "mMx0kzgX6Uv",
+      displayName: "Hoạt động chăm sóc bà mẹ",
+      getReportInstance: async () => await import("./p2ild/bmte_b4"),
+    },
+    {
+      folder: [this.listFolder.core],
+      key: "ctoSw0XuKp7",
+      displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG DO TAI BIẾN SẢN KHOA",
+      getReportInstance: async () => await import("./p2ild/bmte_b5"),
+    },
+    {
+      folder: [this.listFolder.core],
+      key: "r2gK5JEiaxW",
+      displayName:
+        "HOẠT ĐỘNG KHÁM, CHỮA PHỤ KHOA VÀ SÀNG LỌC UNG THƯ CỔ TỬ CUNG",
+      getReportInstance: async () => await import("./p2ild/bmte_b6"),
+    },
+    {
+      folder: [this.listFolder.core],
+      key: "xsJNZLJHG6u",
+      displayName: "HOẠT ĐỘNG KHHGĐ VÀ PHÁ THAI",
+      getReportInstance: async () => await import("./p2ild/bmte_b7"),
+    },
+  ];
 }
 
-export default new Config
+export default new Config();
