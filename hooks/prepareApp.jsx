@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { setupEnvironment } from '../network';
+import { setupEnvironment, wait } from '../network';
 import { useShallow } from 'zustand/react/shallow'
-import { useCoreMetaState } from '@core/stateManage/metadataState';
+import { getCoreMetaStateByPath, useCoreMetaState } from '@core/stateManage/metadataState';
 import { useCorePickerState } from '@core/stateManage/corePickerState';
 import i18n from '../translation/i18n';
 import { parallel } from 'async';
-import { flatten } from 'lodash';
+import { flatten, omit } from 'lodash';
 import ProgressNotificationBuilder from '../ui/picker/ProgressData';
 
 let progressNotification = ProgressNotificationBuilder({
@@ -13,28 +13,6 @@ let progressNotification = ProgressNotificationBuilder({
     label: 'Đang chuẩn bị dữ liệu hệ thống',
 });
 
-let taskStatus = {
-    ME_DATA: {
-        title: "Dữ liệu người dùng",
-    },
-    VERSION: {
-        title: "Dữ liệu cài đặt",
-    },
-    LIST_REPORT: {
-        title: "Dữ liệu báo cáo",
-    },
-    ORG: {
-        title: "Dữ liệu đơn vị",
-    },
-    // PROGRAM: {
-    //     title: "Dữ liệu chương trình",
-    // },
-    // OPTION_SET: {
-    //     title: "Dữ liệu danh mục",
-    // },
-
-
-}
 
 //Define instance
 export const useDefiningInstance = () => {
@@ -59,15 +37,12 @@ export const useDefiningInstance = () => {
                     // setUnknowError(`Instance env not found: ${process.env.REACT_APP_TARGET_BUILD_INSTANCE}`);
                     break;
             }
-            let {
-                default: instance,
-                locale
-            } = tmp;
-            await instance.init({
-                locale
-            });
+            let instance = tmp.default;
+
+            await instance.init({});
             setInstanceTarget({
-                ...instance, locale
+                ...instance,
+                ...omit(tmp, ['default'])// Get all export from instance.jsx file without default export
             })
         })()
     }, [])
@@ -169,11 +144,20 @@ export const useMetadataAddition = () => {
                     // }
                 ].map((e, idx) => {
                     return (callback) => {
-                        taskStatus[e.key].status = true
-                        progressNotification.open(taskStatus);
-                        e.fetch().then((data) => {
-                            callback(undefined, data)
-                        });
+                        let taskStatus = getCoreMetaStateByPath('initAppTask');
+                        let currentTaskStatus = taskStatus[e.key].status;
+                        if (!currentTaskStatus) {
+                            e.fetch().then((data) => {
+                                callback(undefined, data)
+                                taskStatus[e.key].status = true;
+                                getCoreMetaStateByPath('actions.setInitAppTask')(taskStatus);
+                                progressNotification.open(taskStatus);
+
+                            });
+
+                        } else callback(undefined)
+
+
                     }
                 })
 
@@ -207,9 +191,9 @@ const usePrefetchForReport = ({ loaded }) => {
         () => {
 
             (async () => {
+                let taskStatus = getCoreMetaStateByPath('initAppTask');
                 if (loaded && networkUtils && !me?.orgViewData) {
                     progressNotification.open(taskStatus);
-
                     let orgViewData = await parallel(
                         me?.dataViewOrganisationUnits?.map(orgObj => {
                             return (callback) => {
@@ -221,11 +205,15 @@ const usePrefetchForReport = ({ loaded }) => {
                     );
                     !corePicker.orgSelected && setCorePicker({
                         orgSelected: {
-                            id: orgViewData[0]?.organisationUnits?.[0]?.id, displayName: orgViewData[0]?.organisationUnits?.[0]?.displayName, level: orgViewData[0]?.organisationUnits?.[0]?.level
+                            id: orgViewData[0]?.organisationUnits?.[0]?.id,
+                            displayName: orgViewData[0]?.organisationUnits?.[0]?.displayName,
+                            level: orgViewData[0]?.organisationUnits?.[0]?.level
                         }
                     })
 
                     taskStatus.ORG.status = true;
+                    getCoreMetaStateByPath('actions.setInitAppTask')(taskStatus);
+
                     progressNotification.open(taskStatus);
 
                     progressNotification.destroy(taskStatus, 1.5);
@@ -235,8 +223,6 @@ const usePrefetchForReport = ({ loaded }) => {
                         orgViewData: flatten(orgViewData)
                     });
                 }
-
-
             })();
 
         },
@@ -247,21 +233,20 @@ const usePrefetchForReport = ({ loaded }) => {
 // ________ ON PREPARE APP COMPLETED _________
 export default function usePrepareApp() {
     const [
-        instanceTarget, networkUtils, language, me,
+        instanceTarget, networkUtils, language,
         setGlobalOverlay,
         firstLoadApp,
         setFirstLoadApp,
     ] = useCoreMetaState(useShallow(state => ([
-        state.instanceTarget, state.networkUtils, state.language, state.me,
+        state.instanceTarget, state.networkUtils, state.language,
         state.actions.setGlobalOverlay,
 
         state.firstLoadApp,
         state.actions.setFirstLoadApp,
     ])));
 
-    const [corePicker, setCorePicker] = useCorePickerState(
+    const [setCorePicker] = useCorePickerState(
         useShallow(state => ([
-            state.corePicker,
             state.actions.setCorePicker,
         ])));
 
@@ -270,6 +255,10 @@ export default function usePrepareApp() {
 
     usePrefetchForReport({ loaded: firstLoadApp })
     const metadataAddition = useMetadataAddition()
+
+    // useEffect(() => {
+    //     console.log(taskStatus)
+    // }, [])
 
     useEffect(() => {
         setGlobalOverlay({
