@@ -22,8 +22,8 @@ class Base {
             ele.label = reportPulled?.displayName || ele.displayName
             ele.value = reportPulled?.id
             return {
-                ...reportPulled,
                 ...ele,
+                ...reportPulled,
             }
         })
 
