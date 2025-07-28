@@ -27,10 +27,22 @@ class Config extends Base {
 
   listReport = [
     {
-      key: "test",
+      key: "",
       folder: [this.listFolder.core],
       displayName: "test",
       getReportInstance: async () => await import("./b12_ncd"),
+    },
+    {
+      key: "",
+      folder: [this.listFolder.core],
+      displayName: "HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS",
+      getReportInstance: async () => await import("./b10_tntt_hiv_sktt"),
+    },
+    {
+      key: "",
+      folder: [this.listFolder.core],
+      displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH  TRUYỀN NHIỄM GÂY DỊCH  ",
+      getReportInstance: async () => await import("./b11_tngd"),
     },
     {
       key: "eOlFpQQhgL4",
