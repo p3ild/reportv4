@@ -5,6 +5,29 @@
 .b10_tntt_hiv_sktt-report-container th,
 .b10_tntt_hiv_sktt-report-container td {
   padding: 5px 8px;
-  border: 1px solid #000;
   text-align: center;
+}
+
+.b10_tntt_hiv_sktt-report-container
+  .report-table-main
+  thead
+  tr:first-of-type
+  th {
+  border-top: 1px solid black !important;
+}
+.b10_tntt_hiv_sktt-report-container .report-table-main td:first-of-type {
+  border-left: 1px solid black !important;
+}
+
+.b10_tntt_hiv_sktt-report-container
+  .report-table-main
+  thead
+  tr:first-of-type
+  th:first-of-type {
+  border-left: 1px solid black !important;
+}
+
+.b10_tntt_hiv_sktt-report-container table {
+  border-left: 0 !important;
+  border-top: 0 !important;
 }

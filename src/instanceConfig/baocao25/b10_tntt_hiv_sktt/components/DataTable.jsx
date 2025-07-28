@@ -5,7 +5,6 @@ import {
   ROW_GENERATE_FOR_NATION_LEVEL,
   ROW_GENERATE_FOR_PROVINCE_LEVEL,
 } from "../constants";
-import { useSingleBorderTable } from "../hooks/useSingleBorderStyle";
 import { useStickyRows } from "../hooks/ueStickyRow";
 import { useCorePickerState } from "@core/stateManage/corePickerState";
 import { useShallow } from "zustand/react/shallow";
@@ -20,6 +19,7 @@ const DataTable = ({
   headers = [],
   title = "",
   code = "",
+  data,
 }) => {
   const { _get, setGlobalOverlay, me } = useCoreMetaState(
     useShallow((state) => ({
@@ -35,38 +35,8 @@ const DataTable = ({
   );
   const { orgViewData } = me;
   const orgUnits = flatten(orgViewData?.[0]?.organisationUnits || []);
-  const [data, setData] = useState();
   const tableRef = useRef(null);
-  useSingleBorderTable(tableRef, data);
-  useStickyRows(tableRef);
-
-  const getData = async () => {
-    try {
-      setGlobalOverlay({ isOpen: true });
-
-      const result = await _get(
-        `/api/analytics?dimension=dx:${dataElements.join(";")},ou:${
-          corePicker.orgSelected.id
-        };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${
-          corePicker.periodSelected.outputDataDhis2
-        }`
-      );
-      const valueIndex = findHeaderIndex(result, "value");
-      const dxIndex = findHeaderIndex(result, "dx");
-      const ouIndex = findHeaderIndex(result, "ou");
-
-      const dataResult = result.rows.map((row) => ({
-        value: row[valueIndex],
-        ou: row[ouIndex],
-        dx: row[dxIndex],
-      }));
-      setData(dataResult);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setGlobalOverlay({ isOpen: false });
-    }
-  };
+  useStickyRows(tableRef, data);
 
   const generateRowByOrgUnit = () => {
     if (!corePicker || !corePicker.pickCompleted) return [];
@@ -76,6 +46,8 @@ const DataTable = ({
         return corePicker.orgSelected.children.map((item) => ({
           id: item.id,
           label: item.displayName,
+          generatePrefix: true,
+
           children: ROW_GENERATE_FOR_NATION_LEVEL.map((ouGroup) => {
             return {
               label: ouGroup.label,
@@ -186,13 +158,26 @@ const DataTable = ({
         <React.Fragment key={row.id || index * level}>
           <tr
             className={`${haveChildren ? "row-sticky" : ""} ${
-              row.prefix ? "[&>*]:!font-bold" : ""
+              row.prefix || row.generatePrefix ? "[&>*]:!font-bold" : ""
             }`}
             data-group={id || row.id}
           >
             {/* Indentation: render empty cells for parent levels */}
-            <td key={`prefix-${index}`}>{row.prefix || index + 1}</td>
-            <td>
+            <td
+              data-a-wrap="true"
+              data-b-a-s="thin"
+              data-a-v="middle"
+              data-f-bold={haveChildren && "true"}
+              key={`prefix-${index}`}
+            >
+              {row.prefix || (row.generatePrefix && index + 1)}
+            </td>
+            <td
+              data-f-bold={haveChildren && "true"}
+              data-b-a-s="thin"
+              data-a-v="middle"
+              data-a-indent={level}
+            >
               <p
                 className={`text-left`}
                 style={{
@@ -203,11 +188,19 @@ const DataTable = ({
               </p>
             </td>
             {dataElements.map((de) => (
-              <td key={`${REPORT_NAME}-${row.id}-cell-${de}`}>
+              <td
+                data-a-wrap="true"
+                data-b-a-s="thin"
+                data-a-v="middle"
+                data-width="40"
+                data-f-bold={haveChildren && "true"}
+                key={`${REPORT_NAME}-${row.id}-cell-${de}`}
+              >
                 {row.getData
-                  ? row.getData(data.filter((item) => item.dx === de))
-                  : data.find((item) => item.dx === de && item.ou === row.id)
-                      ?.value || 0}
+                  ? row.getData((data || []).filter((item) => item.dx === de))
+                  : (data || []).find(
+                      (item) => item.dx === de && item.ou === row.id
+                    )?.value || 0}
               </td>
             ))}
           </tr>
@@ -219,14 +212,8 @@ const DataTable = ({
     });
   };
 
-  useEffect(() => {
-    if (corePicker && corePicker.pickCompleted) {
-      getData();
-    }
-  }, [corePicker.pickCompleted]);
-
   return (
-    <div className="flex flex-col gap-2">
+    <>
       <table style={{ border: 0 }} className=" mb-5 sticky left-0">
         <tbody>
           {code && (
@@ -326,7 +313,11 @@ const DataTable = ({
           </tr>
         </tbody>
       </table>
-      <table ref={tableRef} className={`report-table-main  min-w-[2000px]`}>
+      <table
+        key={Math.random()}
+        ref={tableRef}
+        className={`report-table-main  min-w-[2000px]`}
+      >
         <thead>
           {headers.map((row, index) => {
             return (
@@ -338,6 +329,11 @@ const DataTable = ({
                   const { label, ...props } = cell;
                   return (
                     <th
+                      data-a-h="center"
+                      data-a-v="middle"
+                      data-f-bold="true"
+                      data-a-wrap="true"
+                      data-b-a-s="thin"
                       key={`${REPORT_NAME}-header-${index}-cell-${indexCell}`}
                       {...props}
                     >
@@ -349,34 +345,51 @@ const DataTable = ({
             );
           })}
         </thead>
-        {data && (
-          <tbody>
-            <tr className="[&>*]:!font-bold">
-              {Array.from({ length: dataElements.length + 2 })
-                .fill(0)
-                .map((_, index) => (
-                  <td key={`${REPORT_NAME}-body-count-${index}`}>
-                    {index + 1}
-                  </td>
-                ))}
-            </tr>
-            <tr className="[&>*]:!font-bold">
-              <td />
-              <td>Tổng cộng</td>
-              {dataElements.map((de) => (
-                <td key={`${REPORT_NAME}-total-cell-${de}`}>
-                  {data.find(
-                    (item) =>
-                      item.dx === de && item.ou === corePicker.orgSelected.id
-                  )?.value || 0}
+        <tbody>
+          <tr className="[&>*]:!font-bold">
+            {Array.from({ length: dataElements.length + 2 })
+              .fill(0)
+              .map((_, index) => (
+                <td
+                  data-a-wrap="true"
+                  data-b-a-s="thin"
+                  data-a-v="middle"
+                  data-f-bold="true"
+                  key={`${REPORT_NAME}-body-count-${index}`}
+                >
+                  {index + 1}
                 </td>
               ))}
-            </tr>
-            {renderRows(generateRowByOrgUnit())}
-          </tbody>
-        )}
+          </tr>
+          <tr className="[&>*]:!font-bold">
+            <td data-a-wrap="true" data-b-a-s="thin" data-a-v="middle" />
+            <td
+              data-a-wrap="true"
+              data-b-a-s="thin"
+              data-a-v="middle"
+              data-f-bold="true"
+            >
+              Tổng cộng
+            </td>
+            {dataElements.map((de) => (
+              <td
+                data-a-wrap="true"
+                data-b-a-s="thin"
+                data-a-v="middle"
+                data-f-bold="true"
+                key={`${REPORT_NAME}-total-cell-${de}`}
+              >
+                {(data || []).find(
+                  (item) =>
+                    item.dx === de && item.ou === corePicker.orgSelected.id
+                )?.value || 0}
+              </td>
+            ))}
+          </tr>
+          {renderRows(generateRowByOrgUnit())}
+        </tbody>
       </table>
-    </div>
+    </>
   );
 };
 

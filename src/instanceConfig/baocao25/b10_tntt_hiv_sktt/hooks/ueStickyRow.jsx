@@ -6,7 +6,7 @@ import { useShallow } from "zustand/react/shallow";
  * Sticky nhiều dòng có class `.row-sticky`, hỗ trợ scroll ngang và dọc.
  * Áp dụng border cho tất cả các dòng: nếu dòng trước là sticky thì bỏ border-top.
  */
-export function useStickyRows(tableRef) {
+export function useStickyRows(tableRef, data) {
   const { globalOverlay } = useCoreMetaState(
     useShallow((state) => ({
       globalOverlay: state.globalOverlay,
@@ -35,11 +35,11 @@ export function useStickyRows(tableRef) {
 
         Array.from(row.cells).forEach((cell) => {
           cell.style.background = "white"; // giữ đồng bộ nền
-          cell.style.borderBottom = "1px solid #000";
-          cell.style.borderTop = "none";
-          if (isFirstRow) {
-            cell.style.borderTop = "";
-          }
+          // cell.style.borderBottom = "1px solid #000 !important";
+          // cell.style.borderTop = "none !important";
+          // if (isFirstRow) {
+          //   cell.style.borderTop = "";
+          // }
         });
       });
       let groupStickyMap = new Map();
@@ -60,8 +60,10 @@ export function useStickyRows(tableRef) {
         // Dù là sticky hay không, đều xử lý border theo quy tắc
         Array.from(row.cells).forEach((cell) => {
           cell.style.background = "white"; // giữ đồng bộ nền
-          cell.style.borderBottom = isNextRowSticky ? "none" : "1px solid #000";
-          cell.style.borderTop = "none";
+          // cell.style.borderBottom = isNextRowSticky
+          //   ? "none !important"
+          //   : "1px solid #000 !important";
+          // cell.style.borderTop = "none !important";
           cell.style.fontWeight = isSticky ? "700" : "400";
         });
       });
@@ -75,7 +77,7 @@ export function useStickyRows(tableRef) {
           groupOffset += row.getBoundingClientRect().height;
           Array.from(row.cells).forEach((cell) => {
             cell.style.background = "white"; // giữ đồng bộ nền
-            cell.style.borderTop = "1px solid black";
+            // cell.style.borderTop = "1px solid black !important";
           });
         });
       });
@@ -94,5 +96,5 @@ export function useStickyRows(tableRef) {
       // window.removeEventListener("scroll", applySticky);
       resizeObserver.disconnect();
     };
-  }, [tableRef.current, globalOverlay.isOpen]);
+  }, [tableRef.current, JSON.stringify(data)]);
 }

@@ -3,20 +3,29 @@ import {
   useCorePickerState,
 } from "@core/stateManage/corePickerState";
 import { PERIOD_TYPE } from "@core/ui/picker/periodpicker/constant";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { ORG_GROUP } from "../p2ild/common/constant";
-import { useCoreMetaState } from "@core/stateManage/metadataState";
-import { useShallow } from "zustand/react/shallow";
 import Table_1 from "./Table_1";
 import "./index.css";
 import Table_2 from "./Table_2";
 import Table_3 from "./Table_3";
+import { findHeaderIndex } from "../p2ild/common/utils";
+import {
+  DATA_ELEMENTS_TABLE_1,
+  DATA_ELEMENTS_TABLE_2,
+  DATA_ELEMENTS_TABLE_3,
+} from "./constants";
+import { useCoreMetaState } from "@core/stateManage/metadataState";
+import { useShallow } from "zustand/react/shallow";
 const Test = () => {
-  const { firstLoadApp, _get, setGlobalOverlay } = useCoreMetaState(
+  const [data, setData] = useState();
+
+  const { _get, setGlobalOverlay, me, setExcelOptions } = useCoreMetaState(
     useShallow((state) => ({
-      firstLoadApp: state.firstLoadApp,
       _get: state._get,
       setGlobalOverlay: state.actions.setGlobalOverlay,
+      setExcelOptions: state.actions.setExcelOptions,
+      me: state.me,
     }))
   );
   const { corePicker } = useCorePickerState(
@@ -24,7 +33,6 @@ const Test = () => {
       corePicker: state.corePicker,
     }))
   );
-
   useEffect(() => {
     getPickerStateByPath("actions.setAllowPeriodTypes")([
       PERIOD_TYPE.month,
@@ -42,18 +50,55 @@ const Test = () => {
       ],
       // levelsToHideIfEmpty: [3]
     });
+    setExcelOptions({
+      columnWidths: "10,100",
+      excelFileName: "Báo cáo 10",
+    });
   }, []);
 
-  const scrollContainerRef = useRef(null);
+  const getData = async () => {
+    try {
+      setGlobalOverlay({ isOpen: true });
+
+      const result = await _get(
+        `/api/analytics?dimension=dx:${[
+          ...DATA_ELEMENTS_TABLE_1,
+          ...DATA_ELEMENTS_TABLE_2,
+          ...DATA_ELEMENTS_TABLE_3,
+        ].join(";")},ou:${
+          corePicker.orgSelected.id
+        };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${
+          corePicker.periodSelected.outputDataDhis2
+        }`
+      );
+      const valueIndex = findHeaderIndex(result, "value");
+      const dxIndex = findHeaderIndex(result, "dx");
+      const ouIndex = findHeaderIndex(result, "ou");
+
+      const dataResult = result.rows.map((row) => ({
+        value: row[valueIndex],
+        ou: row[ouIndex],
+        dx: row[dxIndex],
+      }));
+      setData(dataResult);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setGlobalOverlay({ isOpen: false });
+    }
+  };
+
+  useEffect(() => {
+    if (corePicker && corePicker.pickCompleted) {
+      getData();
+    }
+  }, [corePicker.pickCompleted]);
 
   return (
-    <div
-      ref={scrollContainerRef}
-      className="font-serif h-full  b10_tntt_hiv_sktt-report-container flex flex-col gap-6"
-    >
-      <Table_1 />
-      <Table_2 />
-      <Table_3 />
+    <div className="font-serif h-full report-container  b10_tntt_hiv_sktt-report-container flex flex-col gap-6">
+      <Table_1 data={data} />
+      <Table_2 data={data} />
+      <Table_3 data={data} />
     </div>
   );
 };
