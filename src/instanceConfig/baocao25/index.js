@@ -1,32 +1,29 @@
-import { PERIOD_TYPE } from "@core/ui/picker/periodpicker/periodpicker";
-import Base from "@core/base/ReportBase";
-import { getPickerStateByPath } from "@core/stateManage/corePickerState";
-import { classifyingOrgSelected } from "./p2ild/common/request/utils";
-import locale from "./locale.json";
-export { locale };
+import { PERIOD_TYPE } from '@core/ui/picker/periodpicker/periodpicker';
+import Base from '@core/base/ReportBase';
+import { getPickerStateByPath } from '@core/stateManage/corePickerState';
+import { classifyingOrgSelected } from './p2ild/common/request/utils';
+import locale from './locale.json';
+export { locale, classifyingOrgSelected };
 
 class Config extends Base {
-  // Server configuration
-  BASE_URL = "https://dev.tkyt.vn/bc25";
-  classifyingOrgSelected = classifyingOrgSelected;
+    // Server configuration
+    BASE_URL = 'https://dev.tkyt.vn/bc25';
 
   init = async () => {
     getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.year]);
   };
 
-  listFolder = {
-    core: {
-      key: "core",
-      label: "Báo cáo cốt lõi ",
-      child: [],
-    },
+    listFolder = {
+        core: {
+            "key": "core",
+            "label": "Báo cáo cốt lõi ",
+         },
 
-    other: {
-      key: "other",
-      label: "Báo cáo mẫu khác",
-      child: [],
-    },
-  };
+        other: {
+            "key": "other",
+            "label": "Báo cáo mẫu khác",
+         }
+    }
 
   listReport = [
     {

@@ -5,7 +5,7 @@ export const useCorePickerState = create((set, get) => (
     {
         corePicker: {
             periodSelected: {},
-            orgSelected: {},
+            orgSelected: undefined,
             dataPeriodByType: {},
         },
 

@@ -1,6 +1,9 @@
 import { create } from 'zustand'
 import { Spin } from 'antd';
 import { get } from 'lodash';
+import { INIT_APP_TASK } from './constant';
+
+
 
 export const useCoreMetaState = create((set, get) => (
     {
@@ -8,7 +11,7 @@ export const useCoreMetaState = create((set, get) => (
         instanceTarget: undefined,
         reportTarget: undefined,
         isDownloadExcelTrigger: false,
-
+        initAppTask: INIT_APP_TASK,
 
         meData: undefined,
         networkUtils: undefined,
@@ -56,6 +59,9 @@ export const useCoreMetaState = create((set, get) => (
                         }
                     }
                 });
+            },
+            setInitAppTask: async (initAppTask) => {
+                set(state => ({ initAppTask }));
             },
             setFirstLoadApp: async (bool) => {
                 set(state => ({ firstLoadApp: bool }));

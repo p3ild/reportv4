@@ -255,7 +255,7 @@ const DataTable = ({
             >
               <p>
                 Đơn vị báo cáo:{" "}
-                {corePicker.orgSelected.displayName.toUpperCase()}
+                {corePicker?.orgSelected?.displayName?.toUpperCase?.()}
               </p>
             </td>
           </tr>
@@ -293,9 +293,9 @@ const DataTable = ({
               <p>
                 Báo cáo{" "}
                 {[
-                  corePicker.periodSelected?.labelStartDate,
-                  corePicker.periodSelected?.labelEndDate
-                    ? `${corePicker.periodSelected?.labelEndDate}`
+                  corePicker?.periodSelected?.labelStartDate,
+                  corePicker?.periodSelected?.labelEndDate
+                    ? `${corePicker?.periodSelected?.labelEndDate}`
                     : undefined,
                 ]
                   .filter((e) => e)

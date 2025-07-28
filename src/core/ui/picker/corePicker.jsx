@@ -1,9 +1,7 @@
 
 import { useCorePickerState } from "@core/stateManage/corePickerState"
-import { FaCircleCheck } from "react-icons/fa6";
-import { PiWarningCircleFill } from "react-icons/pi";
 
-import { BsCalendar2WeekFill } from "react-icons/bs";
+import { BsCalendar2WeekFill, BsThreeDots } from "react-icons/bs";
 import { LiaGlobeSolid } from "react-icons/lia";
 import { PiNotebookFill } from "react-icons/pi";
 
@@ -12,6 +10,8 @@ import { upperFirst } from "lodash";
 import { useShallow } from "zustand/react/shallow";
 import Orgpicker from "./orgPicker/orgpicker";
 import GroupPeriodPicker from "./periodpicker/GroupPeriodPicker";
+import { NoticeBox } from "./notice";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 export default () => {
 
@@ -28,16 +28,18 @@ export default () => {
             <PreviewSelected />
             {customPicker && customPicker}
         </div>
-       
+
     </div>
 }
 
 export const PreviewSelected = (props) => {
     const [
         corePicker,
+        setCorePicker
     ] = useCorePickerState(useShallow(state => (
         [
             state.corePicker,
+            state.actions.setCorePicker,
         ]
     )))
 
@@ -57,14 +59,9 @@ export const PreviewSelected = (props) => {
         : undefined
     const isSelectedCore = orgDisplay && periodDisplay;
 
-    const indicatorIcon = (b) => {
-        return <span className={`flex flex-row items-center gap-1 ${b ? 'text-green-500' : 'text-red-500'}`}>
-            {b}
-            {b ? <FaCircleCheck className="h-3 w-3 " strokeWidth={2} /> : <PiWarningCircleFill className="h-4 w-4" strokeWidth={2.2} />}
-        </span>
-    }
+
     return (
-        
+
         <div className="bg-white rounded-lg p-3 flex flex-col gap-y-5 text-gray-800 shadow-lg border border-gray-200">
             <div className="mb-2">
                 <div className="flex items-center gap-2 mb-1 bg-gray-300 px-2 py-1 rounded-md">
@@ -72,7 +69,6 @@ export const PreviewSelected = (props) => {
                     <h3 className="text-base text-gray-900 font-bold">{trans('common:orgPicker')}</h3>
                 </div>
                 <Orgpicker required />
-                {/* <p className="text-gray-800 text-sm leading-tight px-2 py-1 font-medium"> {orgName} </p> */}
             </div>
 
             <div className="mb-2">
@@ -88,12 +84,40 @@ export const PreviewSelected = (props) => {
                     <PiNotebookFill className="w-[1.5rem] h-[1.5rem]" />
                     <h3 className="text-base text-gray-900 font-bold">Lưu ý</h3>
                 </div>
-                <div className={`text-sm leading-tight px-2 py-1 font-semibold flex flex-col gap-2`}>
-                    <p className="flex flex-row items-center gap-1">{'Đơn vị: '}{indicatorIcon(orgDisplay)}</p>
-                    <p className="flex flex-row items-center gap-1">{'Thời điểm: '} {indicatorIcon(periodDisplay)}</p>
-                    {
-                        !isSelectedCore && `Vui lòng chọn đủ thời gian và địa điểm`
-                    }
+
+                <div className={`flex flex-col leading-tight justify-center px-2 py-1 font-semibold`}>
+                    <NoticeBox type={orgDisplay ? "success" : 'error'} className={'my-[1px]'}>
+                        <p>
+                            Đơn vị: {orgDisplay || 'Chưa chọn'}
+                        </p>
+                    </NoticeBox>
+                    <NoticeBox type={periodDisplay ? "success" : 'error'} className={'my-[1px]'}>
+                        <p>
+                            Thời điểm: {periodDisplay || 'Chưa chọn'}
+                        </p>
+                    </NoticeBox>
+
+
+                    <div className="mt-5">
+                        {
+                            !isSelectedCore
+                                ? <NoticeBox type="error" className={'my-[1px]'}>
+                                    Vui lòng chọn đầy đủ đơn vị và thời điểm để xuất báo cáo.
+                                </NoticeBox>
+                                : <NoticeBox type="success" className={'my-[1px]'}>
+                                    <div className="flex flex-col gap-2">
+                                        <p>
+                                            Đã chọn đầy đủ đơn vị và thời điểm.
+                                        </p>
+                                        <button className="btn-primary w-fit bg-green-600 hover:bg-green-600/90 text-white gap-2"
+                                            onClick={() => setCorePicker({ pickCompleted: Math.random() })}>
+                                            {trans('common:button.loadReport')}
+                                            <FaArrowRightLong className="text-normal" />
+                                        </button>
+                                    </div>
+                                </NoticeBox>
+                        }
+                    </div>
                 </div>
             </div>
 

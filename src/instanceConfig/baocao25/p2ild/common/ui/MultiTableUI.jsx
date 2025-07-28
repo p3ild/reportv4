@@ -5,6 +5,10 @@ import { min, toArray } from "lodash";
 import { useResizeDetector } from 'react-resize-detector';
 import tableBuilder from "./tableUtils/tableBuilder";
 import './tableUtils/table.css'
+import ReactJson from "react-json-view";
+import { JsonViewDebug } from "@core/ui/utils/Debug";
+import { serializeError } from "serialize-error";
+import { RiErrorWarningFill } from "react-icons/ri";
 export const TableData = function (props) {
     let {
         reportName,
@@ -43,12 +47,9 @@ export const TableData = function (props) {
 
     if (errors) {
         return <div className="p-2">
-            <Result
-                status="error"
-                title={
-                    errors?.message
-                }
-            />
+            <JsonViewDebug data={serializeError(errors)} />
+
+
         </div>
     }
     return <div className="p-2">
