@@ -10,6 +10,7 @@ import { useShallow } from "zustand/react/shallow";
 import { find, pick } from "lodash";
 import "./index.css";
 import { DATA_ELEMENTS } from "./const";
+import { format } from "date-fns";
 
 const Tndg = () => {
   const [rawData, setRawData] = useState(null);
@@ -29,7 +30,11 @@ const Tndg = () => {
   const getData = async () => {
     setGlobalOverlay({ isOpen: true });
     let ou = "";
-    if (corePicker.orgSelected.level === 1) {
+    if (
+      corePicker &&
+      corePicker.orgSelected &&
+      corePicker.orgSelected.level === 1
+    ) {
       ou = `LEVEL-xYcrY3IenFA;OU_GROUP-mH8ggZyC39Z;${corePicker.orgSelected.id}`;
     } else {
       if (corePicker.orgSelected.level === 2) {
@@ -86,18 +91,41 @@ const Tndg = () => {
     }
     return ouArr.map((id, index) => {
       const org = rawData[tableKey]?.metaData?.items[id];
+      const isTotal =
+        id === corePicker.orgSelected.id && corePicker.orgSelected.level <= 2;
 
       return (
         <tr id={id} key={id}>
-          {id === corePicker.orgSelected.id &&
-          corePicker.orgSelected.level <= 2 ? (
-            <td colSpan={2} style={{ fontWeight: "bold" }}>
+          {isTotal ? (
+            <td
+              colSpan={2}
+              style={{ fontWeight: "bold" }}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              data-a-wrap="true"
+              data-b-a-s="thin"
+            >
               Tổng số
             </td>
           ) : (
             <>
-              <td>{index}</td>
-              <td>{org ? org.name : ""}</td>
+              <td
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                {index}
+              </td>
+              <td
+                data-a-h="left"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                {org ? org.name : ""}
+              </td>
             </>
           )}
 
@@ -109,16 +137,15 @@ const Tndg = () => {
             return (
               <td
                 key={element}
-                style={{
-                  textAlign: "center",
-                  fontWeight:
-                    id === corePicker.orgSelected.id &&
-                    corePicker.orgSelected.level <= 2
-                      ? "bold"
-                      : "normal",
-                }}
+                style={{ fontWeight: isTotal ? "bold" : "normal" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+                data-f-bold={isTotal ? "true" : undefined}
+                data-num-fmt="0"
               >
-                {findValue ? parseFloat(findValue[valueIndex]).toFixed(2) : 0}
+                {findValue ? parseFloat(findValue[valueIndex]).toFixed(0) : 0}
               </td>
             );
           })}
@@ -156,8 +183,103 @@ const Tndg = () => {
 
   return (
     <div className="report-container">
-      <h3>Báo cáo 11 - TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH</h3>
-
+      <table style={{ border: 0 }} className=" mb-5 sticky left-0">
+        <tbody>
+          <tr>
+            <td
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                textAlign: "left",
+              }}
+            >
+              <p>{"Báo cáo 11"}</p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                textAlign: "left",
+              }}
+            >
+              <p>
+                Đơn vị báo cáo:{" "}
+                {corePicker?.orgSelected?.displayName?.toUpperCase?.()}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p>{"TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH  TRUYỀN NHIỄM GÂY DỊCH"}</p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p>
+                Báo cáo{" "}
+                {[
+                  corePicker?.periodSelected?.labelStartDate,
+                  corePicker?.periodSelected?.labelEndDate
+                    ? `${corePicker?.periodSelected?.labelEndDate}`
+                    : undefined,
+                ]
+                  .filter((e) => e)
+                  .join(" - ")}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p className="italic">
+                Ngày kết xuất dữ liệu cho báo cáo:{" "}
+                {format(new Date(), "dd/MM/yyyy")} - Nguồn dữ liệu: Phần mềm
+                Thống kê Y tế
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <div
         className="table-wrapper"
         style={{ paddingTop: "10px", paddingBottom: "20px" }}
@@ -168,85 +290,437 @@ const Tndg = () => {
               <th
                 className="sticky-col col-1 sticky-top top-1"
                 style={{ width: "2%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
               >
                 TT
               </th>
               <th
                 className="sticky-col col-2 sticky-top top-1"
                 style={{ width: "13%" }}
-                rowSpan={corePicker.orgSelected.level === 1 ? 2 : 1}
+                rowSpan={
+                  corePicker &&
+                  corePicker.orgSelected &&
+                  corePicker.orgSelected.level === 1
+                    ? 2
+                    : 1
+                }
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
               >
-                {corePicker.orgSelected.level === 1
+                {corePicker &&
+                corePicker.orgSelected &&
+                corePicker.orgSelected.level === 1
                   ? "Tỉnh"
                   : "Trạm y tế cấp xã"}
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Bạch hầu
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Liên cầu
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Vi rút Adeno
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Cúm
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Cúm A(H5N1)
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Dại
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Dịch hạch
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Ho gà
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Lỵ Amíp
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Lỵ trực trùng
               </th>
             </tr>
             <tr>
-              <th className="sticky-col col-1 sticky-top top-2">#</th>
-              {corePicker.orgSelected.level !== 1 && (
-                <th className="sticky-col col-2 sticky-top top-2">
-                  Trạm y tế cấp xã
-                </th>
-              )}
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
+              <th
+                className="sticky-col col-1 sticky-top top-2"
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                #
+              </th>
+              {corePicker &&
+                corePicker.orgSelected &&
+                corePicker.orgSelected.level !== 1 && (
+                  <th
+                    className="sticky-col col-2 sticky-top top-2"
+                    data-a-h="center"
+                    data-a-v="middle"
+                    data-f-bold="true"
+                    data-a-wrap="true"
+                    data-b-a-s="thin"
+                  >
+                    Trạm y tế cấp xã
+                  </th>
+                )}
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
             </tr>
           </thead>
           <tbody>{generateTableData("table_1")}</tbody>
         </table>
       </div>
 
-      <h3>
-        Báo cáo 11 - TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH (tiếp)
-      </h3>
+      <table style={{ border: 0 }} className=" mb-5 sticky left-0">
+        <tbody>
+          <tr>
+            <td
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                textAlign: "left",
+              }}
+            >
+              <p>{"Báo cáo 11"}</p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                textAlign: "left",
+              }}
+            >
+              <p>
+                Đơn vị báo cáo:{" "}
+                {corePicker?.orgSelected?.displayName?.toUpperCase?.()}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p>
+                {"TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH  TRUYỀN NHIỄM GÂY DỊCH (tiếp)"}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p>
+                Báo cáo{" "}
+                {[
+                  corePicker?.periodSelected?.labelStartDate,
+                  corePicker?.periodSelected?.labelEndDate
+                    ? `${corePicker?.periodSelected?.labelEndDate}`
+                    : undefined,
+                ]
+                  .filter((e) => e)
+                  .join(" - ")}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p className="italic">
+                Ngày kết xuất dữ liệu cho báo cáo:{" "}
+                {format(new Date(), "dd/MM/yyyy")} - Nguồn dữ liệu: Phần mềm
+                Thống kê Y tế
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <div
         className="table-wrapper"
@@ -258,85 +732,437 @@ const Tndg = () => {
               <th
                 className="sticky-col col-1 sticky-top top-1"
                 style={{ width: "2%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
               >
                 TT
               </th>
               <th
                 className="sticky-col col-2 sticky-top top-1"
                 style={{ width: "13%" }}
-                rowSpan={corePicker.orgSelected.level === 1 ? 2 : 1}
+                rowSpan={
+                  corePicker &&
+                  corePicker.orgSelected &&
+                  corePicker.orgSelected.level === 1
+                    ? 2
+                    : 1
+                }
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
               >
-                {corePicker.orgSelected.level === 1
+                {corePicker &&
+                corePicker.orgSelected &&
+                corePicker.orgSelected.level === 1
                   ? "Tỉnh"
                   : "Trạm y tế cấp xã"}
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Quai bị
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Rubella (Rubeon)
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Sởi
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Sốt rét
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Sốt xuất huyết Dengue
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Tả
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Tay - chân - miệng
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Than
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Thương hàn
               </th>
-              <th colSpan="2" style={{ width: "8.5%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "8.5%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Thủy đậu
               </th>
             </tr>
             <tr>
-              <th className="sticky-col col-1 sticky-top top-2">#</th>
-              {corePicker.orgSelected.level !== 1 && (
-                <th className="sticky-col col-2 sticky-top top-2">
-                  Trạm y tế cấp xã
-                </th>
-              )}
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
+              <th
+                className="sticky-col col-1 sticky-top top-2"
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                #
+              </th>
+              {corePicker &&
+                corePicker.orgSelected &&
+                corePicker.orgSelected.level !== 1 && (
+                  <th
+                    className="sticky-col col-2 sticky-top top-2"
+                    data-a-h="center"
+                    data-a-v="middle"
+                    data-f-bold="true"
+                    data-a-wrap="true"
+                    data-b-a-s="thin"
+                  >
+                    Trạm y tế cấp xã
+                  </th>
+                )}
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
             </tr>
           </thead>
           <tbody>{generateTableData("table_2")}</tbody>
         </table>
       </div>
 
-      <h3>
-        Báo cáo 11 - TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH (tiếp)
-      </h3>
+      <table style={{ border: 0 }} className=" mb-5 sticky left-0">
+        <tbody>
+          <tr>
+            <td
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                textAlign: "left",
+              }}
+            >
+              <p>{"Báo cáo 11"}</p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                textAlign: "left",
+              }}
+            >
+              <p>
+                Đơn vị báo cáo:{" "}
+                {corePicker?.orgSelected?.displayName?.toUpperCase?.()}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p>
+                {"TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH  TRUYỀN NHIỄM GÂY DỊCH (tiếp)"}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p>
+                Báo cáo{" "}
+                {[
+                  corePicker?.periodSelected?.labelStartDate,
+                  corePicker?.periodSelected?.labelEndDate
+                    ? `${corePicker?.periodSelected?.labelEndDate}`
+                    : undefined,
+                ]
+                  .filter((e) => e)
+                  .join(" - ")}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td
+              colSpan={22}
+              data-a-h="center"
+              data-a-v="middle"
+              data-f-bold="true"
+              style={{
+                width: "100vw",
+                fontSize: "16px",
+                border: 0,
+                fontWeight: 800,
+                textAlign: "center",
+              }}
+            >
+              <p className="italic">
+                Ngày kết xuất dữ liệu cho báo cáo:{" "}
+                {format(new Date(), "dd/MM/yyyy")} - Nguồn dữ liệu: Phần mềm
+                Thống kê Y tế
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <div className="table-wrapper" style={{ paddingTop: "10px" }}>
         <table className="table-tndg">
@@ -345,88 +1171,386 @@ const Tndg = () => {
               <th
                 className="sticky-col col-1 sticky-top top-1"
                 style={{ width: "2%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
               >
                 TT
               </th>
               <th
                 className="sticky-col col-2 sticky-top top-1"
-                style={{
-                  width: "13%",
-                }}
-                rowSpan={corePicker.orgSelected.level === 1 ? 2 : 1}
+                style={{ width: "13%" }}
+                rowSpan={
+                  corePicker &&
+                  corePicker.orgSelected &&
+                  corePicker.orgSelected.level === 1
+                    ? 2
+                    : 1
+                }
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
               >
-                {corePicker.orgSelected.level === 1
+                {corePicker &&
+                corePicker.orgSelected &&
+                corePicker.orgSelected.level === 1
                   ? "Tỉnh"
                   : "Trạm y tế cấp xã"}
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Tiêu chảy
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Uốn ván sơ sinh
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Uốn ván khác
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Viêm gan vi rút A
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Viêm gan vi rút B
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Viêm gan vi rút C
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Viêm gan vi rút khác
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Viêm màng não do não mô cầu
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Viêm não Nhật Bản
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Viêm não vi rút khác
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Xoắn khuẩn vàng da (Leptospira)
               </th>
-              <th colSpan="2" style={{ width: "7%" }}>
+              <th
+                colSpan="2"
+                style={{ width: "7%" }}
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
                 Khác
               </th>
             </tr>
             <tr>
-              <th className="sticky-col col-1 sticky-top top-2">#</th>
-              {corePicker.orgSelected.level !== 1 && (
-                <th className="sticky-col col-2 sticky-top top-2">
-                  Trạm y tế cấp xã
-                </th>
-              )}
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
-              <th>M</th>
-              <th>TV</th>
+              <th
+                className="sticky-col col-1 sticky-top top-2"
+                data-a-h="center"
+                data-a-v="middle"
+                data-f-bold="true"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                #
+              </th>
+              {corePicker &&
+                corePicker.orgSelected &&
+                corePicker.orgSelected.level !== 1 && (
+                  <th
+                    className="sticky-col col-2 sticky-top top-2"
+                    data-a-h="center"
+                    data-a-v="middle"
+                    data-f-bold="true"
+                    data-a-wrap="true"
+                    data-b-a-s="thin"
+                  >
+                    Trạm y tế cấp xã
+                  </th>
+                )}
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                M
+              </th>
+              <th
+                data-a-h="center"
+                data-a-v="middle"
+                data-a-wrap="true"
+                data-b-a-s="thin"
+              >
+                TV
+              </th>
             </tr>
           </thead>
           <tbody>{generateTableData("table_3")}</tbody>
