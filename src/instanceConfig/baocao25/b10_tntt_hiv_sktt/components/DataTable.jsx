@@ -168,6 +168,7 @@ const DataTable = ({
               data-b-a-s="thin"
               data-a-v="middle"
               data-f-bold={haveChildren && "true"}
+              data-a-h="center"
               key={`prefix-${index}`}
             >
               {row.prefix || (row.generatePrefix && index + 1)}
@@ -194,6 +195,7 @@ const DataTable = ({
                 data-a-v="middle"
                 data-width="40"
                 data-f-bold={haveChildren && "true"}
+                data-a-h="center"
                 key={`${REPORT_NAME}-${row.id}-cell-${de}`}
               >
                 {row.getData
@@ -351,6 +353,7 @@ const DataTable = ({
               .fill(0)
               .map((_, index) => (
                 <td
+                  data-a-h="center"
                   data-a-wrap="true"
                   data-b-a-s="thin"
                   data-a-v="middle"
@@ -364,6 +367,7 @@ const DataTable = ({
           <tr className="[&>*]:!font-bold">
             <td data-a-wrap="true" data-b-a-s="thin" data-a-v="middle" />
             <td
+              data-a-h="center"
               data-a-wrap="true"
               data-b-a-s="thin"
               data-a-v="middle"
@@ -373,6 +377,7 @@ const DataTable = ({
             </td>
             {dataElements.map((de) => (
               <td
+                data-a-h="center"
                 data-a-wrap="true"
                 data-b-a-s="thin"
                 data-a-v="middle"
