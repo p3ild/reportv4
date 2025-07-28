@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { ORG_GROUP } from "../p2ild/common/constant";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { useShallow } from "zustand/react/shallow";
-import { pick } from "lodash";
 
 const Test = () => {
   const { firstLoadApp, _get, setGlobalOverlay } = useCoreMetaState(
@@ -53,19 +52,15 @@ const Test = () => {
 
   useEffect(() => {
     if (corePicker && corePicker.pickCompleted) {
-      // Show loading overlay
+      console.log(corePicker);
       setGlobalOverlay({ isOpen: true });
       _get("/api/dataElements.json")
         .then((e) => {
           console.log(e);
         })
         .finally(() => {
-          // Hide loading overlay
           setGlobalOverlay({ isOpen: false });
         });
-      _get("/api/me").then((e) => {
-        //console.log(e.name);
-      });
     }
   }, [corePicker.pickCompleted]);
 
