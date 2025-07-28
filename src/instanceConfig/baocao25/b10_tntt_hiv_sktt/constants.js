@@ -2,8 +2,13 @@ const REPORT_NAME = "b10_tntt_hiv_sktt";
 //table 1
 const HEADER_TABLE_1 = [
   [
-    { label: "TT", rowSpan: 3 },
-    { label: "Tên cơ sở", rowSpan: 3 },
+    { label: "TT", rowSpan: 3, className: "sticky-col", "sticky-col": 0 },
+    {
+      label: "Tên cơ sở",
+      rowSpan: 3,
+      className: "sticky-col",
+      "sticky-col": 1,
+    },
     { label: "Phòng chống sốt rét", colSpan: 2 },
     { label: "Phòng chống HIV/AIDS", colSpan: 9 },
   ],
@@ -119,8 +124,13 @@ const DATA_ELEMENTS_TABLE_2 = [
 ];
 const HEADER_TABLE_2 = [
   [
-    { label: "TT", rowSpan: 2 },
-    { label: "Tên cơ sở", rowSpan: 2 },
+    { label: "TT", rowSpan: 2, className: "sticky-col", "sticky-col": 0 },
+    {
+      label: "Tên cơ sở",
+      rowSpan: 2,
+      className: "sticky-col",
+      "sticky-col": 1,
+    },
     { label: "Tai nạn thương tích (*)", colSpan: 11 },
   ],
   [
@@ -180,8 +190,13 @@ const DATA_ELEMENTS_TABLE_3 = [
 ];
 const HEADER_TABLE_3 = [
   [
-    { label: "TT", rowSpan: 3 },
-    { label: "Tên cơ sở", rowSpan: 3 },
+    { label: "TT", rowSpan: 3, className: "sticky-col", "sticky-col": 0 },
+    {
+      label: "Tên cơ sở",
+      rowSpan: 3,
+      className: "sticky-col",
+      "sticky-col": 1,
+    },
     { label: "Sức khỏe tâm thần", colSpan: 6 },
     { label: "Phòng chống Lao", colSpan: 5 },
     { label: "Phòng chống bệnh Phong", colSpan: 5 },

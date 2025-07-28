@@ -1,6 +1,6 @@
 .b10_tntt_hiv_sktt-report-container table {
   border-collapse: separate;
-  border-spacing: 0;
+  border-spacing: 0 !important;
 }
 .b10_tntt_hiv_sktt-report-container th,
 .b10_tntt_hiv_sktt-report-container td {
@@ -8,7 +8,7 @@
   text-align: center;
 }
 
-.b10_tntt_hiv_sktt-report-container
+/* .b10_tntt_hiv_sktt-report-container
   .report-table-main
   thead
   tr:first-of-type
@@ -30,4 +30,4 @@
 .b10_tntt_hiv_sktt-report-container table {
   border-left: 0 !important;
   border-top: 0 !important;
-}
+} */

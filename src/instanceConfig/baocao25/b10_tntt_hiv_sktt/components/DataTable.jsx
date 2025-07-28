@@ -166,6 +166,8 @@ const DataTable = ({
               data-f-bold={haveChildren && "true"}
               data-a-h="center"
               key={`prefix-${index}`}
+              className="sticky-col"
+              sticky-col={0}
             >
               {row.prefix || (row.generatePrefix && index + 1)}
             </td>
@@ -174,6 +176,8 @@ const DataTable = ({
               data-b-a-s="thin"
               data-a-v="middle"
               data-a-indent={level}
+              className="sticky-col"
+              sticky-col={1}
             >
               <p
                 className={`text-left`}
@@ -210,7 +214,7 @@ const DataTable = ({
     });
   };
 
-  const ref = useSticky();
+  const ref = useSticky(id);
 
   return (
     <>
@@ -313,12 +317,7 @@ const DataTable = ({
           </tr>
         </tbody>
       </table>
-      <table
-        id={id}
-        table_id={id}
-        ref={ref}
-        className={`report-table-main  min-w-[2000px]`}
-      >
+      <table id={id} ref={ref} className={`report-table-main  min-w-[2000px]`}>
         <thead>
           {headers.map((row, index) => {
             return (
@@ -358,19 +357,30 @@ const DataTable = ({
                   data-a-v="middle"
                   data-f-bold="true"
                   key={`${REPORT_NAME}-body-count-${index}`}
+                  className={index < 2 ? "sticky-col" : ""}
+                  // eslint-disable-next-line react/no-unknown-property
+                  sticky-col={index}
                 >
                   {index + 1}
                 </td>
               ))}
           </tr>
           <tr className="[&>*]:!font-bold">
-            <td data-a-wrap="true" data-b-a-s="thin" data-a-v="middle" />
+            <td
+              data-a-wrap="true"
+              data-b-a-s="thin"
+              data-a-v="middle"
+              className="sticky-col"
+              sticky-col={0}
+            />
             <td
               data-a-h="center"
               data-a-wrap="true"
               data-b-a-s="thin"
               data-a-v="middle"
               data-f-bold="true"
+              className="sticky-col"
+              sticky-col={1}
             >
               Tổng cộng
             </td>
