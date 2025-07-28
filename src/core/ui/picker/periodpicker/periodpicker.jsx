@@ -120,7 +120,10 @@ const PeriodPicker = (props) => {
   }
 
   const handleChange = (value) => {
-    let [startValue, endValue] = isArray(value) ? value : [value]
+    let [startValue, endValue] = isArray(value) ? value : [value];
+    if (!startValue && !endValue) {
+      onChange(null);return;
+    }
     if (onChange) {
       const [
         startDayJS,

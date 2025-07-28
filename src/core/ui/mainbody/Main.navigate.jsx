@@ -28,10 +28,6 @@ export const NavigateMainComponenet = ({
                 me,
                 orgTreeByUser
             }}
-        // targetInstanceConfig={targetInstanceConfig}
-        // metadata_utils={metadata_utils}
-        // meData={meData}
-        // orgTreeByUser={orgTreeByUser}
         />
     }, [me?.id])
     return <>

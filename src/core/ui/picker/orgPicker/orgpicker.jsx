@@ -181,6 +181,12 @@ export default (props) => {
 
 
     const onChange = (selectedKeys, info, extra) => {
+        if (!info) {
+            setCorePicker({
+                orgSelected: undefined
+            });
+            return;
+        }
         let orgTarget = info[info.length - 1];
         setValue(selectedKeys[selectedKeys.length - 1])
         setTreeExpandedKeys(selectedKeys);
@@ -206,7 +212,7 @@ export default (props) => {
                 {
                     label.map((e, idx, arrLabel) => {
                         const orgWithID = e?.split('_');
-                        return <p key={idx}>
+                        return <p key={idx} className='flex flex-row gap-1 items-center'>
                             <span>{orgWithID.length > 1 ? orgWithID[1] : orgWithID[0]}</span>
                             <span className="text-red-300 font-bold">{idx == arrLabel.length - 1 ? '' : '>'}</span>
                         </p>
@@ -235,7 +241,7 @@ export default (props) => {
 
     const TreeSelectMemo = useMemo(
         () => {
-            return <div className={'min-w-[20vw] py-1'}>
+            return <div className={' p-1 px-3'}>
                 <Cascader
                     {...{
                         key: currentPath.join('_'),
