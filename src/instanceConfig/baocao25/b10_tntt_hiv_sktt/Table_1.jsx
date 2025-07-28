@@ -11,6 +11,7 @@ const Table_1 = ({ data }) => {
       title="HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS"
       code="Báo cáo 10"
       data={data}
+      id={"table-1"}
     />
   );
 };

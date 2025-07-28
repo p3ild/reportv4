@@ -11,6 +11,7 @@ const Table_2 = ({ data }) => {
       title="HOẠT ĐỘNG PHÒNG CHỐNG TAI NẠN THƯƠNG  TÍCH"
       code="Báo cáo 10"
       data={data}
+      id={"table-2"}
     />
   );
 };

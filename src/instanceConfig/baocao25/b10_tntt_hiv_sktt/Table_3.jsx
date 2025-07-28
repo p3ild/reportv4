@@ -11,6 +11,7 @@ const Table_3 = ({ data }) => {
       title="HOẠT ĐỘNG PHÒNG CHỐNG SỨC KHỎE TÂM THẦN, LAO, PHONG"
       code="Báo cáo 10"
       data={data}
+      id={"table-3"}
     />
   );
 };

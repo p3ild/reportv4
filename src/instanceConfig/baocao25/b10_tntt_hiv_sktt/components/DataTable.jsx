@@ -1,16 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import {
   REPORT_NAME,
   ROW_GENERATE_FOR_COMMUNE_LEVEL,
   ROW_GENERATE_FOR_NATION_LEVEL,
   ROW_GENERATE_FOR_PROVINCE_LEVEL,
 } from "../constants";
-import { useStickyRows } from "../hooks/ueStickyRow";
+import useSticky from "../hooks/useSticky";
 import { useCorePickerState } from "@core/stateManage/corePickerState";
 import { useShallow } from "zustand/react/shallow";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { flatten } from "../utils";
-import { findHeaderIndex } from "../../p2ild/common/utils";
 import { format } from "date-fns";
 
 // eslint-disable-next-line react/prop-types
@@ -20,11 +19,10 @@ const DataTable = ({
   title = "",
   code = "",
   data,
+  id,
 }) => {
-  const { _get, setGlobalOverlay, me } = useCoreMetaState(
+  const { me } = useCoreMetaState(
     useShallow((state) => ({
-      _get: state._get,
-      setGlobalOverlay: state.actions.setGlobalOverlay,
       me: state.me,
     }))
   );
@@ -35,8 +33,6 @@ const DataTable = ({
   );
   const { orgViewData } = me;
   const orgUnits = flatten(orgViewData?.[0]?.organisationUnits || []);
-  const tableRef = useRef(null);
-  useStickyRows(tableRef, data);
 
   const generateRowByOrgUnit = () => {
     if (!corePicker || !corePicker.pickCompleted) return [];
@@ -157,7 +153,7 @@ const DataTable = ({
       return (
         <React.Fragment key={row.id || index * level}>
           <tr
-            className={`${haveChildren ? "row-sticky" : ""} ${
+            className={`${haveChildren ? `sticky-row-${level}` : ""} ${
               row.prefix || row.generatePrefix ? "[&>*]:!font-bold" : ""
             }`}
             data-group={id || row.id}
@@ -213,6 +209,8 @@ const DataTable = ({
       );
     });
   };
+
+  const ref = useSticky();
 
   return (
     <>
@@ -316,8 +314,9 @@ const DataTable = ({
         </tbody>
       </table>
       <table
-        key={Math.random()}
-        ref={tableRef}
+        id={id}
+        table_id={id}
+        ref={ref}
         className={`report-table-main  min-w-[2000px]`}
       >
         <thead>
