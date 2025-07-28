@@ -30,10 +30,12 @@ export const Report = (metadata) => {
     });
     let [
         reportTarget,
+        excelOptions,
         setExcelOptions,
         setGlobalOverlay,
     ] = useCoreMetaState(useShallow(state => [
         state.reportTarget,
+        state.excelOptions,
         state.actions.setExcelOptions,
         state.actions.setGlobalOverlay,
     ]))
@@ -142,7 +144,9 @@ export const Report = (metadata) => {
             return document.getElementsByClassName('report-content')[0]
         }} visibilityHeight={0} />
         {loaded && ReportView &&
-            <div className="report-content">
+            <div className="report-content"
+                data-cols-width={excelOptions?.columnWidths}
+            >
                 <ReportView
                     {
                     ...{
