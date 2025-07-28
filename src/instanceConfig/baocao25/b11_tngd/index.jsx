@@ -155,7 +155,7 @@ const Tndg = () => {
   }, [corePicker.pickCompleted]);
 
   return (
-    <>
+    <div className="report-container">
       <h3>Báo cáo 11 - TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH</h3>
 
       <div
@@ -432,7 +432,7 @@ const Tndg = () => {
           <tbody>{generateTableData("table_3")}</tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

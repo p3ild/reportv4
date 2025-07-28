@@ -2,7 +2,7 @@
   border-collapse: collapse;
   width: 100%;
 }
-
+/*
 .table-tndg th,
 .table-tndg td {
   border: 1px solid #ccc;
@@ -16,16 +16,16 @@
   top: 0;
   background-color: white;
   z-index: 4;
-}
+} */
 
-.table-tndg thead tr:nth-child(2) th {
-  top: 40px; /* Adjust if needed based on row height */
+/* .table-tndg thead tr:nth-child(2) th {
+  top: 40px; 
   z-index: 1;
-}
+} */
 
 /* Container must allow horizontal scroll */
-.table-container {
+/* .table-container {
   overflow: auto;
   max-width: 100%;
   position: relative;
-}
+} */
