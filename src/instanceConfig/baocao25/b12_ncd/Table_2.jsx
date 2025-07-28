@@ -1,0 +1,19 @@
+import { DATA_ELEMENTS_TABLE_2, HEADER_TABLE_2 } from "./constants";
+
+import DataTable from "./components/DataTable";
+
+// eslint-disable-next-line react/prop-types
+const Table_2 = ({ data }) => {
+  return (
+    <DataTable
+      dataElements={DATA_ELEMENTS_TABLE_2}
+      headers={HEADER_TABLE_2}
+      title="PHÁT HIỆN, QUẢN LÝ ĐIỀU TRỊ BỆNH KHÔNG LÂY"
+      code="Báo cáo 12"
+      data={data}
+      id={"table-2"}
+    />
+  );
+};
+
+export default Table_2;

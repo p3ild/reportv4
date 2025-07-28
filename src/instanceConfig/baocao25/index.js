@@ -30,7 +30,7 @@ class Config extends Base {
       key: "test",
       folder: [this.listFolder.core],
       displayName: "test",
-      getReportInstance: async () => await import("./b11_tngd"),
+      getReportInstance: async () => await import("./b12_ncd"),
     },
     {
       key: "eOlFpQQhgL4",
