@@ -78,8 +78,8 @@ export default (props) => {
                 <div className={`w-[500px] desktopLow:w-[800px] relative transform overflow-hidden rounded-lg bg-white text-left  transition-all sm:my-8  ${type?.key == ROOT_OVERLAY_TEMPLATE.DEFAULT.key ? 'bg-opacity-0' : 'shadow-xl bg-opacity-90'}`}>
                     <div gap={10} id={'flex-content flex flex-row'} ref={refContent} >
                         {(title || globalOverlay.closeable) &&
-                            <div className="p-2 flex items-center justify-between flex-row w-full border-b-1 border-gray-400 bg-gray-800">
-                                {title && <h3 className="p-1 text-white"> {title}</h3>}
+                            <div className="px-3 py-2 flex items-center justify-between flex-row w-ful bg-black/70">
+                                {title && <h3 className="p-1 text-white text-xl"> {title}</h3>}
                                 {globalOverlay?.closeable &&
                                     <RiCloseLine className="text-white w-7 h-7 hover:text-red-500" onClick={() => {
                                         setGlobalOverlay({
