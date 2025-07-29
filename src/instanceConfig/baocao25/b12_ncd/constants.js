@@ -5,7 +5,7 @@ const ROW_GENERATE_FOR_NATION_LEVEL = [
     ougs: ["a8tDjfQpPbK"],
     blocks: [
       "TjsrDy8W8h3",
-      "",
+      "TyqF8uBkL7B",
       "U5RaHHmpAFs",
       "ChgePBcK76w",
       "DkOZff7DZkl",
@@ -19,7 +19,7 @@ const ROW_GENERATE_FOR_NATION_LEVEL = [
     ougs: ["ubpcYbv2aKe"],
     blocks: [
       "TjsrDy8W8h3",
-      "",
+      "TyqF8uBkL7B",
       "U5RaHHmpAFs",
       "ChgePBcK76w",
       "DkOZff7DZkl",
@@ -34,7 +34,7 @@ const ROW_GENERATE_FOR_NATION_LEVEL = [
     ougs: ["b3Fa4WDUKDl", "LDueUOVxA6b"],
     blocks: [
       "TjsrDy8W8h3",
-      "",
+      "TyqF8uBkL7B",
       "U5RaHHmpAFs",
       "ChgePBcK76w",
       "DkOZff7DZkl",
@@ -57,7 +57,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
         ougs: ["a8tDjfQpPbK"],
         blocks: [
           "TjsrDy8W8h3",
-          "",
+          "TyqF8uBkL7B",
           "U5RaHHmpAFs",
           "ChgePBcK76w",
           "DkOZff7DZkl",
@@ -72,7 +72,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
         ougs: ["ubpcYbv2aKe"],
         blocks: [
           "TjsrDy8W8h3",
-          "",
+          "TyqF8uBkL7B",
           "U5RaHHmpAFs",
           "ChgePBcK76w",
           "DkOZff7DZkl",
@@ -89,7 +89,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
     label: "Y tế tư nhân",
     blocks: [
       "TjsrDy8W8h3",
-      "",
+      "TyqF8uBkL7B",
       "U5RaHHmpAFs",
       "ChgePBcK76w",
       "DkOZff7DZkl",
@@ -105,7 +105,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
         ougs: ["b3Fa4WDUKDl"],
         blocks: [
           "TjsrDy8W8h3",
-          "",
+          "TyqF8uBkL7B",
           "U5RaHHmpAFs",
           "ChgePBcK76w",
           "DkOZff7DZkl",
@@ -120,7 +120,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
         ougs: ["LDueUOVxA6b"],
         blocks: [
           "TjsrDy8W8h3",
-          "",
+          "TyqF8uBkL7B",
           "U5RaHHmpAFs",
           "ChgePBcK76w",
           "DkOZff7DZkl",
@@ -193,7 +193,7 @@ const HEADER_TABLE_1 = [
 ];
 const DATA_ELEMENTS_TABLE_1 = [
   "TjsrDy8W8h3",
-  "TjsrDy8W8h3",
+  "TyqF8uBkL7B",
   "CR18qa3xmiF",
   "RRnKZsIUweW",
   "S4NScJXJ0Bx",
