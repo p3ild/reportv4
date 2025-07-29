@@ -1,12 +1,14 @@
 
 import { useCoreMetaState } from "@core/stateManage/metadataState";
-import { Avatar, Card, Flex, List, Space, Tabs } from "antd";
+import { Avatar, Empty, Tabs } from "antd";
 import { cloneDeep } from 'lodash';
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import "./home.css";
+import { HiDocumentChartBar } from "react-icons/hi2";
+
 
 export const Home = () => {
     const navigate = useNavigate();
@@ -63,7 +65,7 @@ export const Home = () => {
             if (activeFolder != '') {
                 setActiveFolder(activeFolder)
             } else {
-                setActiveFolder(listFolder[0].key)
+                setActiveFolder(listFolder.find(e => e?.child?.length > 0)?.key)
             }
         })()
 
@@ -87,9 +89,7 @@ export const Home = () => {
                 }
             });
             e.children = <>
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{t('common:reportList').toUpperCase()}</h2>
-                <p className="mt-2 text-lg leading-8 text-gray-600"> {e.labelText.toUpperCase()}</p>
-                <List className="h-[60vh]  overflow-auto"
+                {/* <List className="h-[90%] overflow-auto"
                     bordered
                     itemLayout="horizontal"
                     dataSource={dataSource}
@@ -101,7 +101,7 @@ export const Home = () => {
                             />
                         </List.Item>
                     )}
-                />
+                /> */}
             </>
             return e;
         });
@@ -109,41 +109,72 @@ export const Home = () => {
         return uiDataConverted;
     }
 
+
+    const ReportList = () => {
+        let targetFolder = listFolder.find(e => e.key == activeFolder)
+        if (!targetFolder) return null;
+        let forderName = t(`folderName.${targetFolder.key}`, {
+            ns: "INSTANCE_TRANS",
+            defaultValue: targetFolder.labelText || targetFolder.label
+        }).toUpperCase();
+        let listChild = (targetFolder?.child || []).map(item => {
+            return {
+                key: item.id,
+                label: item.displayName,
+                link: item.link,
+                path: item.path
+            }
+        });
+        return targetFolder &&
+
+            <div className="h-full w-full flex flex-col gap-2 justify-center">
+                <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{t('common:reportList').toUpperCase()}</h2>
+                <p className="mt-2 text-lg leading-8 text-gray-600"> {forderName.toUpperCase()}</p>
+                {listChild.length > 0
+                    ? <div className="h-full p-2 overflow-scroll overflow-x-hidden  mr-3 flex flex-col gap-2 shadow-lg border rounded-lg">
+                        {listChild.map((item, childKey) => {
+                            return <div key={childKey}
+                                className=" group rounded-lg hover:bg-[#2673a7] hover:!text-white hover:ml-2 hover:text-lg hover:font-bold  items-center p-2 flex flex-row gap-2" onClick={onReportClick.bind(this, [item])}>
+                                <HiDocumentChartBar className="w-12 h-12 text-gray-800 group-hover:text-white" />
+                                <p className="w-full text-2xl group-hover:text-white">{item.label}</p>
+                            </div>
+                        })}
+                    </div>
+                    : <Empty className="" description={<p className="text-2xl font-bold">{t('common:noReport')}</p>} />
+                }
+
+            </div>
+
+    }
     return <>
         {listFolder &&
-            <div className="home">
-                <Card className="p-2">
-                    <Tabs className="h-[70vh]"
-                        tabPosition={"left"}
-                        items={convertApiDataToDataAsTree(listFolder)}
-                        onChange={
-                            (value) => {
-                                setActiveFolder(value)
-                            }
+            <div className="home py-5 h-full flex flex-row">
+                <Tabs
+                    className="!h-full"
+                    tabPosition={"left"}
+                    items={convertApiDataToDataAsTree(listFolder)}
+                    onChange={
+                        (value) => {
+                            setActiveFolder(value)
                         }
-                        activeKey={activeFolder}
-                        defaultActiveKey={activeFolder}
-                    />
-                </Card>
+                    }
+                    activeKey={activeFolder}
+                    defaultActiveKey={activeFolder}
+                />
+                <ReportList />
             </div>
         }
     </>
 }
 
+// FolderView rewritten using Tailwind flex utilities
 const FolderView = ({ folderName, folderSize }) => {
-    return <Flex align={"center"}>
-        <Space size={24}>
-            {
-                /* <Badge className="badge" color={"#2196f3"} count={folderSize}>
-                <Avatar size='small' shape="square" src={`images/folder-icon.png`} />
-            </Badge> */
-            }
-            <div className="p-2 rounded-lg bg-gray-100 bg-opacity-50">
-                <Avatar size='medium' shape="square" src={`images/folder-icon-1.png`} />
+    return (
+        <div className="flex items-center">
+            <div className="p-2 rounded-lg bg-gray-100 bg-opacity-50 mr-6">
+                <Avatar size="medium" shape="square" src="images/folder-icon-1.png" />
             </div>
-
-        </Space>
-        <p className="folder-title text-left">{folderName.toUpperCase()}</p>
-    </Flex>
-
+            <p className="folder-title text-left">{folderName.toUpperCase()}</p>
+        </div>
+    )
 }

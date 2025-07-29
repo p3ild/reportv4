@@ -3,6 +3,7 @@
     "selectOrg": "Chọn đơn vị",
     "selectMoreOptions": "Tuỳ chọn khác",
     "required": "Bắt buộc",
+    "noReport": "Không có báo cáo",
     "periodPicker": {
         "selectType": {
             "date": "Ngày",

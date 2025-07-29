@@ -57,7 +57,7 @@ export const PreviewSelected = (props) => {
     const periodDisplay = periodInfo?.labelStartDate
         ? upperFirst(`${periodInfo.labelStartDate}${periodInfo.labelEndDate ? ` - ${periodInfo.labelEndDate}` : ""}`)
         : undefined
-    const isSelectedCore = orgDisplay && periodDisplay;
+    const isSelectedCore = !corePicker?.orgSelected?.error && periodDisplay;
 
 
     return (
@@ -88,7 +88,7 @@ export const PreviewSelected = (props) => {
                 <div className={`flex flex-col leading-tight justify-center px-2 py-1 font-semibold`}>
                     <NoticeBox type={orgDisplay ? "success" : 'error'} className={'my-[1px]'}>
                         <p>
-                            Đơn vị: {orgDisplay || 'Chưa chọn'}
+                            Đơn vị: {corePicker?.orgSelected?.error || orgDisplay || 'Chưa chọn'}
                         </p>
                     </NoticeBox>
                     <NoticeBox type={periodDisplay ? "success" : 'error'} className={'my-[1px]'}>

@@ -1,6 +1,11 @@
-.home .ant-tabs {
-    height: fit-content;
-    overflow: auto;
+.home .ant-tabs,
+.home .ant-tabs-content,
+.home #rc-tabs-0-panel-core {
+    @apply h-[80vh];
+}
+
+.home .ant-list {
+    @apply overflow-scroll;
 }
 
 .home .ant-card-body {
@@ -9,19 +14,13 @@
 
 .home .list-report {
     overflow: auto;
-    height: 60vh;
     padding: 10px;
 }
 
 /* ON HOVER REPORT */
-.home .ant-list-item:hover {
-    @apply bg-blue-400;
-}
+
 
 /* FOLDER */
-.home .ant-tabs-tab p {
-    text-wrap: wrap;
-}
 
 .home .ant-tabs-nav {
     width: 25vw
@@ -29,16 +28,8 @@
 
 
 /* FOLDER -  TITLE */
-.home .ant-tabs-tab p {
-    text-wrap: wrap;
-}
-
-.home .ant-tabs-nav-wrap {
-    @apply p-3;
-}
-
 .home .ant-tabs-tab-active {
-    @apply bg-gray-700 px-5 py-5;
+    @apply bg-[#2673a7] px-5 py-5;
 }
 
 .home .ant-tabs-tab-active p {
@@ -47,90 +38,7 @@
 }
 
 .home .folder-title {
-    margin-left: 10px;
     font-size: 1.3em;
     font-weight: 700;
-    /* color: #24557c; */
 }
-
-/* LIST REPORT - DESCRIBE */
-/* .home .list-report-describe:hover {
-    font-size: 40px;
-    font-weight: 600;
-    text-align: center;
-    border-radius: 8px;
-    border: 1px solid white;
-    padding: 5px;
-    background-color: #2196f3;
-    color: white;
-} */
-
-.home .list-report-describe {
-    font-size: 24px;
-    font-weight: 800;
-    text-align: center;
-    border-radius: 8px;
-    /* border: 1px solid #d9d9d9; */
-    padding: 5px;
-    /* background-color: #2196f3; */
-    color: #24557c;
-    margin-bottom: 0px;
-}
-
-
-/* REPORT ICON */
-.home .icon-report {
-    width: 30px;
-    height: auto;
-    margin-right: 15px;
-    /* display: none; */
-}
-
-.home .ant-list-item:hover .icon-report {
-    color: white;
-    filter: invert(95%) sepia(3%) saturate(799%) hue-rotate(333deg) brightness(102%) contrast(113%);
-}
-
-
-.home .ant-scroll-number-only-unit {
-    color: white;
-    font-weight: 600;
-}
-
-/* REPORT TITLE */
-.home .report-title {
-    font-size: 1.5em;
-    font-family: sans-serif;
-    font-weight: 500;
-}
-
-.home .ant-list-item {
-    font-size: 25px;
-    font-weight: 800;
-    color: white;
-    border-radius: 10px;
-}
-
-.home .ant-list-item {
-    font-size: 25px;
-    font-weight: 800;
-    color: white;
-    border-radius: 10px;
-}
-
-.home .ant-list-item:hover .report-title {
-    font-size: 25px;
-    font-weight: 800;
-    color: white;
-}
-
-
-.home .effect-slide:hover {
-    color: white;
-    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #2c6693);
-    background-position: 100% 0 !important;
-    /* moz-transition: all .1s ease-in-out !important;
-    -o-transition: all .1s ease-in-out !important;
-    -webkit-transition: all .1s ease-in-out !important;
-    transition: all .1s ease-in-out !important; */
-}
+ 
