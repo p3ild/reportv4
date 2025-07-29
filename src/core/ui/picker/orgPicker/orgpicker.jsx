@@ -61,14 +61,17 @@ export function useOrgTreeByUser() {
 
         let visibleGroups = filteredOrgGroupVisible
             .filter(e => !e.includes('!'))
+            .map(e => e.replace(/[!+-]/g, ''))
 
         let excludedGroups = filteredOrgGroupVisible
             .filter(e => e.includes('!'))
-            .map(e => e.replace('!', ''));
+            .map(e => e.replace('!', ''))
+            .map(e => e.replace(/[!+-]/g, ''));
 
         let notSupportGroups = filteredOrgGroupVisible
             .filter(e => e.includes('-'))
-            .map(e => e.replace('-', ''));
+            .map(e => e.replace(/[!+-]/g, ''))
+
 
         let hasVisibleGroup = visibleGroups.length === 0 ||
             orgTarget.organisationUnitGroups.some(x => visibleGroups.includes(x.id));
@@ -214,7 +217,7 @@ export default (props) => {
         //Prevent setState when renderring
         wait(150).then(() => {
             setCorePicker({ orgSelected })
-            setCurrentPath(orgSelected.path)
+            setCurrentPath(orgSelected?.path)
         })
 
         return orgSelected?.support ? orgSelected.path : undefined
@@ -296,7 +299,7 @@ export default (props) => {
             return <div className={' p-1 px-3'}>
                 <Cascader
                     {...{
-                        key: currentPath.join('_'),
+                        key: currentPath?.join('_'),
                         className: "w-full custom-org-select h-fit",
                         variant: 'borderless',
                         defaultValue: getDefaultValue(),
@@ -317,7 +320,7 @@ export default (props) => {
         [
             orgTreeData,
             orgPickerConfig?.orgGroupVisible?.join('|'),
-            currentPath.join('|')
+            currentPath?.join('|')
         ]
     )
 
