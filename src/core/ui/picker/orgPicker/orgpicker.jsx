@@ -74,8 +74,15 @@ export function useOrgTreeByUser() {
             && (
                 !orgTarget?.children ||
                 orgTarget?.children?.length == 0
-            )) {
+            )
+
+        ) {
+            //Prevent hide org that is in orgGroupVisible
+            if (orgGroupVisible
+                && orgTarget.organisationUnitGroups.some(e => orgGroupVisible.some(x => x == e.id))
+            ) return orgTarget
             return undefined;
+
         }
         return orgTarget
 

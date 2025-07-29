@@ -25,58 +25,76 @@ class Config extends Base {
         },
     };
 
-  listReport = [
-    {
-      key: "eOlFpQQhgL4",
-      folder: [this.listFolder.core],
-      displayName: "Thông tin chung",
-      getReportInstance: async () => await import("./p2ild/ttc"),
-    },
-    {
-      folder: [this.listFolder.core],
-      key: "mMx0kzgX6Uv",
-      displayName: "Hoạt động chăm sóc bà mẹ",
-      getReportInstance: async () => await import("./p2ild/bmte_b4"),
-    },
-    {
-      folder: [this.listFolder.core],
-      key: "ctoSw0XuKp7",
-      displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG DO TAI BIẾN SẢN KHOA",
-      getReportInstance: async () => await import("./p2ild/bmte_b5"),
-    },
-    {
-      folder: [this.listFolder.core],
-      key: "r2gK5JEiaxW",
-      displayName:
-        "HOẠT ĐỘNG KHÁM, CHỮA PHỤ KHOA VÀ SÀNG LỌC UNG THƯ CỔ TỬ CUNG",
-      getReportInstance: async () => await import("./p2ild/bmte_b6"),
-    },
-    {
-      folder: [this.listFolder.core],
-      key: "xsJNZLJHG6u",
-      displayName: "HOẠT ĐỘNG KHHGĐ VÀ PHÁ THAI",
-      getReportInstance: async () => await import("./p2ild/bmte_b7"),
-    },
-    {
-      key: "mV9DjhMHvEp",
-      folder: [this.listFolder.core],
-      displayName:
-        "HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS, TNTT, LAO, PHONG VÀ SỨC KHỎE TÂM THẦN",
-      getReportInstance: async () => await import("./b10_tntt_hiv_sktt"),
-    },
-    {
-      key: "Iqmu0dxxYCl",
-      folder: [this.listFolder.core],
-      displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH",
-      getReportInstance: async () => await import("./b11_tngd"),
-    },
-    {
-      key: "YjSRTN0MbGa",
-      folder: [this.listFolder.core],
-      displayName: "HOẠT ĐỘNG PHÁT HIỆN, QUẢN LÝ ĐIỀU TRỊ BỆNH KHÔNG LÂY NHIỄM",
-      getReportInstance: async () => await import("./b12_ncd"),
-    },
-  ];
+    listReport = [
+        {
+            key: "eOlFpQQhgL4",
+            folder: [this.listFolder.core],
+            displayName: "Thông tin chung",
+            getReportInstance: async () => await import("./p2ild/ttc"),
+        },
+        {
+            folder: [this.listFolder.core],
+            key: "mMx0kzgX6Uv",
+            displayName: "Hoạt động chăm sóc bà mẹ",
+            getReportInstance: async () => await import("./p2ild/bmte_b4"),
+        },
+        {
+            folder: [this.listFolder.core],
+            key: "ctoSw0XuKp7",
+            displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG DO TAI BIẾN SẢN KHOA",
+            getReportInstance: async () => await import("./p2ild/bmte_b5"),
+        },
+        {
+            folder: [this.listFolder.core],
+            key: "r2gK5JEiaxW",
+            displayName:
+                "HOẠT ĐỘNG KHÁM, CHỮA PHỤ KHOA VÀ SÀNG LỌC UNG THƯ CỔ TỬ CUNG",
+            getReportInstance: async () => await import("./p2ild/bmte_b6"),
+        },
+        {
+            folder: [this.listFolder.core],
+            key: "xsJNZLJHG6u",
+            displayName: "HOẠT ĐỘNG KHHGĐ VÀ PHÁ THAI",
+            getReportInstance: async () => await import("./p2ild/bmte_b7"),
+        },
+        {
+            folder: [this.listFolder.core],
+            key: "Fdp0zf5qF8L",
+            displayName: "TÌNH HÌNH SỨC KHỎE TRẺ EM",
+            getReportInstance: async () => await import("./p2ild/bmte_b8"),
+        },
+        {
+            folder: [this.listFolder.core],
+            key: "wK2fhfTGl6r",
+            displayName: "CƠ SỞ, GIƯỜNG BỆNH VÀ HOẠT ĐỘNG KHÁM CHỮA BỆNH",
+            getReportInstance: async () => await import("./p2ild/b9"),
+        },
+        {
+            folder: [this.listFolder.core],
+            key: "C290QB6SfjZ",
+            displayName: "bmte_x3",
+            getReportInstance: async () => await import("./p2ild/bmte_x3"),
+        },
+        {
+            key: "mV9DjhMHvEp",
+            folder: [this.listFolder.core],
+            displayName:
+                "HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS, TNTT, LAO, PHONG VÀ SỨC KHỎE TÂM THẦN",
+            getReportInstance: async () => await import("./b10_tntt_hiv_sktt"),
+        },
+        {
+            key: "Iqmu0dxxYCl",
+            folder: [this.listFolder.core],
+            displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH",
+            getReportInstance: async () => await import("./b11_tngd"),
+        },
+        {
+            key: "YjSRTN0MbGa",
+            folder: [this.listFolder.core],
+            displayName: "HOẠT ĐỘNG PHÁT HIỆN, QUẢN LÝ ĐIỀU TRỊ BỆNH KHÔNG LÂY NHIỄM",
+            getReportInstance: async () => await import("./b12_ncd"),
+        },
+    ];
 }
 
 export default new Config();
