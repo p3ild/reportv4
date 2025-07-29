@@ -25,67 +25,74 @@ export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, 
 }
 
 export function HeaderUILayoutTable1({ listColumnConfig }) {
+    const excelConfig = {
+        "data-a-h": "center",
+        "data-a-v": "middle",
+        "data-f-bold": "true",
+        "data-a-wrap": "true",
+        "data-b-a-s": 'thin',
+    };
     return <thead>
         <tr>
             <th
-                data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+                {...excelConfig}
                 rowSpan={2}
                 {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
             >TT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}
                 {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
             >Tên Xã/Phường</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={5}>Dân số trung bình</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={8}>Trạm Y tế</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={3}>Số thôn bản</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Tổng số</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Nữ</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Trẻ em &lt;5 tuổi</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Trẻ em &lt;15 tuổi</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>PN từ 15-49 tuổi</th>
+            <th {...excelConfig}>Tổng số</th>
+            <th {...excelConfig}>Nữ</th>
+            <th {...excelConfig}>Trẻ em &lt;5 tuổi</th>
+            <th {...excelConfig}>Trẻ em &lt;15 tuổi</th>
+            <th {...excelConfig}>PN từ 15-49 tuổi</th>
 
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Xã đạt tiêu chí QG về YT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>TYT triển khai dự phòng, quản lý điều trị bệnh không lây nhiễm</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Xã/ phường có TYT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Bác sỹ định biên</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Bác sỹ làm việc</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>YHCT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>HS/ YSSN</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>TYT có cộng tác viên dân số</th>
+            <th {...excelConfig}>Xã đạt tiêu chí QG về YT</th>
+            <th {...excelConfig}>TYT triển khai dự phòng, quản lý điều trị bệnh không lây nhiễm</th>
+            <th {...excelConfig}>Xã/ phường có TYT</th>
+            <th {...excelConfig}>Bác sỹ định biên</th>
+            <th {...excelConfig}>Bác sỹ làm việc</th>
+            <th {...excelConfig}>YHCT</th>
+            <th {...excelConfig}>HS/ YSSN</th>
+            <th {...excelConfig}>TYT có cộng tác viên dân số</th>
 
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Tổng số</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Có nhân viên y tế hoạt động</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Có cô đỡ được đào tạo</th>
+            <th {...excelConfig}>Tổng số</th>
+            <th {...excelConfig}>Có nhân viên y tế hoạt động</th>
+            <th {...excelConfig}>Có cô đỡ được đào tạo</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
+            <th {...excelConfig}
+                {...findColStyleByKey({ listColumnConfig, key: 'stt', colClassName: "!font-normal" })}
             >1</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
+            <th {...excelConfig}
+                {...findColStyleByKey({ listColumnConfig, key: 'orgName', colClassName: "!font-normal" })}
             >2</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>3</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>4</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>5</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>6</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>7</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>9</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>10</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>11</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>12</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>13</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>14</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>15</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>16</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>17</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>18</th>
+            <th {...excelConfig} className="!text-normal">3</th>
+            <th {...excelConfig} className="!text-normal">4</th>
+            <th {...excelConfig} className="!text-normal">5</th>
+            <th {...excelConfig} className="!text-normal">6</th>
+            <th {...excelConfig} className="!text-normal">7</th>
+            <th {...excelConfig} className="!text-normal">8</th>
+            <th {...excelConfig} className="!text-normal">9</th>
+            <th {...excelConfig} className="!text-normal">10</th>
+            <th {...excelConfig} className="!text-normal">11</th>
+            <th {...excelConfig} className="!text-normal">12</th>
+            <th {...excelConfig} className="!text-normal">13</th>
+            <th {...excelConfig} className="!text-normal">14</th>
+            <th {...excelConfig} className="!text-normal">15</th>
+            <th {...excelConfig} className="!text-normal">16</th>
+            <th {...excelConfig} className="!text-normal">17</th>
+            <th {...excelConfig} className="!text-normal">18</th>
         </tr>
     </thead>
 }

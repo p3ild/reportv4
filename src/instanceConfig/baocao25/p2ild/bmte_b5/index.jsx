@@ -59,10 +59,9 @@ export default () => {
                 dhis2Period,
                 data,
                 style: {
-                    // width: '100%',
-                    minWidth: '2000px',
-                    // border: '1px solid black',
-                    // width: '300% !important' 
+                    // tableLayout: 'fixed',
+                    minWidth: '100%'
+                    // width: '100%'
                 }
             }
             }

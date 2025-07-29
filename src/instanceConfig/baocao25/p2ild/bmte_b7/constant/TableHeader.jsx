@@ -42,82 +42,95 @@ export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, 
 }
 
 export function HeaderUILayoutTable1({ listColumnConfig }) {
+    const excelConfig = {
+        "data-a-h": "center",
+        "data-a-v": "middle",
+        "data-f-bold": "true",
+        "data-a-wrap": "true",
+        "data-b-a-s": 'thin',
+    };
     return <thead>
         <tr>
             <th
-                data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+                {...excelConfig}
+                className="sticky-col-0"
                 rowSpan={4}
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
             >TT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
+                className="sticky-col-1"
                 rowSpan={4}
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
             >Tên cơ sở y tế</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={4}>Tổng số</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={8}>Số mới thực hiện Biện pháp tránh thai hiện đại</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={5}>Phá thai</th>
         </tr>
         <tr>
 
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={8}>Trong đó</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                colSpan={5}>Trong đó</th>
+            <th {...excelConfig}
+                rowSpan={3}>Tổng số</th>
+            <th {...excelConfig}
+                colSpan={4}>Trong đó</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>DCTC</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={3}>Thuốc TT</th>
 
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Triệt sản</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>BCS</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Biện pháp khác</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                rowSpan={2}>Tổng số</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số phá thai ≤ 7 tuần</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số phá thai trên 7- ≤12 tuần</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số phá thai trên 12 tuần</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Trđ: Số phá thai mới VTN</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Thuốc tiêm</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Thuốc cấy</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Thuốc viên TT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Tổng số</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Trđ: Nam</th>
+            <th {...excelConfig}>Thuốc tiêm</th>
+            <th {...excelConfig}>Thuốc cấy</th>
+            <th {...excelConfig}>Thuốc viên TT</th>
+            <th {...excelConfig}>Tổng số</th>
+            <th {...excelConfig}>Trđ: Nam</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
+            <th {...excelConfig}
+                className="sticky-col-0 !font-normal"
+                style={{
+                    width: '30px'
+                }}
             >1</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
+            <th {...excelConfig}
+                style={{
+                    width: '130px'
+                }}
+                className="sticky-col-1 !font-normal"
             >2</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>3</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>4</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>5a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>5b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>5c</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>6</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>7</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>9</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>10</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>11</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>12</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>13</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>14</th>
+            <th {...excelConfig} className={"!font-normal"}>3</th>
+            <th {...excelConfig} className={"!font-normal"}>4</th>
+            <th {...excelConfig} className={"!font-normal"}>5a</th>
+            <th {...excelConfig} className={"!font-normal"}>5b</th>
+            <th {...excelConfig} className={"!font-normal"}>5c</th>
+            <th {...excelConfig} className={"!font-normal"}>6</th>
+            <th {...excelConfig} className={"!font-normal"}>7</th>
+            <th {...excelConfig} className={"!font-normal"}>8</th>
+            <th {...excelConfig} className={"!font-normal"}>9</th>
+            <th {...excelConfig} className={"!font-normal"}>10</th>
+            <th {...excelConfig} className={"!font-normal"}>11</th>
+            <th {...excelConfig} className={"!font-normal"}>12</th>
+            <th {...excelConfig} className={"!font-normal"}>13</th>
+            <th {...excelConfig} className={"!font-normal"}>14</th>
         </tr>
     </thead>
 }

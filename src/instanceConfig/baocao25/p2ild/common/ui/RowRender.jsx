@@ -156,15 +156,15 @@ export let sumMultiRow = (props) => {
         approvalConfig
     } = props
     let { approvalVisible, approvalKey } = approvalConfig || {};
-
+    listRow = listRow.filter(e => e);
     let colSum =
         listRow.length > 0
-            ? zip(...listRow
-                .map(row => row.map(col => toNumber(col.value))))
-                .map(col => {
-                    return sum(col)
-                })
-            : [getDataEachRow({ ...props, emptyValue: true })]
+            ? zip(
+                ...listRow.map(row => row.map(col => toNumber(col.value)))
+            ).map(col => {
+                return sum(col)
+            })
+            : getDataEachRow({ ...props, emptyValue: true }).map(e => e.value)
 
 
 
@@ -209,7 +209,14 @@ export let sumMultiRow = (props) => {
 
 export const getDataEachRow = (data) => {
     let rowData = data?.listColumnConfig?.map(e => {
-        if (e.render) {
+        if (data.emptyValue || e.emptyValue) {
+            e = {
+                ...e,
+                view: 0,
+                value: 0,
+                ...omit(e, ['colStyle']),
+            }
+        } else if (e.render) {
             e = {
                 ...e.render({
                     ...data,
@@ -217,13 +224,6 @@ export const getDataEachRow = (data) => {
                     ...omit(e, ['colStyle']),
                 }),
                 ...e
-            }
-            if (e.emptyValue) {
-                e = {
-                    ...e,
-                    view: 0,
-                    value: 0
-                }
             }
         }
         return e;
@@ -238,17 +238,16 @@ export const getClassNameColFreeze = ({ listColumnConfig, offsetX }) => {
     return listColumnConfig.map(e => {
         if (e.freezeColWidth) {
             e.colClassName = [
-                e.colClassName || '',
-                `sticky-col`
+                e.colClassName || ''
             ].join(' ');
 
             e.colStyle = {
                 ...e.colStyle,
-                "minWidth": `${e.freezeColWidth}`,
-                // "background": 'transparent',
-                "maxWidth": `${e.freezeColWidth}`,
-                width: `${e.freezeColWidth}`,
-                left: `calc(${lastColWidth})`,
+                // "minWidth": `${e.freezeColWidth}`,
+                // // "background": 'transparent',
+                // "maxWidth": `${e.freezeColWidth}`,
+                // width: `${e.freezeColWidth}`,
+                // left: `calc(${lastColWidth})`,
             };
 
             lastColWidth = `${lastColWidth} + ${e.freezeColWidth}`;
@@ -261,7 +260,8 @@ export const getClassNameColFreeze = ({ listColumnConfig, offsetX }) => {
 export const ListColumnConfigBuilder = ({ listColumnConfig }) => {
     //Apply freeze col
     let colClassName = getClassNameColFreeze({ listColumnConfig });
-    return colClassName
+    // return colClassName
+    return listColumnConfig
 }
 
 export const findColByKey = ({ listColumnConfig, key, index }) => {
@@ -275,7 +275,9 @@ export const findColStyleByKey = (data) => {
         // border: '0.5px solid black'
     }
     let rs = {
-        className: col?.colClassName?.split(' ')?.filter(e => !e.includes("bg")).join(' '),
+        className:
+            [...col?.colClassName?.split(' ')?.filter(e => !e.includes("bg")), data.colClassName].filter(e => e)
+                .join(' '),
         style,
         name: col?.name,
     };

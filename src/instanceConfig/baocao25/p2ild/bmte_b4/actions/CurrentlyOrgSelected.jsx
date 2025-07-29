@@ -1,4 +1,3 @@
-import { fetchAnalyticsData } from '../../common/request/request';
 import { listingRowByOuGroup } from '../../common/ui/RowRender';
 
 export const getDataCommon = async (props) => {

@@ -4,6 +4,8 @@ export const ORG_GROUP = {
     // ------------------------------------- BAOCAO25 -------------------------------------
     TINH_DVHC: "mH8ggZyC39Z",
     XA_DVHC: "uyuiasZ82O4",
+    XA_TYT: "OHWM3DxkeMR",
+    XA_CSYT_KHAC_TYT: "eHs95ggJw7J",
 
     XA: "OHWM3DxkeMR",
     XA_CSYT_KHAC: 'eHs95ggJw7J',

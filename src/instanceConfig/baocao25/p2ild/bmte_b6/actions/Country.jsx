@@ -1,8 +1,7 @@
 import { parallel } from 'async';
-import { fetchAnalyticsData } from '../../common/request/request';
-import { getDisableColDataObject, listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
-import { ORG_GROUP, ORG_GROUP_SET } from '../constant';
 import { flatten, zip } from 'lodash';
+import { listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
+import { ORG_GROUP, ORG_GROUP_SET } from '../constant';
 
 export const getDataCommon = async (props) => {
     props = {
@@ -48,6 +47,7 @@ export const getDataCommon = async (props) => {
             rowTotalProvince,
             ...provinceData.map((e, rowIdx) => {
                 e[0].view = <></>
+                e[0].value = ""
                 e[1].view = <p style={{ marginLeft: '10px' }}>{rsDataOrgGroupSet[rowIdx].name}</p>
                 return e;
             })

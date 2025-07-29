@@ -45,12 +45,13 @@ export const fetchAnalyticsData = async (data) => {
                     description: err.message
                 })
         });
-    let ouIndex = Object.values(apiData.headers).findIndex(e => e.name == "ou");
-    let orgIsOpening = await networkUtils.filterCloseOrgUnit(apiData.metaData.dimensions.ou, cloneDeep(period))
-    if (ouIndex != -1) {
-        apiData.rows = apiData.rows.filter(e => orgIsOpening.includes(e[ouIndex]));
-        apiData.metaData.dimensions.ou = orgIsOpening;
-    }
+    // ------ Filter close org unit:  Only use for old instance ------
+    // let ouIndex = Object.values(apiData.headers).findIndex(e => e.name == "ou");
+    // let orgIsOpening = await networkUtils.filterCloseOrgUnit(apiData.metaData.dimensions.ou, cloneDeep(period))
+    // if (ouIndex != -1) {
+    //     apiData.rows = apiData.rows.filter(e => orgIsOpening.includes(e[ouIndex]));
+    //     apiData.metaData.dimensions.ou = orgIsOpening;
+    // }
     apiData.rowAsObject = apiData.rows.map(e => {
         return zipObject(apiData.headers.map(e => e.name), e)
     })

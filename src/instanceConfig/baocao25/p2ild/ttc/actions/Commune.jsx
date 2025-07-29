@@ -18,7 +18,6 @@ export const getDataCommon = async (props) => {
         orgUnitGroup: [ORG_GROUP.XA, ORG_GROUP.XA_CSYT_KHAC],
     });
 
-
     let rowTotal = sumMultiRow({
         ...props,
         listRow: [
@@ -27,11 +26,11 @@ export const getDataCommon = async (props) => {
         includeTotalRow: [
             "",
             <p>Tổng số</p>,
-            rowAll[0][2].value,
-            rowAll[0][3].value,
-            rowAll[0][4].value,
-            rowAll[0][5].value,
-            rowAll[0][6].value
+            rowAll[0]?.[2]?.value || '',
+            rowAll[0]?.[3]?.value || '',
+            rowAll[0]?.[4]?.value || '',
+            rowAll[0]?.[5]?.value || '',
+            rowAll[0]?.[6]?.value || ''
         ]
     });
 

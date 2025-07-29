@@ -6,24 +6,24 @@ import locale from "./locale.json";
 export { locale, classifyingOrgSelected };
 
 class Config extends Base {
-  // Server configuration
-  BASE_URL = "https://dev.tkyt.vn/bc25";
+    // Server configuration
+    BASE_URL = "https://dev.tkyt.vn/bc25";
 
-  init = async () => {
-    getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.year]);
-  };
+    init = async () => {
+        getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.year]);
+    };
 
-  listFolder = {
-    core: {
-      key: "core",
-      label: "Báo cáo cốt lõi ",
-    },
+    listFolder = {
+        core: {
+            key: "core",
+            label: "Báo cáo cốt lõi ",
+        },
 
-    other: {
-      key: "other",
-      label: "Báo cáo mẫu khác",
-    },
-  };
+        other: {
+            key: "other",
+            label: "Báo cáo mẫu khác",
+        },
+    };
 
   listReport = [
     {

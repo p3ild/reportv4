@@ -28,119 +28,137 @@ export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, 
 }
 
 export function HeaderUILayoutTable1({ listColumnConfig }) {
-    return <thead>
-        <tr>
-            <th
-                data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                rowSpan={2}
-                // sticky-col={0}
-                // className="sticky-col-0"
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
-            >TT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                rowSpan={2}
-                // sticky-col={1}
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
-            >Tên cơ sở</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                colSpan={2}>PN mới có thai</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                colSpan={2}>PN có thai</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                colSpan={2}>Số khám thai</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                rowSpan={2}>Tổng số phụ nữ đẻ</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                colSpan={25}>Trong đó</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                colSpan={3}>CS tại nhà sau sinh</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                rowSpan={2}>Số ca tử vong mẹ</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                rowSpan={2}>Số ca tử vong mẹ được thẩm định</th>
-        </tr>
-        <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tổng số`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Trđ Vị thành niên`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tổng số`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Trđ Vị thành niên`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tổng số`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Trđ Số lượt XN protein niệu`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ VTN `}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ là người DTTS`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ được quản lý thai`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ được tiêm  UV đủ mũi`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ được KT ≥ 4 lần/3 TK`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số PN đẻ  DTTS được KT ≥4 lần/3 TK`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số PN đẻ được XN VGB khi MT`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ được XN VGB khi CD`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số có KQ XN VGB (+)`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ được XN GM khi MT`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ được XN GM khi CD`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ có KQ XN GM (+)`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đc XN HIV trước & trong lần MT này`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số được XN HIV khi CD`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số có KQ KĐ nhiễm HIV trong Tkỳ MT`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số có KQ khẳng định nhiễm HIV`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số PN đẻ HIV (+) được điều trị ARV`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ được XN đường huyết`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số đẻ có KQ XN ĐHcao hơn trị số bt`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số PN đẻ được can thiệp FX/GH`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số PN được mổ đẻ`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số PN đẻ ngoài CSYT`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số PN đẻ được NV Y tế đỡ`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số PN đẻ được NV có kỹ năng đỡ`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Số trẻ được cấp giấy chứng sinh`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Trong vòng 6 tuần đầu`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Trđ: Tuần đầu`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Trđ: Từ tuần 2 đến hết 6 tuần`}</th>
-        </tr>
-        <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
-            >1</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
-            >2</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>3a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>3b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>4a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>4b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>5</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>6</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>7</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8c</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8d</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>9a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>9b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>10a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>10b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>10c</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>11a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>11b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>11c</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>12a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>12b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>13a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>13b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>14</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>15a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>15b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>16</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>17</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>18a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>18b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>18c</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>19</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>20</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>21a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>21b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>22a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>22b</th>
-        </tr>
-    </thead>
+    const excelConfig = {
+        "data-a-h": "center",
+        "data-a-v": "middle",
+        "data-f-bold": "true",
+        "data-a-wrap": "true",
+        "data-b-a-s": 'thin',
+    }
+    return <>
+        <thead>
+            <tr>
+                <th
+                    {...excelConfig}
+                    rowSpan={2}
+                    className="sticky-col-0"
+                    style={{
+                        width: '30px'
+                    }}
+                >TT</th>
+                <th {...excelConfig}
+                    rowSpan={2}
+                    style={{
+                        width: '200px'
+                    }}
+                    className="sticky-col-1"
+                >Tên cơ sở</th>
+                <th {...excelConfig}
+                    colSpan={2}>PN mới có thai</th>
+                <th {...excelConfig}
+                    colSpan={2}>PN có thai</th>
+                <th {...excelConfig}
+                    colSpan={2}>Số khám thai</th>
+                <th {...excelConfig}
+                    rowSpan={2}>Tổng số phụ nữ đẻ</th>
+                <th {...excelConfig}
+                    colSpan={25}>Trong đó</th>
+                <th {...excelConfig}
+                    colSpan={3}>CS tại nhà sau sinh</th>
+                <th {...excelConfig}
+                    rowSpan={2}>Số ca tử vong mẹ</th>
+                <th {...excelConfig}
+                    rowSpan={2}>Số ca tử vong mẹ được thẩm định</th>
+            </tr>
+            <tr>
+                <th {...excelConfig}>{`Tổng số`}</th>
+                <th {...excelConfig}>{`Trđ Vị thành niên`}</th>
+                <th {...excelConfig}
+                >{`Tổng số`}</th>
+                <th {...excelConfig}>{`Trđ Vị thành niên`}</th>
+                <th {...excelConfig}>{`Tổng số`}</th>
+                <th {...excelConfig}
+                >{`Trđ Số lượt XN protein niệu`}</th>
+                <th {...excelConfig}>{`Số đẻ VTN `}</th>
+                <th {...excelConfig}>{`Số đẻ là người DTTS`}</th>
+                <th {...excelConfig}>{`Số đẻ được quản lý thai`}</th>
+                <th {...excelConfig}>{`Số đẻ được tiêm  UV đủ mũi`}</th>
+                <th {...excelConfig}>{`Số đẻ được KT ≥ 4 lần/3 TK`}</th>
+                <th {...excelConfig}>{`Số PN đẻ  DTTS được KT ≥4 lần/3 TK`}</th>
+                <th {...excelConfig}>{`Số PN đẻ được XN VGB khi MT`}</th>
+                <th {...excelConfig}>{`Số đẻ được XN VGB khi CD`}</th>
+                <th {...excelConfig}>{`Số có KQ XN VGB (+)`}</th>
+                <th {...excelConfig}>{`Số đẻ được XN GM khi MT`}</th>
+                <th {...excelConfig}>{`Số đẻ được XN GM khi CD`}</th>
+                <th {...excelConfig}>{`Số đẻ có KQ XN GM (+)`}</th>
+                <th {...excelConfig}>{`Số đc XN HIV trước & trong lần MT này`}</th>
+                <th {...excelConfig}>{`Số được XN HIV khi CD`}</th>
+                <th {...excelConfig}>{`Số có KQ KĐ nhiễm HIV trong Tkỳ MT`}</th>
+                <th {...excelConfig}>{`Số có KQ khẳng định nhiễm HIV`}</th>
+                <th {...excelConfig}>{`Số PN đẻ HIV (+) được điều trị ARV`}</th>
+                <th {...excelConfig}>{`Số đẻ được XN đường huyết`}</th>
+                <th {...excelConfig}>{`Số đẻ có KQ XN ĐHcao hơn trị số bt`}</th>
+                <th {...excelConfig}>{`Số PN đẻ được can thiệp FX/GH`}</th>
+                <th {...excelConfig}>{`Số PN được mổ đẻ`}</th>
+                <th {...excelConfig}>{`Số PN đẻ ngoài CSYT`}</th>
+                <th {...excelConfig}>{`Số PN đẻ được NV Y tế đỡ`}</th>
+                <th {...excelConfig}>{`Số PN đẻ được NV có kỹ năng đỡ`}</th>
+                <th {...excelConfig}>{`Số trẻ được cấp giấy chứng sinh`}</th>
+                <th {...excelConfig}>{`Trong vòng 6 tuần đầu`}</th>
+                <th {...excelConfig}>{`Trđ: Tuần đầu`}</th>
+                <th {...excelConfig}>{`Trđ: Từ tuần 2 đến hết 6 tuần`}</th>
+            </tr>
+            <tr>
+                <th {...excelConfig}
+                    className="sticky-col-0"
+                >1</th>
+                <th {...excelConfig}
+                    className="sticky-col-1"
+                >2</th>
+                <th {...excelConfig} className={"!font-normal"}>3a</th>
+                <th {...excelConfig} className={"!font-normal"}>3b</th>
+                <th {...excelConfig} className={"!font-normal"}>4a</th>
+                <th {...excelConfig} className={"!font-normal"}>4b</th>
+                <th {...excelConfig} className={"!font-normal"}>5</th>
+                <th {...excelConfig} className={"!font-normal"}
+                    style={{
+                        width: '100px'
+                    }}
+                >6</th>
+                <th {...excelConfig} className={"!font-normal"}>7</th>
+                <th {...excelConfig} className={"!font-normal"}>8a</th>
+                <th {...excelConfig} className={"!font-normal"}>8b</th>
+                <th {...excelConfig} className={"!font-normal"}>8c</th>
+                <th {...excelConfig} className={"!font-normal"}>8d</th>
+                <th {...excelConfig} className={"!font-normal"}>9a</th>
+                <th {...excelConfig} className={"!font-normal"}>9b</th>
+                <th {...excelConfig} className={"!font-normal"}>10a</th>
+                <th {...excelConfig} className={"!font-normal"}>10b</th>
+                <th {...excelConfig} className={"!font-normal"}>10c</th>
+                <th {...excelConfig} className={"!font-normal"}>11a</th>
+                <th {...excelConfig} className={"!font-normal"}>11b</th>
+                <th {...excelConfig} className={"!font-normal"}>11c</th>
+                <th {...excelConfig} className={"!font-normal"}>12a</th>
+                <th {...excelConfig} className={"!font-normal"}>12b</th>
+                <th {...excelConfig} className={"!font-normal"}>13a</th>
+                <th {...excelConfig} className={"!font-normal"}>13b</th>
+                <th {...excelConfig} className={"!font-normal"}>14</th>
+                <th {...excelConfig} className={"!font-normal"}>15a</th>
+                <th {...excelConfig} className={"!font-normal"}>15b</th>
+                <th {...excelConfig} className={"!font-normal"}>16</th>
+                <th {...excelConfig} className={"!font-normal"}>17</th>
+                <th {...excelConfig} className={"!font-normal"}>18a</th>
+                <th {...excelConfig} className={"!font-normal"}>18b</th>
+                <th {...excelConfig} className={"!font-normal"}>18c</th>
+                <th {...excelConfig} className={"!font-normal"}>19</th>
+                <th {...excelConfig} className={"!font-normal"}>20</th>
+                <th {...excelConfig} className={"!font-normal"}>21a</th>
+                <th {...excelConfig} className={"!font-normal"}>21b</th>
+                <th {...excelConfig} className={"!font-normal"}>22a</th>
+                <th {...excelConfig} className={"!font-normal"}>22b</th>
+            </tr>
+        </thead>
+    </>
 }
 
 export function SectionHeaderTable1({
