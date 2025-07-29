@@ -29,19 +29,20 @@ class Config extends Base {
     {
       key: "",
       folder: [this.listFolder.core],
-      displayName: "test",
+      displayName: "HOẠT ĐỘNG PHÁT HIỆN, QUẢN LÝ ĐIỀU TRỊ BỆNH KHÔNG LÂY NHIỄM",
       getReportInstance: async () => await import("./b12_ncd"),
     },
     {
       key: "",
       folder: [this.listFolder.core],
-      displayName: "HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS",
+      displayName:
+        "HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS, TNTT, LAO, PHONG VÀ SỨC KHỎE TÂM THẦN",
       getReportInstance: async () => await import("./b10_tntt_hiv_sktt"),
     },
     {
       key: "",
       folder: [this.listFolder.core],
-      displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH  TRUYỀN NHIỄM GÂY DỊCH  ",
+      displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH  ",
       getReportInstance: async () => await import("./b11_tngd"),
     },
     {
