@@ -27,25 +27,6 @@ class Config extends Base {
 
   listReport = [
     {
-      key: "",
-      folder: [this.listFolder.core],
-      displayName: "HOẠT ĐỘNG PHÁT HIỆN, QUẢN LÝ ĐIỀU TRỊ BỆNH KHÔNG LÂY NHIỄM",
-      getReportInstance: async () => await import("./b12_ncd"),
-    },
-    {
-      key: "",
-      folder: [this.listFolder.core],
-      displayName:
-        "HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS, TNTT, LAO, PHONG VÀ SỨC KHỎE TÂM THẦN",
-      getReportInstance: async () => await import("./b10_tntt_hiv_sktt"),
-    },
-    {
-      key: "",
-      folder: [this.listFolder.core],
-      displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH  ",
-      getReportInstance: async () => await import("./b11_tngd"),
-    },
-    {
       key: "eOlFpQQhgL4",
       folder: [this.listFolder.core],
       displayName: "Thông tin chung",
@@ -75,6 +56,25 @@ class Config extends Base {
       key: "xsJNZLJHG6u",
       displayName: "HOẠT ĐỘNG KHHGĐ VÀ PHÁ THAI",
       getReportInstance: async () => await import("./p2ild/bmte_b7"),
+    },
+    {
+      key: "mV9DjhMHvEp",
+      folder: [this.listFolder.core],
+      displayName:
+        "HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS, TNTT, LAO, PHONG VÀ SỨC KHỎE TÂM THẦN",
+      getReportInstance: async () => await import("./b10_tntt_hiv_sktt"),
+    },
+    {
+      key: "Iqmu0dxxYCl",
+      folder: [this.listFolder.core],
+      displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH",
+      getReportInstance: async () => await import("./b11_tngd"),
+    },
+    {
+      key: "YjSRTN0MbGa",
+      folder: [this.listFolder.core],
+      displayName: "HOẠT ĐỘNG PHÁT HIỆN, QUẢN LÝ ĐIỀU TRỊ BỆNH KHÔNG LÂY NHIỄM",
+      getReportInstance: async () => await import("./b12_ncd"),
     },
   ];
 }
