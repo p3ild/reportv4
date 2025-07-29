@@ -2,7 +2,7 @@ const REPORT_NAME = "b12_ncd";
 const ROW_GENERATE_FOR_NATION_LEVEL = [
   {
     label: "Tuyến trung ương",
-    ougs: ["a8tDjfQpPbK"],
+    ougs: ["HBkLjXEWSBZ"],
     blocks: [
       "TjsrDy8W8h3",
       "TyqF8uBkL7B",
@@ -16,7 +16,7 @@ const ROW_GENERATE_FOR_NATION_LEVEL = [
   },
   {
     label: "Tuyến tỉnh",
-    ougs: ["ubpcYbv2aKe"],
+    ougs: ["kh9FwPDWgUi"],
     blocks: [
       "TjsrDy8W8h3",
       "TyqF8uBkL7B",
@@ -31,7 +31,7 @@ const ROW_GENERATE_FOR_NATION_LEVEL = [
   { label: "Tuyến xã", ougs: ["uyuiasZ82O4"] },
   {
     label: "Tư nhân",
-    ougs: ["b3Fa4WDUKDl", "LDueUOVxA6b"],
+    ougs: ["rz2nPhBJoVo"],
     blocks: [
       "TjsrDy8W8h3",
       "TyqF8uBkL7B",
@@ -54,7 +54,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
       {
         label: "Tuyến trung ương",
         prefix: "I",
-        ougs: ["a8tDjfQpPbK"],
+        ougs: ["HBkLjXEWSBZ"],
         blocks: [
           "TjsrDy8W8h3",
           "TyqF8uBkL7B",
@@ -69,7 +69,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
       {
         label: "Tuyến tỉnh",
         prefix: "II",
-        ougs: ["ubpcYbv2aKe"],
+        ougs: ["kh9FwPDWgUi"],
         blocks: [
           "TjsrDy8W8h3",
           "TyqF8uBkL7B",
@@ -98,38 +98,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
       "JXXc1zqIIwf",
     ],
     prefix: "B",
-    children: [
-      {
-        label: "Bệnh viện",
-        prefix: "I",
-        ougs: ["b3Fa4WDUKDl"],
-        blocks: [
-          "TjsrDy8W8h3",
-          "TyqF8uBkL7B",
-          "U5RaHHmpAFs",
-          "ChgePBcK76w",
-          "DkOZff7DZkl",
-          "ZIOSE2mQfW9",
-          "L5TaiYbqD6w",
-          "JXXc1zqIIwf",
-        ],
-      },
-      {
-        label: "Phòng khám",
-        prefix: "II",
-        ougs: ["LDueUOVxA6b"],
-        blocks: [
-          "TjsrDy8W8h3",
-          "TyqF8uBkL7B",
-          "U5RaHHmpAFs",
-          "ChgePBcK76w",
-          "DkOZff7DZkl",
-          "ZIOSE2mQfW9",
-          "L5TaiYbqD6w",
-          "JXXc1zqIIwf",
-        ],
-      },
-    ],
+    ougs: ["rz2nPhBJoVo"],
   },
 ];
 

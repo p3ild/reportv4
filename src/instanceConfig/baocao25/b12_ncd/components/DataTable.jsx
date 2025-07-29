@@ -79,38 +79,61 @@ const DataTable = ({
           prefix: item.prefix,
           blocks: item.blocks,
 
-          children: item.children.map((child) => {
-            return {
-              label: child.label,
-              prefix: child.prefix,
-              blocks: child.blocks,
-
-              getData: (filteredData) => {
-                return filteredData.reduce((prev, curr) => {
-                  const foundOu = orgUnits.find((ou) => ou.id === curr.ou);
-                  if (!foundOu) return prev;
-                  const inOuGroup = foundOu.organisationUnitGroups.some((oug) =>
-                    child.ougs.includes(oug.id)
-                  );
-                  if (!inOuGroup) return prev;
-
-                  return prev + (Number(curr.value) || 0);
-                }, 0);
-              },
-              children: filterOrgUnits
-                .filter((ou) =>
-                  ou.organisationUnitGroups.some((oug) =>
-                    child.ougs.includes(oug.id)
+          ...(item.ougs
+            ? {
+                children: filterOrgUnits
+                  .filter((ou) =>
+                    ou.organisationUnitGroups.some((oug) =>
+                      item.ougs.includes(oug.id)
+                    )
                   )
-                )
-                .map((ou) => ({
-                  id: ou.id,
-                  label: ou.displayName,
-                })),
-            };
-          }),
+                  .map((ou) => ({
+                    id: ou.id,
+                    label: ou.displayName,
+                    blocks: item.blocks,
+                  })),
+              }
+            : {
+                children: item.children.map((child) => {
+                  return {
+                    label: child.label,
+                    prefix: child.prefix,
+                    blocks: child.blocks,
+                    getData: (filteredData) => {
+                      return filteredData.reduce((prev, curr) => {
+                        const foundOu = orgUnits.find(
+                          (ou) => ou.id === curr.ou
+                        );
+                        if (!foundOu) return prev;
+                        const inOuGroup = foundOu.organisationUnitGroups.some(
+                          (oug) => child.ougs.includes(oug.id)
+                        );
+                        if (!inOuGroup) return prev;
+
+                        return prev + (Number(curr.value) || 0);
+                      }, 0);
+                    },
+                    children: filterOrgUnits
+                      .filter((ou) =>
+                        ou.organisationUnitGroups.some((oug) =>
+                          child.ougs.includes(oug.id)
+                        )
+                      )
+                      .map((ou) => ({
+                        id: ou.id,
+                        label: ou.displayName,
+                        blocks: child.blocks,
+                      })),
+                  };
+                }),
+              }),
         }));
       case 3:
+        filterOrgUnits = orgUnits.filter((ou) =>
+          ou.ancestors.some(
+            (ancestor) => ancestor.id === corePicker.orgSelected.id
+          )
+        );
         return ROW_GENERATE_FOR_COMMUNE_LEVEL.map((item) => ({
           id: item.id,
           label: item.label,
@@ -133,7 +156,7 @@ const DataTable = ({
               return prev + (Number(curr.value) || 0);
             }, 0);
           },
-          children: orgUnits
+          children: filterOrgUnits
             .filter((ou) =>
               ou.organisationUnitGroups.some((oug) =>
                 item.ougs.includes(oug.id)
@@ -146,7 +169,7 @@ const DataTable = ({
             })),
         }));
       default:
-        return null;
+        return [];
     }
   };
 

@@ -108,6 +108,11 @@ const DataTable = ({
           }),
         }));
       case 3:
+        filterOrgUnits = orgUnits.filter((ou) =>
+          ou.ancestors.some(
+            (ancestor) => ancestor.id === corePicker.orgSelected.id
+          )
+        );
         return ROW_GENERATE_FOR_COMMUNE_LEVEL.map((item) => ({
           id: item.id,
           label: item.label,
@@ -130,7 +135,7 @@ const DataTable = ({
               return prev + (Number(curr.value) || 0);
             }, 0);
           },
-          children: orgUnits
+          children: filterOrgUnits
             .filter((ou) =>
               ou.organisationUnitGroups.some((oug) =>
                 item.ougs.includes(oug.id)
@@ -143,7 +148,7 @@ const DataTable = ({
             })),
         }));
       default:
-        return null;
+        return [];
     }
   };
 
