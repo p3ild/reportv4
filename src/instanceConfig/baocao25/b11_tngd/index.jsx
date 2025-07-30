@@ -122,6 +122,7 @@ const Tndg = () => {
         <tr id={id} key={id}>
           {isTotal ? (
             <td
+              data-f-name="Times New Roman"
               colSpan={2}
               style={{ fontWeight: "bold" }}
               data-a-h="center"
@@ -135,6 +136,7 @@ const Tndg = () => {
           ) : (
             <>
               <td
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -143,6 +145,7 @@ const Tndg = () => {
                 {index === 0 ? 1 : index}
               </td>
               <td
+                data-f-name="Times New Roman"
                 data-a-h="left"
                 data-a-v="left"
                 data-a-wrap="true"
@@ -161,6 +164,7 @@ const Tndg = () => {
             );
             return (
               <td
+                data-f-name="Times New Roman"
                 key={element}
                 style={{ fontWeight: isTotal ? "bold" : "normal" }}
                 data-a-h="center"
@@ -214,6 +218,7 @@ const Tndg = () => {
         <tbody>
           <tr>
             <td
+              data-f-name="Times New Roman"
               style={{
                 width: "100vw",
                 fontSize: "16px",
@@ -226,6 +231,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               style={{
                 width: "100vw",
@@ -242,6 +248,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -259,6 +266,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -287,6 +295,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -315,6 +324,7 @@ const Tndg = () => {
           <thead>
             <tr>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-1 sticky-top top-1"
                 style={{ width: "2%" }}
                 data-a-h="center"
@@ -326,6 +336,7 @@ const Tndg = () => {
                 TT
               </th>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-2 sticky-top top-1"
                 style={{ width: "13%" }}
                 rowSpan={
@@ -348,6 +359,7 @@ const Tndg = () => {
                   : "Trạm y tế cấp xã"}
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -359,6 +371,7 @@ const Tndg = () => {
                 Bạch hầu
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -370,6 +383,7 @@ const Tndg = () => {
                 Liên cầu
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -381,6 +395,7 @@ const Tndg = () => {
                 Vi rút Adeno
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -392,6 +407,7 @@ const Tndg = () => {
                 Cúm
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -403,6 +419,7 @@ const Tndg = () => {
                 Cúm A(H5N1)
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -414,6 +431,7 @@ const Tndg = () => {
                 Dại
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -425,6 +443,7 @@ const Tndg = () => {
                 Dịch hạch
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -436,6 +455,7 @@ const Tndg = () => {
                 Ho gà
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -447,6 +467,7 @@ const Tndg = () => {
                 Lỵ Amíp
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -460,6 +481,7 @@ const Tndg = () => {
             </tr>
             <tr>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-1 sticky-top top-2"
                 data-a-h="center"
                 data-a-v="middle"
@@ -470,6 +492,7 @@ const Tndg = () => {
                 #
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -478,6 +501,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -486,6 +510,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -494,6 +519,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -502,6 +528,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -510,6 +537,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -518,6 +546,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -526,6 +555,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -534,6 +564,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -542,6 +573,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -550,6 +582,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -558,6 +591,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -566,6 +600,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -574,6 +609,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -582,6 +618,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -590,6 +627,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -598,6 +636,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -606,6 +645,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -614,6 +654,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -622,6 +663,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -632,16 +674,18 @@ const Tndg = () => {
             </tr>
             <tr>
               {Array.from({ length: 22 }, (_, i) => (
-                <th
+                <td
+                  data-f-name="Times New Roman"
                   key={i + 1}
                   data-a-h="center"
                   data-a-v="middle"
-                  data-f-bold="true"
+                  data-f-italic="true"
                   data-a-wrap="true"
                   data-b-a-s="thin"
+                  style={{ fontStyle: "italic" }}
                 >
                   {i + 1}
-                </th>
+                </td>
               ))}
             </tr>
           </thead>
@@ -653,6 +697,7 @@ const Tndg = () => {
         <tbody>
           <tr>
             <td
+              data-f-name="Times New Roman"
               style={{
                 width: "100vw",
                 fontSize: "16px",
@@ -665,6 +710,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               style={{
                 width: "100vw",
@@ -681,6 +727,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -700,6 +747,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -728,6 +776,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -757,6 +806,7 @@ const Tndg = () => {
           <thead>
             <tr>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-1 sticky-top top-1"
                 style={{ width: "2%" }}
                 data-a-h="center"
@@ -768,6 +818,7 @@ const Tndg = () => {
                 TT
               </th>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-2 sticky-top top-1"
                 style={{ width: "13%" }}
                 rowSpan={
@@ -790,6 +841,7 @@ const Tndg = () => {
                   : "Trạm y tế cấp xã"}
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -801,6 +853,7 @@ const Tndg = () => {
                 Quai bị
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -812,6 +865,7 @@ const Tndg = () => {
                 Rubella (Rubeon)
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -823,6 +877,7 @@ const Tndg = () => {
                 Sởi
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -834,6 +889,7 @@ const Tndg = () => {
                 Sốt rét
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -845,6 +901,7 @@ const Tndg = () => {
                 Sốt xuất huyết Dengue
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -856,6 +913,7 @@ const Tndg = () => {
                 Tả
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -867,6 +925,7 @@ const Tndg = () => {
                 Tay - chân - miệng
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -878,6 +937,7 @@ const Tndg = () => {
                 Than
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -889,6 +949,7 @@ const Tndg = () => {
                 Thương hàn
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "8.5%" }}
                 data-a-h="center"
@@ -902,6 +963,7 @@ const Tndg = () => {
             </tr>
             <tr>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-1 sticky-top top-2"
                 data-a-h="center"
                 data-a-v="middle"
@@ -914,7 +976,7 @@ const Tndg = () => {
               {/* {corePicker &&
                 corePicker.orgSelected &&
                 corePicker.orgSelected.level !== 1 && (
-                  <th
+                  <th data-f-name="Times New Roman"
                     className="sticky-col col-2 sticky-top top-2"
                     data-a-h="center"
                     data-a-v="middle"
@@ -926,6 +988,7 @@ const Tndg = () => {
                   </th>
                 )} */}
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -934,6 +997,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -942,6 +1006,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -950,6 +1015,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -958,6 +1024,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -966,6 +1033,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -974,6 +1042,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -982,6 +1051,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -990,6 +1060,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -998,6 +1069,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1006,6 +1078,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1014,6 +1087,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1022,6 +1096,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1030,6 +1105,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1038,6 +1114,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1046,6 +1123,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1054,6 +1132,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1062,6 +1141,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1070,6 +1150,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1078,6 +1159,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1088,16 +1170,18 @@ const Tndg = () => {
             </tr>
             <tr>
               {Array.from({ length: 22 }, (_, i) => (
-                <th
+                <td
+                  data-f-name="Times New Roman"
                   key={i + 1}
                   data-a-h="center"
                   data-a-v="middle"
-                  data-f-bold="true"
+                  data-f-italic="true"
                   data-a-wrap="true"
                   data-b-a-s="thin"
+                  style={{ fontStyle: "italic" }}
                 >
                   {i + 1}
-                </th>
+                </td>
               ))}
             </tr>
           </thead>
@@ -1109,6 +1193,7 @@ const Tndg = () => {
         <tbody>
           <tr>
             <td
+              data-f-name="Times New Roman"
               style={{
                 width: "100vw",
                 fontSize: "16px",
@@ -1121,6 +1206,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               style={{
                 width: "100vw",
@@ -1137,6 +1223,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -1156,6 +1243,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -1184,6 +1272,7 @@ const Tndg = () => {
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
               colSpan={22}
               data-a-h="center"
               data-a-v="middle"
@@ -1210,6 +1299,7 @@ const Tndg = () => {
           <thead>
             <tr>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-1 sticky-top top-1"
                 style={{ width: "2%" }}
                 data-a-h="center"
@@ -1221,6 +1311,7 @@ const Tndg = () => {
                 TT
               </th>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-2 sticky-top top-1"
                 style={{ width: "13%" }}
                 rowSpan={
@@ -1243,6 +1334,7 @@ const Tndg = () => {
                   : "Trạm y tế cấp xã"}
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1254,6 +1346,7 @@ const Tndg = () => {
                 Tiêu chảy
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1265,6 +1358,7 @@ const Tndg = () => {
                 Uốn ván sơ sinh
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1276,6 +1370,7 @@ const Tndg = () => {
                 Uốn ván khác
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1287,6 +1382,7 @@ const Tndg = () => {
                 Viêm gan vi rút A
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1298,6 +1394,7 @@ const Tndg = () => {
                 Viêm gan vi rút B
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1309,6 +1406,7 @@ const Tndg = () => {
                 Viêm gan vi rút C
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1320,6 +1418,7 @@ const Tndg = () => {
                 Viêm gan vi rút khác
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1331,6 +1430,7 @@ const Tndg = () => {
                 Viêm màng não do não mô cầu
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1342,6 +1442,7 @@ const Tndg = () => {
                 Viêm não Nhật Bản
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1353,6 +1454,7 @@ const Tndg = () => {
                 Viêm não vi rút khác
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1364,6 +1466,7 @@ const Tndg = () => {
                 Xoắn khuẩn vàng da (Leptospira)
               </th>
               <th
+                data-f-name="Times New Roman"
                 colSpan="2"
                 style={{ width: "7%" }}
                 data-a-h="center"
@@ -1377,6 +1480,7 @@ const Tndg = () => {
             </tr>
             <tr>
               <th
+                data-f-name="Times New Roman"
                 className="sticky-col col-1 sticky-top top-2"
                 data-a-h="center"
                 data-a-v="middle"
@@ -1389,7 +1493,7 @@ const Tndg = () => {
               {/* {corePicker &&
                 corePicker.orgSelected &&
                 corePicker.orgSelected.level !== 1 && (
-                  <th
+                  <th data-f-name="Times New Roman"
                     className="sticky-col col-2 sticky-top top-2"
                     data-a-h="center"
                     data-a-v="middle"
@@ -1401,6 +1505,7 @@ const Tndg = () => {
                   </th>
                 )} */}
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1409,6 +1514,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1417,6 +1523,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1425,6 +1532,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1433,6 +1541,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1441,6 +1550,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1449,6 +1559,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1457,6 +1568,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1465,6 +1577,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1473,6 +1586,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1481,6 +1595,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1489,6 +1604,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1497,6 +1613,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1505,6 +1622,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1513,6 +1631,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1521,6 +1640,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1529,6 +1649,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1537,6 +1658,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1545,6 +1667,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1553,6 +1676,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1561,6 +1685,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1569,6 +1694,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1577,6 +1703,7 @@ const Tndg = () => {
                 TV
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1585,6 +1712,7 @@ const Tndg = () => {
                 M
               </th>
               <th
+                data-f-name="Times New Roman"
                 data-a-h="center"
                 data-a-v="middle"
                 data-a-wrap="true"
@@ -1595,16 +1723,18 @@ const Tndg = () => {
             </tr>
             <tr>
               {Array.from({ length: 26 }, (_, i) => (
-                <th
+                <td
+                  data-f-name="Times New Roman"
                   key={i + 1}
                   data-a-h="center"
                   data-a-v="middle"
-                  data-f-bold="true"
+                  data-f-italic="true"
                   data-a-wrap="true"
                   data-b-a-s="thin"
+                  style={{ fontStyle: "italic" }}
                 >
                   {i + 1}
-                </th>
+                </td>
               ))}
             </tr>
           </thead>
