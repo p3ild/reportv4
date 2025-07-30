@@ -38,12 +38,13 @@ const B10 = () => {
       PERIOD_TYPE.month,
       PERIOD_TYPE.month2,
       PERIOD_TYPE.year,
-      PERIOD_TYPE.sixMonth,
-      PERIOD_TYPE.biWeek,
+      // PERIOD_TYPE.sixMonth,
+      // PERIOD_TYPE.biWeek,
     ]);
 
     getPickerStateByPath("actions.setOrgPickerConfig")({
       orgGroupVisible: [
+        ORG_GROUP.TUYEN_TRUNG_UONG,
         ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
         ORG_GROUP.TUYEN_TINH,

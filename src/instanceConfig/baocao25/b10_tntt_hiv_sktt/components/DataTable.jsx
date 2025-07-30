@@ -295,7 +295,7 @@ const DataTable = ({
                     : undefined,
                 ]
                   .filter((e) => e)
-                  .join(" - ")}
+                  .join(" đến ")}
               </p>
             </td>
           </tr>
