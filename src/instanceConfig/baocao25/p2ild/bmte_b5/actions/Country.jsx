@@ -24,8 +24,10 @@ export const getDataCommon = async (props) => {
         return cb => listingRowByOuGroup({
             ...props,
             // includeTotalRow: ["", <p>{orgGroup.name}</p>],
-            idOrgGroupSet: `${ORG_GROUP_SET.TUYEN}:${orgGroup.id}}`,
+            idOrgGroupSet: `${ORG_GROUP_SET.TUYEN}:${orgGroup.id}`,
             orgUnitGroup: [ORG_GROUP.TINH_DVHC],
+            ouGroupSetQueryType: 'dimension'
+
         }).then(x => cb(null, x))
     })).then(e => {
         e.forEach((x, idx) => {

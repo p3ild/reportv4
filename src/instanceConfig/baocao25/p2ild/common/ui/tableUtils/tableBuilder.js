@@ -1,14 +1,15 @@
 import DataTable from 'datatables.net-dt';
 import JSZip from 'jszip/dist/jszip.min.js';
 import 'datatables.net-buttons/js/buttons.html5.mjs';
-
+import 'datatables.net-fixedcolumns-dt';
 
 DataTable.defaults.column.orderSequence = ['desc', 'asc', ''];
 DataTable.type('num', 'detect', () => true)
 // DataTable.type('num', 'className','number')
 window.JSZip = JSZip;
 
-export default ({ tableID, tableObject, exportExcel = false }) => {
+export default ({ tableID, tableObject, tableOptions, exportExcel = false }) => {
+    return;
     let table = null
     try {
         tableObject?.current?.destroy();
@@ -41,6 +42,7 @@ export default ({ tableID, tableObject, exportExcel = false }) => {
                     ].filter(e => e)
                 }
             },
+            ...tableOptions
         });
         tableObject.current = table
 

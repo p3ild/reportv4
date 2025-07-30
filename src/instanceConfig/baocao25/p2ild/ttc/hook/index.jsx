@@ -124,7 +124,7 @@ export const useLoadData = (props) => {
             period?.labelEndDate ? `${period?.labelEndDate}` : undefined
         ]
             .filter(e => e)
-            .join(' - ')
+            .join(' đến ')
     }
 
 }

@@ -73,7 +73,8 @@ export const useLoadData = (props) => {
                     targetAction = await import('../actions/Commune');
                     break;
                 default:
-                    throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
+                    targetAction = await import('../actions/CurrentlyOrgSelected')
+                    // throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
             }
             {
 
@@ -130,7 +131,7 @@ export const useLoadData = (props) => {
             period?.labelEndDate ? `${period?.labelEndDate}` : undefined
         ]
             .filter(e => e)
-            .join(' - ')
+            .join(' đến ')
     }
 
 }

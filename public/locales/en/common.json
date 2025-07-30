@@ -3,6 +3,7 @@
     "selectOrg": "Select organisation unit",
     "selectMoreOptions": "Options",
     "required": "Required",
+    "noReport": "No report",
     "periodPicker": {
         "selectType": {
             "date": "Date",

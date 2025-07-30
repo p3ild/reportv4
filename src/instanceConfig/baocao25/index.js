@@ -58,6 +58,24 @@ class Config extends Base {
       getReportInstance: async () => await import("./p2ild/bmte_b7"),
     },
     {
+      folder: [this.listFolder.core],
+      key: "Fdp0zf5qF8L",
+      displayName: "TÌNH HÌNH SỨC KHỎE TRẺ EM",
+      getReportInstance: async () => await import("./p2ild/bmte_b8"),
+    },
+    {
+      folder: [this.listFolder.core],
+      key: "wK2fhfTGl6r",
+      displayName: "CƠ SỞ, GIƯỜNG BỆNH VÀ HOẠT ĐỘNG KHÁM CHỮA BỆNH",
+      getReportInstance: async () => await import("./p2ild/b9"),
+    },
+    {
+      folder: [this.listFolder.core],
+      key: "C290QB6SfjZ",
+      displayName: "bmte_x3",
+      getReportInstance: async () => await import("./p2ild/bmte_x3"),
+    },
+    {
       key: "",
       folder: [this.listFolder.core],
       displayName: "TÌNH HÌNH NHÂN LỰC Y TẾ",

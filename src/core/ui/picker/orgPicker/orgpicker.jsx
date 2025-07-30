@@ -1,5 +1,5 @@
 import { DownOutlined } from '@ant-design/icons';
-import { Cascader, Flex, Spin } from "antd";
+import { Cascader, Flex, Spin, Tag } from "antd";
 import { cloneDeep, debounce, flatten } from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -39,24 +39,70 @@ export function useOrgTreeByUser() {
                 state.actions.setCorePicker,
             ])));
 
+
+    const checkSupport = (orgTarget, orgGroupVisible) => {
+        if (!orgGroupVisible?.length) {
+            orgTarget.support = true;
+            return orgTarget;
+        }
+
+        let shouldApplyRules = true;
+        if (orgTarget.level == 1) {
+            let hasRootIndicator = orgGroupVisible.find(e => e.replace(/[!+-]/g, '') === 'root');
+            shouldApplyRules = hasRootIndicator;
+            orgTarget.support = true;
+            if (hasRootIndicator && hasRootIndicator.includes('-')) {
+                orgTarget.support = false;
+            }
+            return orgTarget;
+        }
+
+        let filteredOrgGroupVisible = orgGroupVisible.filter(e => e.replace(/[!+-]/g, '') !== 'root');
+
+        let visibleGroups = filteredOrgGroupVisible
+            .filter(e => !e.includes('!'))
+            .map(e => e.replace(/[!+-]/g, ''))
+
+        let excludedGroups = filteredOrgGroupVisible
+            .filter(e => e.includes('!'))
+            .map(e => e.replace('!', ''))
+            .map(e => e.replace(/[!+-]/g, ''));
+
+        let notSupportGroups = filteredOrgGroupVisible
+            .filter(e => e.includes('-'))
+            .map(e => e.replace(/[!+-]/g, ''))
+
+
+        let hasVisibleGroup = visibleGroups.length === 0 ||
+            orgTarget.organisationUnitGroups.some(x => visibleGroups.includes(x.id));
+
+        let hasExcludedGroup = excludedGroups.length > 0 &&
+            orgTarget.organisationUnitGroups.some(x => excludedGroups.includes(x.id));
+
+        if (!hasVisibleGroup || hasExcludedGroup) {
+            return undefined;
+        }
+
+        orgTarget.support = true;
+
+        if (notSupportGroups.length > 0 && orgTarget.organisationUnitGroups.some(x => notSupportGroups.includes(x.id))) {
+            orgTarget.support = false;
+        }
+
+        return orgTarget;
+    }
+
     const generateEachOrgData = useCallback(({
         orgTarget,
         ORG_TREE_DEEP
     }) => {
         let { orgGroupVisible, levelsToHideIfEmpty } = orgPickerConfig || {}
-        if (orgGroupVisible?.length > 0) {
-            let groupInclude = orgGroupVisible.filter(e => !e.includes('!'));
-            let groupExclude = orgGroupVisible.filter(e => e.includes('!')).map(e => e.replace('!', ''));
-            let invisibleByOrgGroup =
-                orgTarget.organisationUnitGroups.every(x => groupInclude.length > 0 && !groupInclude.includes(x.id))
-                ||
-                orgTarget.organisationUnitGroups.some(x => groupExclude.length > 0 && groupExclude.includes(x.id));
-            if (
-                orgTarget.level != 1 && invisibleByOrgGroup
-            ) {
-                return undefined
-            }
+
+        const processedOrg = checkSupport(orgTarget, orgGroupVisible);
+        if (!processedOrg) {
+            return undefined;
         }
+        orgTarget = processedOrg;
 
         orgTarget['title'] = generateOrgTitle(orgTarget)
         orgTarget['label'] = generateOrgTitle(orgTarget)
@@ -74,8 +120,15 @@ export function useOrgTreeByUser() {
             && (
                 !orgTarget?.children ||
                 orgTarget?.children?.length == 0
-            )) {
+            )
+
+        ) {
+            //Prevent hide org that is in orgGroupVisible
+            if (orgGroupVisible
+                && orgTarget.organisationUnitGroups.some(e => orgGroupVisible.some(x => x == e.id))
+            ) return orgTarget
             return undefined;
+
         }
         return orgTarget
 
@@ -110,9 +163,8 @@ export function useOrgTreeByUser() {
 
     return { orgTreeData, setCorePicker, networkUtils, corePicker }
 }
-
+export const OrgError = (orgSelected) => <><Tag color='red'>{orgSelected.displayName}</Tag> không hỗ trợ xuất báo cáo này. Vui lòng chọn đơn vị khác</>
 export default (props) => {
-    let { onSelected } = props
     const { orgTreeData, setCorePicker, corePicker } = useOrgTreeByUser();
     let [value, setValue] = useState(undefined);
     let [currentPath, setCurrentPath] = useState([]);
@@ -149,26 +201,27 @@ export default (props) => {
 
             foundOrg = currentOrg
         }
-
+        let orgSelected;
         if (foundOrg) {
             foundOrg.path = targetPath
-            //Prevent setState when renderring
-            wait(150).then(() => {
-                setCorePicker({ orgSelected: foundOrg })
-                setCurrentPath(targetPath)
-            })
-
-            return targetPath
+            orgSelected = foundOrg
+            orgSelected.path = targetPath
         } else {
             rootOrg.path = rootPath;
-            //Prevent setState when renderring
-            wait(150).then(() => {
-                setCorePicker({ orgSelected: rootOrg })
-                setCurrentPath(rootPath)
-            })
-
-            return rootPath
+            orgSelected = rootOrg
+            orgSelected.path = targetPath
         }
+
+        !orgSelected.support && (orgSelected = { error: OrgError(orgSelected) })
+
+        //Prevent setState when renderring
+        wait(150).then(() => {
+            setCorePicker({ orgSelected })
+            setCurrentPath(orgSelected?.path)
+        })
+
+        return orgSelected?.support ? orgSelected.path : undefined
+
     }, [orgTreeData, expandedKeys, corePicker?.orgSelected?.path])
 
     const filter = (inputValue, path) => {
@@ -188,18 +241,20 @@ export default (props) => {
             return;
         }
         let orgTarget = info[info.length - 1];
+
+        let orgSelected = {
+            ...orgTarget,
+            id: orgTarget?.id, displayName: orgTarget?.displayName, level: orgTarget?.level, path: selectedKeys
+        }
+
+        !orgSelected.support && (orgSelected = { error: OrgError(orgSelected) })
+
+
         setValue(selectedKeys[selectedKeys.length - 1])
         setTreeExpandedKeys(selectedKeys);
-
-        if (onSelected) {
-        } else {
-            setCorePicker({
-                orgSelected: {
-                    ...orgTarget,
-                    id: orgTarget?.id, displayName: orgTarget?.displayName, level: orgTarget?.level, path: selectedKeys
-                }
-            })
-        }
+        setCorePicker({
+            orgSelected
+        })
 
 
 
@@ -244,7 +299,7 @@ export default (props) => {
             return <div className={' p-1 px-3'}>
                 <Cascader
                     {...{
-                        key: currentPath.join('_'),
+                        key: currentPath?.join('_'),
                         className: "w-full custom-org-select h-fit",
                         variant: 'borderless',
                         defaultValue: getDefaultValue(),
@@ -265,7 +320,7 @@ export default (props) => {
         [
             orgTreeData,
             orgPickerConfig?.orgGroupVisible?.join('|'),
-            currentPath.join('|')
+            currentPath?.join('|')
         ]
     )
 

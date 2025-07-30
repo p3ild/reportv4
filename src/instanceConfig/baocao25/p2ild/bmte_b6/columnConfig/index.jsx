@@ -13,21 +13,16 @@ export const getListColumnConfig = ({ }) => {
         listColumnConfig: [
             {
                 key: "stt",
-                freezeColWidth: '5vw',
+                freezeColWidth: '3vw',
                 label: 'STT',
                 excelOpts: {
                     "data-a-wrap": "true",
                     "data-a-h": "center",
-                    "data-a-v": "center",
-                    "sticky-col": 0
-                    // "data-t":'n'
+                    "data-a-v": "center"
                 },
                 render: ({ orgIdx }) => {
                     let value = orgIdx + 1;
                     return {
-                        excelOpts: {
-                            "sticky-col": 0
-                        },
                         view: <RenderValue {...{
                             value
                         }}
@@ -40,9 +35,7 @@ export const getListColumnConfig = ({ }) => {
                 freezeColWidth: '10vw',
                 colDataClassName: '!text-left !text-nowrap',
                 excelOpts: {
-                    "data-a-wrap": "true",
-                    "sticky-col": 1
-                    // "data-t":'n'
+                    "data-a-wrap": "true"
                 },
                 render: (props) => {
                     let { orgIdx, orgName, orgUnit, period, approvalConfig } = props;
@@ -50,9 +43,6 @@ export const getListColumnConfig = ({ }) => {
                     let { approvalKey, approvalVisible, approvalType } = approvalConfig || {};
 
                     return {
-                        excelOpts: {
-                            "sticky-col": 0
-                        },
                         view: <Flex vertical >
                             <RenderValue {...{
                                 value: props.orgName,

@@ -38,7 +38,7 @@ export const useLoadData = (props) => {
             period: period?.outputDataDhis2,
             orgSelected,
             listColumnConfig: getListColumnConfig(props),
-            defaultCol: 14 - 2,
+            defaultCol: 16 - 2,
             dx: [
                 'EbgigboTmrd',
                 'OOvABOGvmwx',
@@ -126,7 +126,7 @@ export const useLoadData = (props) => {
             period?.labelEndDate ? `${period?.labelEndDate}` : undefined
         ]
             .filter(e => e)
-            .join(' - ')
+            .join(' đến ')
     }
 
 }

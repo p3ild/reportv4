@@ -43,7 +43,7 @@ export default () => {
     useEffect(
         () => {
             setExcelOptions({
-                // excelOnlyTable: true,
+                columnWidths: '10,30',
                 excelFileName: reportCode.toLocaleLowerCase().replace(/ /g, '_')
             });
             setOrgPickerConfig(orgPickerConfig)
@@ -71,8 +71,7 @@ export default () => {
                 }
             }
             }
-        >
-        </TableData>
+        />
     }, [orgReportName, data, errors]);
 
     return <div className="report-container">

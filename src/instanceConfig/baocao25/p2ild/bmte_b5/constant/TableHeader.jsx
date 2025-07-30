@@ -1,7 +1,4 @@
-import { Divider } from "antd";
-import { format, parse } from "date-fns"
-import { BreakLine } from "../../common/ui/MultiTableUI";
-import { findColStyleByKey } from "../../common/ui/RowRender"
+import { findColStyleByKey } from "../../common/ui/RowRender";
 
 export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, dhis2Period, customData }) {
     let period = dhis2Period.split(' ');
@@ -28,79 +25,87 @@ export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, 
 }
 
 export function HeaderUILayoutTable1({ listColumnConfig }) {
+    const excelConfig = {
+        "data-a-h": "center",
+        "data-a-v": "middle",
+        "data-f-bold": "true",
+        "data-a-wrap": "true",
+        "data-b-a-s": 'thin'
+    };
     return <thead>
         <tr>
             <th
-                data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+                {...excelConfig}
                 rowSpan={2}
-                // sticky-col={0}
-                // className="sticky-col-0"
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
+                className="sticky-col-0"
+                style={{ width: '30px' }}
             >TT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}
-                // sticky-col={1}
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
+                className="sticky-col-1"
+                style={{
+                    width: '130px !important',
+                }}
             >Tên cơ sở</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Tổng số</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Băng huyết</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Sản giật</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Uốn ván sơ sinh</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Vỡ tử cung</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Nhiễm trùng sau đẻ</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Phá thai</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Khác</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Mắc`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tử vong`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Mắc`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tử vong`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Mắc`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tử vong`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Mắc`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tử vong`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Mắc`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tử vong`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Mắc`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tử vong`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Mắc`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tử vong`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Mắc`}</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>{`Tử vong`}</th>
+            <th {...excelConfig}>{`Mắc`}</th>
+            <th {...excelConfig}>{`Tử vong`}</th>
+            <th {...excelConfig}>{`Mắc`}</th>
+            <th {...excelConfig}>{`Tử vong`}</th>
+            <th {...excelConfig}>{`Mắc`}</th>
+            <th {...excelConfig}>{`Tử vong`}</th>
+            <th {...excelConfig}>{`Mắc`}</th>
+            <th {...excelConfig}>{`Tử vong`}</th>
+            <th {...excelConfig}>{`Mắc`}</th>
+            <th {...excelConfig}>{`Tử vong`}</th>
+            <th {...excelConfig}>{`Mắc`}</th>
+            <th {...excelConfig}>{`Tử vong`}</th>
+            <th {...excelConfig}>{`Mắc`}</th>
+            <th {...excelConfig}>{`Tử vong`}</th>
+            <th {...excelConfig}>{`Mắc`}</th>
+            <th {...excelConfig}>{`Tử vong`}</th>
 
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
+            <th {...excelConfig}
+                className="sticky-col-0"
             >1</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
+            <th {...excelConfig}
+                className="sticky-col-1"
             >2</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>3</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>4</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>5</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>6</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>7</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>9</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>10</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>11</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>12</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>13</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>14</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>15</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>16</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>17</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>18</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>3</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>4</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>5</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>6</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>7</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>8</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>9</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>10</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>11</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>12</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>13</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>14</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>15</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>16</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>17</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>18</th>
         </tr>
     </thead>
 }

@@ -42,72 +42,85 @@ export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, 
 }
 
 export function HeaderUILayoutTable1({ listColumnConfig }) {
+    const excelConfig = {
+        "data-a-h": "center",
+        "data-a-v": "middle",
+        "data-f-bold": "true",
+        "data-a-wrap": "true",
+        "data-b-a-s": 'thin',
+    };
     return <thead>
         <tr>
             <th
-                data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+                {...excelConfig}
                 rowSpan={2}
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
+                className="sticky-col-0"
+                style={{
+                    width: '30px'
+                }}
             >TT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
+                className="sticky-col-1"
+                style={{
+                    width: '130px'
+                }}
             >Tên cơ sở y tế</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Tổng số lượt khám phụ khoa (khám bệnh)</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Tổng số lượt khám phụ khoa (khám dự phòng - sàng lọc)</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Tổng số lượt điều trị phụ khoa</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số điều trị GM</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số điều trị lậu</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số được đốt điện/áp lạnh</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số được thực hiện LEEP</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số được khỏi chữa CTC</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 rowSpan={2}>Số lượt được thực hiện</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>VIA/VILI</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Xét nghiệm tế bào học</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th {...excelConfig}
                 colSpan={2}>Xét nghiệm HPV</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Số (+) VIA/VILI</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Số nghỉ ngơi K</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Số lượt được xét nghiệm</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Số lượt có KQ bất thường</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Số lượt được xét nghiệm</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Số HPV (+)</th>
+            <th {...excelConfig}>Số (+) VIA/VILI</th>
+            <th {...excelConfig}>Số nghỉ ngơi K</th>
+            <th {...excelConfig}>Số lượt được xét nghiệm</th>
+            <th {...excelConfig}>Số lượt có KQ bất thường</th>
+            <th {...excelConfig}>Số lượt được xét nghiệm</th>
+            <th {...excelConfig}>Số HPV (+)</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
+            <th {...excelConfig}
+                className="sticky-col-0"
             >1</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
+            <th {...excelConfig}
+                className="sticky-col-1"
             >2</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>3a</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>3b</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>4</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>5</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>6</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>7</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>9</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>10</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>11</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>12</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>13</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>14</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>15</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>16</th>
+            <th {...excelConfig} className={"!font-normal"}>3a</th>
+            <th {...excelConfig} className={"!font-normal"}>3b</th>
+            <th {...excelConfig} className={"!font-normal"}>4</th>
+            <th {...excelConfig} className={"!font-normal"}>5</th>
+            <th {...excelConfig} className={"!font-normal"}>6</th>
+            <th {...excelConfig} className={"!font-normal"}>7</th>
+            <th {...excelConfig} className={"!font-normal"}>8</th>
+            <th {...excelConfig} className={"!font-normal"}>9</th>
+            <th {...excelConfig} className={"!font-normal"}>10</th>
+            <th {...excelConfig} className={"!font-normal"}>11</th>
+            <th {...excelConfig} className={"!font-normal"}>12</th>
+            <th {...excelConfig} className={"!font-normal"}>13</th>
+            <th {...excelConfig} className={"!font-normal"}>14</th>
+            <th {...excelConfig} className={"!font-normal"}>15</th>
+            <th {...excelConfig} className={"!font-normal"}>16</th>
         </tr>
     </thead>
 }
