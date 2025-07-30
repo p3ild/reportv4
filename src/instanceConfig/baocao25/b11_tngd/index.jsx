@@ -40,7 +40,8 @@ const Tndg = () => {
       if (corePicker.orgSelected.level === 2) {
         ou = `LEVEL-WhQd3l5lhwv;OU_GROUP-uyuiasZ82O4;${corePicker.orgSelected.id}`;
       } else {
-        ou = corePicker.orgSelected.id;
+        //ou = corePicker.orgSelected.id;
+        ou = `LEVEL-DlpICkLnkZl;OU_GROUP-eHs95ggJw7J;OU_GROUP-OHWM3DxkeMR;${corePicker.orgSelected.id}`;
       }
     }
     try {
@@ -90,16 +91,32 @@ const Tndg = () => {
       }
     }
 
-    let newOuArr = ouArr.map((id) => {
-      const org = rawData[tableKey]?.metaData?.items[id];
-      return org;
-    });
+    let newOuArr = ouArr
+      .map((id) => {
+        const org = rawData[tableKey]?.metaData?.items[id];
+        return org;
+      })
+      .sort((a, b) => {
+        if (a && b) {
+          return a.name.localeCompare(b.name);
+        }
+        return 0;
+      });
+
+    const idx = newOuArr.findIndex((org) => org && org.uid === selectedId);
+    if (idx > 0) {
+      const [selectedOrg] = newOuArr.splice(idx, 1);
+      newOuArr.unshift(selectedOrg);
+    }
 
     return newOuArr.map((org, index) => {
-      const id = org.id;
+      const id = org.uid;
       //const org = rawData[tableKey]?.metaData?.items[id];
+      //console.log(corePicker.orgSelected);
       const isTotal =
-        id === corePicker.orgSelected.id && corePicker.orgSelected.level <= 2;
+        corePicker.orgSelected.children.length > 0 &&
+        id === corePicker.orgSelected.id;
+      // id === corePicker.orgSelected.id && corePicker.orgSelected.level <= 3;
 
       return (
         <tr id={id} key={id}>
@@ -123,7 +140,7 @@ const Tndg = () => {
                 data-a-wrap="true"
                 data-b-a-s="thin"
               >
-                {index}
+                {index === 0 ? 1 : index}
               </td>
               <td
                 data-a-h="left"
@@ -176,6 +193,8 @@ const Tndg = () => {
         ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
         ORG_GROUP.TUYEN_TINH,
+        ORG_GROUP.XA_CSYT_KHAC,
+        ORG_GROUP.XA,
       ],
       // levelsToHideIfEmpty: [3]
     });
@@ -702,7 +721,8 @@ const Tndg = () => {
                     : undefined,
                 ]
                   .filter((e) => e)
-                  .join(" - ")}
+                  .join(" đến ")
+                  .replaceAll("-", "/")}
               </p>
             </td>
           </tr>
@@ -721,9 +741,8 @@ const Tndg = () => {
               }}
             >
               <p className="italic">
-                Ngày kết xuất dữ liệu cho báo cáo:{" "}
-                {format(new Date(), "dd/MM/yyyy")} - Nguồn dữ liệu: Phần mềm
-                Thống kê Y tế
+                Ngày kết xuất báo cáo: {format(new Date(), "dd/MM/yyyy")} -
+                Nguồn dữ liệu: Phần mềm Thống kê y tế
               </p>
             </td>
           </tr>
@@ -1158,7 +1177,8 @@ const Tndg = () => {
                     : undefined,
                 ]
                   .filter((e) => e)
-                  .join(" - ")}
+                  .join(" đến ")
+                  .replaceAll("-", "/")}
               </p>
             </td>
           </tr>
@@ -1177,9 +1197,8 @@ const Tndg = () => {
               }}
             >
               <p className="italic">
-                Ngày kết xuất dữ liệu cho báo cáo:{" "}
-                {format(new Date(), "dd/MM/yyyy")} - Nguồn dữ liệu: Phần mềm
-                Thống kê Y tế
+                Ngày kết xuất báo cáo: {format(new Date(), "dd/MM/yyyy")} -
+                Nguồn dữ liệu: Phần mềm Thống kê y tế
               </p>
             </td>
           </tr>
