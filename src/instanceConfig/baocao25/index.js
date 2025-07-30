@@ -34,6 +34,12 @@ class Config extends Base {
     },
     {
       folder: [this.listFolder.core],
+      key: "R6v6PxC0JM8",
+      displayName: "TÌNH HÌNH NHÂN LỰC Y TẾ",
+      getReportInstance: async () => await import("./p2ild/bmte_b4"),
+    },
+    {
+      folder: [this.listFolder.core],
       key: "mMx0kzgX6Uv",
       displayName: "Hoạt động chăm sóc bà mẹ",
       getReportInstance: async () => await import("./p2ild/bmte_b4"),
