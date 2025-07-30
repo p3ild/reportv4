@@ -253,7 +253,8 @@ const DataTable = ({
   const checkHaveChildren = (array) =>
     array.some(
       (item) =>
-        item.id || (item.children ? checkHaveChildren(item.children) : true)
+        (item.id && orgUnits.some((ou) => ou.id === item.id)) ||
+        (item.children ? checkHaveChildren(item.children) : true)
     );
 
   const haveChildren = checkHaveChildren(generateRowByOrgUnit());

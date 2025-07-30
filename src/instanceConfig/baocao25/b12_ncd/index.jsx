@@ -33,8 +33,6 @@ const B12 = () => {
       PERIOD_TYPE.month,
       PERIOD_TYPE.month2,
       PERIOD_TYPE.year,
-      PERIOD_TYPE.sixMonth,
-      PERIOD_TYPE.biWeek,
     ]);
 
     getPickerStateByPath("actions.setOrgPickerConfig")({
