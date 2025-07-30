@@ -19,4 +19,12 @@ const flatten = (items) => {
   return result;
 };
 
-export { findHeaderIndex, flatten };
+const getLatestMonth = (year) => {
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
+
+  if (year !== currentYear) return `${year}12`;
+  return `${year}${currentMonth.toString().padStart(2, "0")}`;
+};
+
+export { findHeaderIndex, flatten, getLatestMonth };

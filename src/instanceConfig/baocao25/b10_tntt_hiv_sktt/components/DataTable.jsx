@@ -78,36 +78,56 @@ const DataTable = ({
           label: item.label,
           prefix: item.prefix,
 
-          children: item.children.map((child) => {
-            return {
-              label: child.label,
-              prefix: child.prefix,
-
-              getData: (filteredData) => {
-                return filteredData.reduce((prev, curr) => {
-                  const foundOu = orgUnits.find((ou) => ou.id === curr.ou);
-                  if (!foundOu) return prev;
-                  const inOuGroup = foundOu.organisationUnitGroups.some((oug) =>
-                    child.ougs.includes(oug.id)
-                  );
-                  if (!inOuGroup) return prev;
-
-                  return prev + (Number(curr.value) || 0);
-                }, 0);
-              },
-              children: filterOrgUnits
-                .filter((ou) =>
-                  ou.organisationUnitGroups.some((oug) =>
-                    child.ougs.includes(oug.id)
+          ...(item.ougs
+            ? {
+                children: filterOrgUnits
+                  .filter((ou) =>
+                    ou.organisationUnitGroups.some((oug) =>
+                      item.ougs.includes(oug.id)
+                    )
                   )
-                )
-                .map((ou) => ({
-                  id: ou.id,
-                  label: ou.displayName,
-                }))
-                .sort((a, b) => a.label.localeCompare(b.label)),
-            };
-          }),
+                  .map((ou) => ({
+                    id: ou.id,
+                    label: ou.displayName,
+                    blocks: item.blocks,
+                  }))
+                  .sort((a, b) => a.label.localeCompare(b.label)),
+              }
+            : {
+                children: item.children.map((child) => {
+                  return {
+                    label: child.label,
+                    prefix: child.prefix,
+                    blocks: child.blocks,
+                    getData: (filteredData) => {
+                      return filteredData.reduce((prev, curr) => {
+                        const foundOu = orgUnits.find(
+                          (ou) => ou.id === curr.ou
+                        );
+                        if (!foundOu) return prev;
+                        const inOuGroup = foundOu.organisationUnitGroups.some(
+                          (oug) => child.ougs.includes(oug.id)
+                        );
+                        if (!inOuGroup) return prev;
+
+                        return prev + (Number(curr.value) || 0);
+                      }, 0);
+                    },
+                    children: filterOrgUnits
+                      .filter((ou) =>
+                        ou.organisationUnitGroups.some((oug) =>
+                          child.ougs.includes(oug.id)
+                        )
+                      )
+                      .map((ou) => ({
+                        id: ou.id,
+                        label: ou.displayName,
+                        blocks: child.blocks,
+                      }))
+                      .sort((a, b) => a.label.localeCompare(b.label)),
+                  };
+                }),
+              }),
         }));
       case 3:
         filterOrgUnits = orgUnits.filter((ou) =>
@@ -350,18 +370,20 @@ const DataTable = ({
         </tbody>
       </table>
       <div>
-        <table className="!border-0">
-          <tr>
-            <td
-              data-f-name="Times New Roman"
-              data-f-sz="12"
-              className="!border-0 font-bold"
-              colSpan={dataElements.length + 2}
-            >
-              {subTitle}
-            </td>
-          </tr>
-        </table>
+        {subTitle && (
+          <table className="!border-0">
+            <tr>
+              <td
+                data-f-name="Times New Roman"
+                data-f-sz="12"
+                className="!border-0 font-bold"
+                colSpan={dataElements.length + 2}
+              >
+                {subTitle}
+              </td>
+            </tr>
+          </table>
+        )}
         <table id={id} ref={ref} className={`report-table-main min-w-full`}>
           <thead>
             {headers.map((row, index) => {
