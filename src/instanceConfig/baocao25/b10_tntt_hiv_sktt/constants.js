@@ -10,6 +10,49 @@ const LAST_VALUE_DATA_ELEMENTS = [
   "CwwMLAEYbuD",
   "QRIgOI9CRNd",
 ];
+const ROW_GENERATE_FOR_NATION_LEVEL = [
+  { label: "Tuyến trung ương", ougs: ["a8tDjfQpPbK"] },
+  { label: "Tuyến tỉnh", ougs: ["ubpcYbv2aKe"] },
+  { label: "Tuyến xã", ougs: ["uyuiasZ82O4"] },
+  { label: "Tư nhân", ougs: ["b3Fa4WDUKDl", "LDueUOVxA6b"] },
+];
+
+const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
+  {
+    id: "publicHeath",
+    label: "Y tế công",
+    prefix: "A",
+    children: [
+      { label: "Tuyến trung ương", prefix: "I", ougs: ["a8tDjfQpPbK"] },
+      { label: "Tuyến tỉnh", prefix: "II", ougs: ["ubpcYbv2aKe"] },
+      { label: "Tuyến xã", prefix: "III", ougs: ["uyuiasZ82O4"] },
+    ],
+  },
+  {
+    id: "privateHealth",
+    label: "Y tế tư nhân",
+    prefix: "B",
+    children: [
+      { label: "Bệnh viện", prefix: "I", ougs: ["b3Fa4WDUKDl"] },
+      { label: "Phòng khám", prefix: "II", ougs: ["LDueUOVxA6b"] },
+    ],
+  },
+];
+
+const ROW_GENERATE_FOR_COMMUNE_LEVEL = [
+  {
+    id: "medicalStation",
+    label: "Trạm y tế",
+    prefix: "I",
+    ougs: ["OHWM3DxkeMR"],
+  },
+  {
+    id: "otherMedicalFacilities",
+    label: "Cơ sở y tế khác",
+    prefix: "II",
+    ougs: ["eHs95ggJw7J"],
+  },
+];
 //table 1
 const HEADER_TABLE_1 = [
   [
@@ -58,7 +101,7 @@ const HEADER_TABLE_1 = [
       label: "Tổng số",
     },
     {
-      label: "Trđ: Nữ1",
+      label: "Trđ: Nữ",
     },
   ],
 ];
@@ -76,49 +119,6 @@ const DATA_ELEMENTS_TABLE_1 = [
   "T01fetxyjry.GvoEANq375m",
 ];
 
-const ROW_GENERATE_FOR_NATION_LEVEL = [
-  { label: "Tuyến trung ương", ougs: ["a8tDjfQpPbK"] },
-  { label: "Tuyến tỉnh", ougs: ["ubpcYbv2aKe"] },
-  { label: "Tuyến xã", ougs: ["uyuiasZ82O4"] },
-  { label: "Tư nhân", ougs: ["b3Fa4WDUKDl", "LDueUOVxA6b"] },
-];
-
-const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
-  {
-    id: "publicHeath",
-    label: "Y tế công",
-    prefix: "A",
-    children: [
-      { label: "Tuyến trung ương", prefix: "I", ougs: ["a8tDjfQpPbK"] },
-      { label: "Tuyến tỉnh", prefix: "II", ougs: ["ubpcYbv2aKe"] },
-      { label: "Tuyến xã", prefix: "III", ougs: ["uyuiasZ82O4"] },
-    ],
-  },
-  {
-    id: "privateHealth",
-    label: "Y tế tư nhân",
-    prefix: "B",
-    children: [
-      { label: "Bệnh viện", prefix: "I", ougs: ["b3Fa4WDUKDl"] },
-      { label: "Phòng khám", prefix: "II", ougs: ["LDueUOVxA6b"] },
-    ],
-  },
-];
-
-const ROW_GENERATE_FOR_COMMUNE_LEVEL = [
-  {
-    id: "medicalStation",
-    label: "Trạm y tế",
-    prefix: "I",
-    ougs: ["OHWM3DxkeMR"],
-  },
-  {
-    id: "otherMedicalFacilities",
-    label: "Cơ sở y tế khác",
-    prefix: "II",
-    ougs: ["eHs95ggJw7J"],
-  },
-];
 //table 2
 const DATA_ELEMENTS_TABLE_2 = [
   "sFUAD4MnkHI",
@@ -135,7 +135,12 @@ const DATA_ELEMENTS_TABLE_2 = [
 ];
 const HEADER_TABLE_2 = [
   [
-    { label: "TT", rowSpan: 2, className: "sticky-col", "sticky-col": 0 },
+    {
+      label: "TT",
+      rowSpan: 2,
+      className: "sticky-col w-[36px]",
+      "sticky-col": 0,
+    },
     {
       label: "Tên cơ sở",
       rowSpan: 2,
@@ -147,35 +152,46 @@ const HEADER_TABLE_2 = [
   [
     {
       label: "Tai nạn Giao thông",
+      className: "w-[7.2%]",
     },
     {
+      className: "w-[7.2%]",
       label: "Tai nạn lao động",
     },
     {
+      className: "w-[7.2%]",
       label: "Đuối nước",
     },
     {
+      className: "w-[7.2%]",
       label: "Ngã",
     },
     {
+      className: "w-[7.2%]",
       label: "Bỏng",
     },
     {
+      className: "w-[7.2%]",
       label: "Tự tử",
     },
     {
+      className: "w-[7.2%]",
       label: "Ngộ độc (hóa chất, thực phẩm)",
     },
     {
+      className: "w-[7.2%]",
       label: "Hóc sặc dị vật",
     },
     {
+      className: "w-[7.2%]",
       label: "Động vật cắn, đốt, húc",
     },
     {
+      className: "w-[7.2%]",
       label: "Bạo lực xung đột",
     },
     {
+      className: "w-[7.2%]",
       label: "Tai nạn khác",
     },
   ],

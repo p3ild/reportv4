@@ -56,7 +56,7 @@ const B10 = () => {
       // levelsToHideIfEmpty: [3]
     });
     setExcelOptions({
-      columnWidths: "10,50",
+      columnWidths: "10,30",
       excelFileName: "Báo cáo 10",
     });
   }, []);

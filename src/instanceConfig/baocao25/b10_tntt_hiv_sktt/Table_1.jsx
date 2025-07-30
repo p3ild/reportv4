@@ -8,7 +8,7 @@ const Table_1 = ({ data }) => {
     <DataTable
       dataElements={DATA_ELEMENTS_TABLE_1}
       headers={HEADER_TABLE_1}
-      title="BÁO CÁO 10 - HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS, TNTT, LAO, PHONG VÀ SỨC KHỎE TÂM THẦN"
+      title="HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS, TNTT, LAO, PHONG VÀ SỨC KHỎE TÂM THẦN"
       subTitle="HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS"
       code="Báo cáo 10"
       data={data}
