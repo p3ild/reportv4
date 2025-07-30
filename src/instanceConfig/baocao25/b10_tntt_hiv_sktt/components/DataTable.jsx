@@ -168,6 +168,8 @@ const DataTable = ({
           >
             {/* Indentation: render empty cells for parent levels */}
             <td
+              data-f-name="Times New Roman"
+              data-f-sz="12"
               data-a-wrap="true"
               data-b-a-s="thin"
               data-a-v="middle"
@@ -180,24 +182,28 @@ const DataTable = ({
               {row.prefix || (row.generatePrefix && index + 1)}
             </td>
             <td
+              data-f-name="Times New Roman"
+              data-f-sz="12"
               data-f-bold={haveChildren && "true"}
               data-b-a-s="thin"
               data-a-v="middle"
-              data-a-indent={level}
+              // data-a-indent={level}
               className="sticky-col"
               sticky-col={1}
             >
               <p
                 className={`text-left whitespace-nowrap`}
-                style={{
-                  marginLeft: level && `${level}rem`,
-                }}
+                // style={{
+                //   marginLeft: level && `${level}rem`,
+                // }}
               >
                 {row.label}
               </p>
             </td>
             {dataElements.map((de) => (
               <td
+                data-f-name="Times New Roman"
+                data-f-sz="12"
                 data-a-wrap="true"
                 data-b-a-s="thin"
                 data-a-v="middle"
@@ -234,11 +240,13 @@ const DataTable = ({
 
   return (
     <>
-      <table style={{ border: 0 }} className=" mb-3 sticky left-0">
+      <table style={{ border: 0 }} className="sticky left-0">
         <tbody>
           {code && (
             <tr>
               <td
+                data-f-name="Times New Roman"
+                data-f-sz="12"
                 style={{
                   width: "100vw",
                   fontSize: "16px",
@@ -252,6 +260,8 @@ const DataTable = ({
           )}
           <tr>
             <td
+              data-f-name="Times New Roman"
+              data-f-sz="12"
               colSpan={dataElements.length + 2}
               style={{
                 width: "100vw",
@@ -268,6 +278,8 @@ const DataTable = ({
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
+              data-f-sz="12"
               colSpan={dataElements.length + 2}
               data-a-h="center"
               data-a-v="center"
@@ -285,6 +297,8 @@ const DataTable = ({
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
+              data-f-sz="12"
               colSpan={dataElements.length + 2}
               data-a-h="center"
               data-a-v="center"
@@ -313,6 +327,8 @@ const DataTable = ({
           </tr>
           <tr>
             <td
+              data-f-name="Times New Roman"
+              data-f-sz="12"
               colSpan={dataElements.length + 2}
               data-a-h="center"
               data-a-v="center"
@@ -337,6 +353,8 @@ const DataTable = ({
         <table className="!border-0">
           <tr>
             <td
+              data-f-name="Times New Roman"
+              data-f-sz="12"
               className="!border-0 font-bold"
               colSpan={dataElements.length + 2}
             >
@@ -373,16 +391,18 @@ const DataTable = ({
             })}
           </thead>
           <tbody>
-            <tr className="[&>*]:!font-bold">
+            <tr className="[&>*]:!italic">
               {Array.from({ length: dataElements.length + 2 })
                 .fill(0)
                 .map((_, index) => (
                   <td
+                    data-f-name="Times New Roman"
+                    data-f-sz="12"
                     data-a-h="center"
                     data-a-wrap="true"
                     data-b-a-s="thin"
                     data-a-v="middle"
-                    data-f-bold="true"
+                    data-f-italic="true"
                     key={`${REPORT_NAME}-body-count-${index}`}
                     className={index < 2 ? "sticky-col" : ""}
                     // eslint-disable-next-line react/no-unknown-property
@@ -394,6 +414,8 @@ const DataTable = ({
             </tr>
             <tr className={haveChildren ? "[&>*]:!font-bold" : ""}>
               <td
+                data-f-name="Times New Roman"
+                data-f-sz="12"
                 data-a-wrap="true"
                 data-b-a-s="thin"
                 data-a-v="middle"
@@ -401,11 +423,13 @@ const DataTable = ({
                 sticky-col={0}
               />
               <td
+                data-f-name="Times New Roman"
+                data-f-sz="12"
                 data-a-h={haveChildren ? "center" : "left"}
                 data-a-wrap="true"
                 data-b-a-s="thin"
                 data-a-v="middle"
-                data-f-bold="true"
+                data-f-bold={haveChildren ? "true" : "false"}
                 className={`sticky-col ${
                   haveChildren ? "text-center" : "!text-left"
                 } whitespace-nowrap`}
@@ -417,6 +441,8 @@ const DataTable = ({
               </td>
               {dataElements.map((de) => (
                 <td
+                  data-f-name="Times New Roman"
+                  data-f-sz="12"
                   data-a-h="center"
                   data-a-wrap="true"
                   data-b-a-s="thin"
