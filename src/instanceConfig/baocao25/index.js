@@ -36,7 +36,7 @@ class Config extends Base {
       folder: [this.listFolder.core],
       key: "R6v6PxC0JM8",
       displayName: "TÌNH HÌNH NHÂN LỰC Y TẾ",
-      getReportInstance: async () => await import("./p2ild/bmte_b4"),
+      getReportInstance: async () => await import("./b3"),
     },
     {
       folder: [this.listFolder.core],
@@ -80,12 +80,6 @@ class Config extends Base {
       key: "C290QB6SfjZ",
       displayName: "bmte_x3",
       getReportInstance: async () => await import("./p2ild/bmte_x3"),
-    },
-    {
-      key: "",
-      folder: [this.listFolder.core],
-      displayName: "TÌNH HÌNH NHÂN LỰC Y TẾ",
-      getReportInstance: async () => await import("./b3"),
     },
     {
       key: "mV9DjhMHvEp",
