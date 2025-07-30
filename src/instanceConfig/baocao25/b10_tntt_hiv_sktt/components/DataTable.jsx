@@ -297,7 +297,8 @@ const DataTable = ({
                     : undefined,
                 ]
                   .filter((e) => e)
-                  .join(" đến ")}
+                  .join(" đến ")
+                  .replaceAll("-", "/")}
               </p>
             </td>
           </tr>
@@ -316,9 +317,8 @@ const DataTable = ({
               }}
             >
               <p className="italic">
-                Ngày kết xuất dữ liệu cho báo cáo:{" "}
-                {format(new Date(), "dd/MM/yyyy")} - Nguồn dữ liệu: Phần mềm
-                Thống kê Y tế
+                Ngày kết xuất báo cáo: {format(new Date(), "dd/MM/yyyy")} -
+                Nguồn dữ liệu: Phần mềm Thống kê y tế
               </p>
             </td>
           </tr>

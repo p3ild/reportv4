@@ -89,8 +89,15 @@ const Tndg = () => {
         ouArr.unshift(selectedId);
       }
     }
-    return ouArr.map((id, index) => {
+
+    let newOuArr = ouArr.map((id) => {
       const org = rawData[tableKey]?.metaData?.items[id];
+      return org;
+    });
+
+    return newOuArr.map((org, index) => {
+      const id = org.id;
+      //const org = rawData[tableKey]?.metaData?.items[id];
       const isTotal =
         id === corePicker.orgSelected.id && corePicker.orgSelected.level <= 2;
 
@@ -120,9 +127,10 @@ const Tndg = () => {
               </td>
               <td
                 data-a-h="left"
-                data-a-v="middle"
+                data-a-v="left"
                 data-a-wrap="true"
                 data-b-a-s="thin"
+                style={{ textAlign: "left", paddingLeft: "20px" }}
               >
                 {org ? org.name : ""}
               </td>
@@ -253,7 +261,8 @@ const Tndg = () => {
                     : undefined,
                 ]
                   .filter((e) => e)
-                  .join(" - ")}
+                  .join(" đến ")
+                  .replaceAll("-", "/")}
               </p>
             </td>
           </tr>
@@ -272,9 +281,8 @@ const Tndg = () => {
               }}
             >
               <p className="italic">
-                Ngày kết xuất dữ liệu cho báo cáo:{" "}
-                {format(new Date(), "dd/MM/yyyy")} - Nguồn dữ liệu: Phần mềm
-                Thống kê Y tế
+                Ngày kết xuất báo cáo: {format(new Date(), "dd/MM/yyyy")} -
+                Nguồn dữ liệu: Phần mềm Thống kê y tế
               </p>
             </td>
           </tr>
@@ -306,7 +314,7 @@ const Tndg = () => {
                   corePicker.orgSelected &&
                   corePicker.orgSelected.level === 1
                     ? 2
-                    : 1
+                    : 2
                 }
                 data-a-h="center"
                 data-a-v="middle"
@@ -442,20 +450,6 @@ const Tndg = () => {
               >
                 #
               </th>
-              {corePicker &&
-                corePicker.orgSelected &&
-                corePicker.orgSelected.level !== 1 && (
-                  <th
-                    className="sticky-col col-2 sticky-top top-2"
-                    data-a-h="center"
-                    data-a-v="middle"
-                    data-f-bold="true"
-                    data-a-wrap="true"
-                    data-b-a-s="thin"
-                  >
-                    Trạm y tế cấp xã
-                  </th>
-                )}
               <th
                 data-a-h="center"
                 data-a-v="middle"
@@ -617,6 +611,20 @@ const Tndg = () => {
                 TV
               </th>
             </tr>
+            <tr>
+              {Array.from({ length: 22 }, (_, i) => (
+                <th
+                  key={i + 1}
+                  data-a-h="center"
+                  data-a-v="middle"
+                  data-f-bold="true"
+                  data-a-wrap="true"
+                  data-b-a-s="thin"
+                >
+                  {i + 1}
+                </th>
+              ))}
+            </tr>
           </thead>
           <tbody>{generateTableData("table_1")}</tbody>
         </table>
@@ -748,7 +756,7 @@ const Tndg = () => {
                   corePicker.orgSelected &&
                   corePicker.orgSelected.level === 1
                     ? 2
-                    : 1
+                    : 2
                 }
                 data-a-h="center"
                 data-a-v="middle"
@@ -884,7 +892,7 @@ const Tndg = () => {
               >
                 #
               </th>
-              {corePicker &&
+              {/* {corePicker &&
                 corePicker.orgSelected &&
                 corePicker.orgSelected.level !== 1 && (
                   <th
@@ -897,7 +905,7 @@ const Tndg = () => {
                   >
                     Trạm y tế cấp xã
                   </th>
-                )}
+                )} */}
               <th
                 data-a-h="center"
                 data-a-v="middle"
@@ -1059,6 +1067,20 @@ const Tndg = () => {
                 TV
               </th>
             </tr>
+            <tr>
+              {Array.from({ length: 22 }, (_, i) => (
+                <th
+                  key={i + 1}
+                  data-a-h="center"
+                  data-a-v="middle"
+                  data-f-bold="true"
+                  data-a-wrap="true"
+                  data-b-a-s="thin"
+                >
+                  {i + 1}
+                </th>
+              ))}
+            </tr>
           </thead>
           <tbody>{generateTableData("table_2")}</tbody>
         </table>
@@ -1187,7 +1209,7 @@ const Tndg = () => {
                   corePicker.orgSelected &&
                   corePicker.orgSelected.level === 1
                     ? 2
-                    : 1
+                    : 2
                 }
                 data-a-h="center"
                 data-a-v="middle"
@@ -1345,7 +1367,7 @@ const Tndg = () => {
               >
                 #
               </th>
-              {corePicker &&
+              {/* {corePicker &&
                 corePicker.orgSelected &&
                 corePicker.orgSelected.level !== 1 && (
                   <th
@@ -1358,7 +1380,7 @@ const Tndg = () => {
                   >
                     Trạm y tế cấp xã
                   </th>
-                )}
+                )} */}
               <th
                 data-a-h="center"
                 data-a-v="middle"
@@ -1551,6 +1573,20 @@ const Tndg = () => {
               >
                 TV
               </th>
+            </tr>
+            <tr>
+              {Array.from({ length: 26 }, (_, i) => (
+                <th
+                  key={i + 1}
+                  data-a-h="center"
+                  data-a-v="middle"
+                  data-f-bold="true"
+                  data-a-wrap="true"
+                  data-b-a-s="thin"
+                >
+                  {i + 1}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>{generateTableData("table_3")}</tbody>
