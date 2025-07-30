@@ -20,6 +20,7 @@ const DataTable = ({
   code = "",
   data,
   id,
+  subTitle = "",
 }) => {
   const { me } = useCoreMetaState(
     useShallow((state) => ({
@@ -324,92 +325,107 @@ const DataTable = ({
           </tr>
         </tbody>
       </table>
-      <table id={id} ref={ref} className={`report-table-main `}>
-        <thead>
-          {headers.map((row, index) => {
-            return (
-              <tr
-                className="row-sticky !left-0"
-                key={`${REPORT_NAME}-header-${index}`}
+      <div>
+        <table className="!border-0">
+          <tr>
+            <td className="!border-0" colSpan={dataElements.length + 2}>
+              {subTitle}
+            </td>
+          </tr>
+        </table>
+        <table id={id} ref={ref} className={`report-table-main `}>
+          <thead>
+            {headers.map((row, index) => {
+              return (
+                <tr
+                  className="row-sticky !left-0"
+                  key={`${REPORT_NAME}-header-${index}`}
+                >
+                  {row.map((cell, indexCell) => {
+                    const { label, ...props } = cell;
+                    return (
+                      <th
+                        data-a-h="center"
+                        data-a-v="middle"
+                        data-f-bold="true"
+                        data-a-wrap="true"
+                        data-b-a-s="thin"
+                        key={`${REPORT_NAME}-header-${index}-cell-${indexCell}`}
+                        {...props}
+                      >
+                        {label}
+                      </th>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </thead>
+          <tbody>
+            <tr className="[&>*]:!font-bold">
+              {Array.from({ length: dataElements.length + 2 })
+                .fill(0)
+                .map((_, index) => (
+                  <td
+                    data-a-h="center"
+                    data-a-wrap="true"
+                    data-b-a-s="thin"
+                    data-a-v="middle"
+                    data-f-bold="true"
+                    key={`${REPORT_NAME}-body-count-${index}`}
+                    className={index < 2 ? "sticky-col" : ""}
+                    // eslint-disable-next-line react/no-unknown-property
+                    sticky-col={index}
+                  >
+                    {index + 1}
+                  </td>
+                ))}
+            </tr>
+            <tr className="[&>*]:!font-bold">
+              <td
+                data-a-wrap="true"
+                data-b-a-s="thin"
+                data-a-v="middle"
+                className="sticky-col"
+                sticky-col={0}
+              />
+              <td
+                data-a-h={generateRowByOrgUnit().length > 0 ? "center" : "left"}
+                data-a-wrap="true"
+                data-b-a-s="thin"
+                data-a-v="middle"
+                data-f-bold="true"
+                className={`sticky-col ${
+                  generateRowByOrgUnit().length > 0
+                    ? "text-center"
+                    : "!text-left"
+                }`}
+                sticky-col={1}
               >
-                {row.map((cell, indexCell) => {
-                  const { label, ...props } = cell;
-                  return (
-                    <th
-                      data-a-h="center"
-                      data-a-v="middle"
-                      data-f-bold="true"
-                      data-a-wrap="true"
-                      data-b-a-s="thin"
-                      key={`${REPORT_NAME}-header-${index}-cell-${indexCell}`}
-                      {...props}
-                    >
-                      {label}
-                    </th>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </thead>
-        <tbody>
-          <tr className="[&>*]:!font-bold">
-            {Array.from({ length: dataElements.length + 2 })
-              .fill(0)
-              .map((_, index) => (
+                {generateRowByOrgUnit().length > 0
+                  ? "Tổng cộng"
+                  : corePicker.orgSelected.displayName}
+              </td>
+              {dataElements.map((de) => (
                 <td
                   data-a-h="center"
                   data-a-wrap="true"
                   data-b-a-s="thin"
                   data-a-v="middle"
                   data-f-bold="true"
-                  key={`${REPORT_NAME}-body-count-${index}`}
-                  className={index < 2 ? "sticky-col" : ""}
-                  // eslint-disable-next-line react/no-unknown-property
-                  sticky-col={index}
+                  key={`${REPORT_NAME}-total-cell-${de}`}
                 >
-                  {index + 1}
+                  {(data || []).find(
+                    (item) =>
+                      item.dx === de && item.ou === corePicker.orgSelected.id
+                  )?.value || 0}
                 </td>
               ))}
-          </tr>
-          <tr className="[&>*]:!font-bold">
-            <td
-              data-a-wrap="true"
-              data-b-a-s="thin"
-              data-a-v="middle"
-              className="sticky-col"
-              sticky-col={0}
-            />
-            <td
-              data-a-h="center"
-              data-a-wrap="true"
-              data-b-a-s="thin"
-              data-a-v="middle"
-              data-f-bold="true"
-              className="sticky-col"
-              sticky-col={1}
-            >
-              Tổng cộng
-            </td>
-            {dataElements.map((de) => (
-              <td
-                data-a-h="center"
-                data-a-wrap="true"
-                data-b-a-s="thin"
-                data-a-v="middle"
-                data-f-bold="true"
-                key={`${REPORT_NAME}-total-cell-${de}`}
-              >
-                {(data || []).find(
-                  (item) =>
-                    item.dx === de && item.ou === corePicker.orgSelected.id
-                )?.value || 0}
-              </td>
-            ))}
-          </tr>
-          {renderRows(generateRowByOrgUnit())}
-        </tbody>
-      </table>
+            </tr>
+            {renderRows(generateRowByOrgUnit())}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 };
