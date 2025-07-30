@@ -37,6 +37,7 @@ const B12 = () => {
 
     getPickerStateByPath("actions.setOrgPickerConfig")({
       orgGroupVisible: [
+        ORG_GROUP.TUYEN_TRUNG_UONG,
         ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
         ORG_GROUP.TUYEN_TINH,
@@ -46,7 +47,7 @@ const B12 = () => {
       // levelsToHideIfEmpty: [3]
     });
     setExcelOptions({
-      columnWidths: "10,50",
+      columnWidths: "10,30",
       excelFileName: "Báo cáo 12",
     });
   }, []);
