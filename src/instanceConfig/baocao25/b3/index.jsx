@@ -34,11 +34,7 @@ const B3 = () => {
     }))
   );
   useEffect(() => {
-    getPickerStateByPath("actions.setAllowPeriodTypes")([
-      PERIOD_TYPE.month,
-      PERIOD_TYPE.month2,
-      PERIOD_TYPE.year,
-    ]);
+    getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.year]);
 
     getPickerStateByPath("actions.setOrgPickerConfig")({
       orgGroupVisible: [
