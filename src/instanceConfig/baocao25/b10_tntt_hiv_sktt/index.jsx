@@ -14,9 +14,11 @@ import {
   DATA_ELEMENTS_TABLE_1,
   DATA_ELEMENTS_TABLE_2,
   DATA_ELEMENTS_TABLE_3,
+  LAST_VALUE_DATA_ELEMENTS,
 } from "./constants";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { useShallow } from "zustand/react/shallow";
+import { getLatestMonth } from "./utils";
 const B10 = () => {
   const [data, setData] = useState();
 
@@ -63,22 +65,42 @@ const B10 = () => {
     try {
       setGlobalOverlay({ isOpen: true });
 
-      const result = await _get(
-        `/api/analytics?dimension=dx:${[
-          ...DATA_ELEMENTS_TABLE_1,
-          ...DATA_ELEMENTS_TABLE_2,
-          ...DATA_ELEMENTS_TABLE_3,
-        ].join(";")},ou:${
-          corePicker.orgSelected.id
-        };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${
-          corePicker.periodSelected.outputDataDhis2
-        }`
-      );
+      const isMultiplePe =
+        corePicker.periodSelected.outputDataDhis2.split(";").length > 1;
+
+      const lastPeriod = isMultiplePe
+        ? corePicker.periodSelected.endDate
+        : corePicker.periodSelected.type === "year"
+        ? getLatestMonth(Number(corePicker.periodSelected.outputDataDhis2))
+        : corePicker.periodSelected.outputDataDhis2;
+
+      const [result, result1] = await Promise.all([
+        _get(
+          `/api/analytics?dimension=dx:${[
+            ...DATA_ELEMENTS_TABLE_1,
+            ...DATA_ELEMENTS_TABLE_2,
+            ...DATA_ELEMENTS_TABLE_3,
+          ]
+            .filter((de) => !LAST_VALUE_DATA_ELEMENTS.includes(de))
+            .join(";")},ou:${
+            corePicker.orgSelected.id
+          };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${
+            corePicker.periodSelected.outputDataDhis2
+          }`
+        ),
+        _get(
+          `/api/analytics?dimension=dx:${LAST_VALUE_DATA_ELEMENTS.join(
+            ";"
+          )},ou:${
+            corePicker.orgSelected.id
+          };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${lastPeriod}`
+        ),
+      ]);
       const valueIndex = findHeaderIndex(result, "value");
       const dxIndex = findHeaderIndex(result, "dx");
       const ouIndex = findHeaderIndex(result, "ou");
 
-      const dataResult = result.rows.map((row) => ({
+      const dataResult = [...result.rows, ...result1.rows].map((row) => ({
         value: row[valueIndex],
         ou: row[ouIndex],
         dx: row[dxIndex],

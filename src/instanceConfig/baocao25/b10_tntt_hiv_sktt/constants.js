@@ -1,4 +1,15 @@
 const REPORT_NAME = "b10_tntt_hiv_sktt";
+const LAST_VALUE_DATA_ELEMENTS = [
+  "pvzHrKHH3I5",
+  "pvzHrKHH3I5.GvoEANq375m",
+  "WvJoHH7IjFL",
+  "WvJoHH7IjFL.GvoEANq375m",
+  "wSak01RyjQ7",
+  "Gx8E2HsAjVp",
+  "SOmWBc5Ygym",
+  "CwwMLAEYbuD",
+  "QRIgOI9CRNd",
+];
 //table 1
 const HEADER_TABLE_1 = [
   [
@@ -246,4 +257,5 @@ export {
   HEADER_TABLE_2,
   DATA_ELEMENTS_TABLE_3,
   HEADER_TABLE_3,
+  LAST_VALUE_DATA_ELEMENTS,
 };

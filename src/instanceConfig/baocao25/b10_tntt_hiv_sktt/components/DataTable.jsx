@@ -344,7 +344,7 @@ const DataTable = ({
             </td>
           </tr>
         </table>
-        <table id={id} ref={ref} className={`report-table-main `}>
+        <table id={id} ref={ref} className={`report-table-main min-w-full`}>
           <thead>
             {headers.map((row, index) => {
               return (
