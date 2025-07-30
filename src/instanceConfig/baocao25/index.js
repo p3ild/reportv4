@@ -58,6 +58,12 @@ class Config extends Base {
       getReportInstance: async () => await import("./p2ild/bmte_b7"),
     },
     {
+      key: "",
+      folder: [this.listFolder.core],
+      displayName: "TÌNH HÌNH NHÂN LỰC Y TẾ",
+      getReportInstance: async () => await import("./b3"),
+    },
+    {
       key: "mV9DjhMHvEp",
       folder: [this.listFolder.core],
       displayName:

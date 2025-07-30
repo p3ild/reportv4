@@ -17,7 +17,7 @@ import {
 } from "./constants";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { useShallow } from "zustand/react/shallow";
-const Test = () => {
+const B10 = () => {
   const [data, setData] = useState();
 
   const { _get, setGlobalOverlay, me, setExcelOptions } = useCoreMetaState(
@@ -105,4 +105,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default B10;

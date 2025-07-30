@@ -8,11 +8,16 @@ import { ORG_GROUP } from "../p2ild/common/constant";
 import Table_1 from "./Table_1";
 import "./index.css";
 import Table_2 from "./Table_2";
+import Table_3 from "./Table_3";
 import { findHeaderIndex } from "../p2ild/common/utils";
-import { DATA_ELEMENTS_TABLE_1, DATA_ELEMENTS_TABLE_2 } from "./constants";
+import {
+  DATA_ELEMENTS_TABLE_1,
+  DATA_ELEMENTS_TABLE_2,
+  DATA_ELEMENTS_TABLE_3,
+} from "./constants";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { useShallow } from "zustand/react/shallow";
-const B12 = () => {
+const B3 = () => {
   const [data, setData] = useState();
 
   const { _get, setGlobalOverlay, me, setExcelOptions } = useCoreMetaState(
@@ -49,7 +54,7 @@ const B12 = () => {
     });
     setExcelOptions({
       columnWidths: "10,50",
-      excelFileName: "Báo cáo 12",
+      excelFileName: "Báo cáo 10",
     });
   }, []);
 
@@ -61,6 +66,7 @@ const B12 = () => {
         `/api/analytics?dimension=dx:${[
           ...DATA_ELEMENTS_TABLE_1,
           ...DATA_ELEMENTS_TABLE_2,
+          ...DATA_ELEMENTS_TABLE_3,
         ].join(";")},ou:${
           corePicker.orgSelected.id
         };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${
@@ -94,8 +100,9 @@ const B12 = () => {
     <div className="font-serif h-full report-container  b10_tntt_hiv_sktt-report-container flex flex-col gap-6">
       <Table_1 data={data} />
       <Table_2 data={data} />
+      <Table_3 data={data} />
     </div>
   );
 };
 
-export default B12;
+export default B3;
