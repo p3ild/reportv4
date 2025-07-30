@@ -224,9 +224,17 @@ const DataTable = ({
 
   const ref = useSticky(id);
 
+  const checkHaveChildren = (array) =>
+    array.some(
+      (item) =>
+        item.id && (item.children ? checkHaveChildren(item.children) : true)
+    );
+
+  const haveChildren = checkHaveChildren(generateRowByOrgUnit());
+
   return (
     <>
-      <table style={{ border: 0 }} className=" mb-5 sticky left-0">
+      <table style={{ border: 0 }} className=" mb-3 sticky left-0">
         <tbody>
           {code && (
             <tr>
@@ -328,7 +336,10 @@ const DataTable = ({
       <div>
         <table className="!border-0">
           <tr>
-            <td className="!border-0" colSpan={dataElements.length + 2}>
+            <td
+              className="!border-0 font-bold"
+              colSpan={dataElements.length + 2}
+            >
               {subTitle}
             </td>
           </tr>
@@ -381,7 +392,7 @@ const DataTable = ({
                   </td>
                 ))}
             </tr>
-            <tr className="[&>*]:!font-bold">
+            <tr className={haveChildren ? "[&>*]:!font-bold" : ""}>
               <td
                 data-a-wrap="true"
                 data-b-a-s="thin"
@@ -390,21 +401,19 @@ const DataTable = ({
                 sticky-col={0}
               />
               <td
-                data-a-h={generateRowByOrgUnit().length > 0 ? "center" : "left"}
+                data-a-h={haveChildren ? "center" : "left"}
                 data-a-wrap="true"
                 data-b-a-s="thin"
                 data-a-v="middle"
                 data-f-bold="true"
                 className={`sticky-col ${
-                  generateRowByOrgUnit().length > 0
-                    ? "text-center"
-                    : "!text-left"
+                  haveChildren ? "text-center" : "!text-left"
                 }`}
                 sticky-col={1}
               >
-                {generateRowByOrgUnit().length > 0
+                {haveChildren
                   ? "Tổng cộng"
-                  : corePicker.orgSelected.displayName}
+                  : corePicker?.orgSelected?.displayName}
               </td>
               {dataElements.map((de) => (
                 <td
@@ -422,7 +431,8 @@ const DataTable = ({
                 </td>
               ))}
             </tr>
-            {renderRows(generateRowByOrgUnit())}
+
+            {haveChildren && renderRows(generateRowByOrgUnit())}
           </tbody>
         </table>
       </div>
