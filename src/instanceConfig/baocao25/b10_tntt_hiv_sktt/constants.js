@@ -6,7 +6,7 @@ const HEADER_TABLE_1 = [
     {
       label: "Tên cơ sở",
       rowSpan: 3,
-      className: "sticky-col",
+      className: "sticky-col whitespace-nowrap",
       "sticky-col": 1,
     },
     { label: "Phòng chống sốt rét", colSpan: 2 },

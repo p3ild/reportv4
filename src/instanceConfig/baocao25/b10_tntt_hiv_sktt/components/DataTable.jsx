@@ -188,7 +188,7 @@ const DataTable = ({
               sticky-col={1}
             >
               <p
-                className={`text-left`}
+                className={`text-left whitespace-nowrap`}
                 style={{
                   marginLeft: level && `${level}rem`,
                 }}
@@ -227,7 +227,7 @@ const DataTable = ({
   const checkHaveChildren = (array) =>
     array.some(
       (item) =>
-        item.id && (item.children ? checkHaveChildren(item.children) : true)
+        item.id || (item.children ? checkHaveChildren(item.children) : true)
     );
 
   const haveChildren = checkHaveChildren(generateRowByOrgUnit());
@@ -408,7 +408,7 @@ const DataTable = ({
                 data-f-bold="true"
                 className={`sticky-col ${
                   haveChildren ? "text-center" : "!text-left"
-                }`}
+                } whitespace-nowrap`}
                 sticky-col={1}
               >
                 {haveChildren
