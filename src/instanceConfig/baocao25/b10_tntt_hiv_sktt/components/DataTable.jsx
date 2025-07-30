@@ -103,7 +103,8 @@ const DataTable = ({
                 .map((ou) => ({
                   id: ou.id,
                   label: ou.displayName,
-                })),
+                }))
+                .sort((a, b) => a.label.localeCompare(b.label)),
             };
           }),
         }));
@@ -145,7 +146,8 @@ const DataTable = ({
             .map((ou) => ({
               id: ou.id,
               label: ou.displayName,
-            })),
+            }))
+            .sort((a, b) => a.label.localeCompare(b.label)),
         }));
       default:
         return [];
@@ -322,7 +324,7 @@ const DataTable = ({
           </tr>
         </tbody>
       </table>
-      <table id={id} ref={ref} className={`report-table-main  min-w-[2000px]`}>
+      <table id={id} ref={ref} className={`report-table-main `}>
         <thead>
           {headers.map((row, index) => {
             return (
