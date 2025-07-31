@@ -20,6 +20,9 @@ export const ORG_GROUP = {
   TINH_CSYT_CONG_CSSKBM: "ImtV96dR0JK",
   TINH_YTTN_CSSKBM: "KKrseu3RYOe",
 
+  TINH_CSYT_CONG_KCB: "prigYTb70un",
+  TW_CSYT_KCB: "LnayCg8zlUA",
+  TW_YT_NGANH: "sNVZhZdlqvt",
   // ------------------------------------- BAOCAO -------------------------------------
   // HUYEN_DVHC: "W4U1KdFeIJH",
   // HUYEN_DVHC_BF_2025: "BP9QnWc3imF",

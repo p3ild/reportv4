@@ -49,7 +49,7 @@ const B3 = () => {
     });
     setExcelOptions({
       columnWidths: "10,30",
-      excelFileName: "Báo cáo 10",
+      excelFileName: "Báo cáo 3",
     });
   }, []);
 
@@ -92,10 +92,10 @@ const B3 = () => {
   }, [corePicker.pickCompleted]);
 
   return (
-    <div className="font-serif h-full report-container  b10_tntt_hiv_sktt-report-container flex flex-col gap-6">
+    <div className="font-serif h-full report-container  b3-report-container flex flex-col gap-6">
       <Table_1 data={data} />
-      {/* <Table_2 data={data} />
-      <Table_3 data={data} /> */}
+      <Table_2 data={data} />
+      <Table_3 data={data} />
     </div>
   );
 };

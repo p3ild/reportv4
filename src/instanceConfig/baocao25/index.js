@@ -16,7 +16,7 @@ class Config extends Base {
   listFolder = {
     core: {
       key: "core",
-      label: "Báo cáo cốt lõi ",
+      label: "Báo cáo cốt lõi",
     },
 
     other: {
@@ -99,6 +99,12 @@ class Config extends Base {
       folder: [this.listFolder.core],
       displayName: "HOẠT ĐỘNG PHÁT HIỆN, QUẢN LÝ ĐIỀU TRỊ BỆNH KHÔNG LÂY NHIỄM",
       getReportInstance: async () => await import("./b12_ncd"),
+    },
+    {
+      key: "test",
+      folder: [this.listFolder.core],
+      displayName: "TÌNH HÌNH BỆNH TẬT VÀ TỬ VONG TẠI BỆNH VIỆN THEO ICD 10",
+      getReportInstance: async () => await import("./b14_icd10"),
     },
   ];
 }

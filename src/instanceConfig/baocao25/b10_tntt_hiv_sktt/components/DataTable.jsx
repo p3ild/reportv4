@@ -135,41 +135,47 @@ const DataTable = ({
             (ancestor) => ancestor.id === corePicker.orgSelected.id
           )
         );
-        return ROW_GENERATE_FOR_COMMUNE_LEVEL.map((item) => ({
-          id: item.id,
-          label: item.label,
-          prefix: item.prefix,
-          getData: (filteredData) => {
-            return filteredData.reduce((prev, curr) => {
-              const foundOu = orgUnits.find(
-                (ou) =>
-                  ou.id === curr.ou &&
-                  ou.ancestors?.some(
-                    (ancestor) => ancestor.id === corePicker.orgSelected.id
-                  )
-              );
-              if (!foundOu) return prev;
-              const inOuGroup = foundOu.organisationUnitGroups.some((oug) =>
-                item.ougs.includes(oug.id)
-              );
-              if (!inOuGroup) return prev;
+        return filterOrgUnits
+          .map((ou) => ({
+            id: ou.id,
+            label: ou.displayName,
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+      // return ROW_GENERATE_FOR_COMMUNE_LEVEL.map((item) => ({
+      //   id: item.id,
+      //   label: item.label,
+      //   prefix: item.prefix,
+      //   getData: (filteredData) => {
+      //     return filteredData.reduce((prev, curr) => {
+      //       const foundOu = orgUnits.find(
+      //         (ou) =>
+      //           ou.id === curr.ou &&
+      //           ou.ancestors?.some(
+      //             (ancestor) => ancestor.id === corePicker.orgSelected.id
+      //           )
+      //       );
+      //       if (!foundOu) return prev;
+      //       const inOuGroup = foundOu.organisationUnitGroups.some((oug) =>
+      //         item.ougs.includes(oug.id)
+      //       );
+      //       if (!inOuGroup) return prev;
 
-              return prev + (Number(curr.value) || 0);
-            }, 0);
-          },
-          children: filterOrgUnits
-            .filter((ou) =>
-              ou.organisationUnitGroups.some((oug) =>
-                item.ougs.includes(oug.id)
-              )
-            )
+      //       return prev + (Number(curr.value) || 0);
+      //     }, 0);
+      //   },
+      //   children: filterOrgUnits
+      //     .filter((ou) =>
+      //       ou.organisationUnitGroups.some((oug) =>
+      //         item.ougs.includes(oug.id)
+      //       )
+      //     )
 
-            .map((ou) => ({
-              id: ou.id,
-              label: ou.displayName,
-            }))
-            .sort((a, b) => a.label.localeCompare(b.label)),
-        }));
+      //     .map((ou) => ({
+      //       id: ou.id,
+      //       label: ou.displayName,
+      //     }))
+      //     .sort((a, b) => a.label.localeCompare(b.label)),
+      // }));
       default:
         return [];
     }
@@ -397,6 +403,8 @@ const DataTable = ({
                     const { label, ...props } = cell;
                     return (
                       <th
+                        data-f-name="Times New Roman"
+                        data-f-sz="12"
                         data-a-h="center"
                         data-a-v="middle"
                         data-f-bold="true"

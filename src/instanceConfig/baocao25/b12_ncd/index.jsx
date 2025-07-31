@@ -90,7 +90,7 @@ const B12 = () => {
   }, [corePicker.pickCompleted]);
 
   return (
-    <div className="font-serif h-full report-container  b10_tntt_hiv_sktt-report-container flex flex-col gap-6">
+    <div className="font-serif h-full report-container  b12_ncd-report-container flex flex-col gap-6">
       <Table_1 data={data} />
       <Table_2 data={data} />
     </div>
