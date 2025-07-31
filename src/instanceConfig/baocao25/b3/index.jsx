@@ -73,7 +73,7 @@ const B3 = () => {
       const ouIndex = findHeaderIndex(result, "ou");
 
       const dataResult = result.rows.map((row) => ({
-        value: row[valueIndex],
+        value: row[valueIndex] * 1,
         ou: row[ouIndex],
         dx: row[dxIndex],
       }));
@@ -94,8 +94,8 @@ const B3 = () => {
   return (
     <div className="font-serif h-full report-container  b10_tntt_hiv_sktt-report-container flex flex-col gap-6">
       <Table_1 data={data} />
-      <Table_2 data={data} />
-      <Table_3 data={data} />
+      {/* <Table_2 data={data} />
+      <Table_3 data={data} /> */}
     </div>
   );
 };

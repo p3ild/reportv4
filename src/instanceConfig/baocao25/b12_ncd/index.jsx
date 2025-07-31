@@ -71,7 +71,7 @@ const B12 = () => {
       const ouIndex = findHeaderIndex(result, "ou");
 
       const dataResult = result.rows.map((row) => ({
-        value: row[valueIndex],
+        value: row[valueIndex] * 1,
         ou: row[ouIndex],
         dx: row[dxIndex],
       }));
