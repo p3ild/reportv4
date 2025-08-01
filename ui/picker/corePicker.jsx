@@ -109,7 +109,7 @@ export const PreviewSelected = (props) => {
                                         <p>
                                             Đã chọn đầy đủ đơn vị và thời điểm.
                                         </p>
-                                        <button className="btn-primary w-fit bg-green-600 hover:bg-green-600/90 text-white gap-2"
+                                        <button id="btn-load-report" className="btn-primary w-fit bg-green-600 hover:bg-green-600/90 text-white gap-2"
                                             onClick={() => setCorePicker({ pickCompleted: Math.random() })}>
                                             {trans('common:button.loadReport')}
                                             <FaArrowRightLong className="text-normal" />

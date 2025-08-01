@@ -1,10 +1,12 @@
 import { create } from 'zustand'
 import { get } from 'lodash';
+import { getCoreMetaStateByPath } from './metadataState';
+import { trans } from '@core/translation/i18n';
 
 export const useCorePickerState = create((set, get) => (
     {
         corePicker: {
-            periodSelected: {},
+            periodSelected: undefined,
             orgSelected: undefined,
             dataPeriodByType: {},
         },
@@ -14,6 +16,17 @@ export const useCorePickerState = create((set, get) => (
         allowPeriodTypes: [],
 
         actions: {
+            openCorePicker(bool = true) {
+                getCoreMetaStateByPath("actions.setGlobalOverlay")({
+                    isOpen: bool,
+                    closeable: true,
+                    type: {
+                        key: 'corePicker',
+                        title: trans('common:corePicker.title'),
+                        // content: <CorePicker />
+                    }
+                })
+            },
             setCorePicker: async (corePicker) => {
                 set(state => {
                     let newCorePicker = {
