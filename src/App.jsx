@@ -1,17 +1,18 @@
 
+import useMouseShake from '@core/hooks/useMouseShake';
 import { Spin } from 'antd';
 import usePrepareApp from './core/hooks/prepareApp';
 import Footer from './core/ui/footer';
 import Headerbar from './core/ui/headerbar';
 import Mainbody from './core/ui/mainbody';
-import RootOverlay, { OVERLAY_TYPE } from './core/ui/overlay/RootOverlay';
-
+import RootOverlay from './core/ui/overlay/RootOverlay';
 function App() {
   const {
     loaded,
     language
   } = usePrepareApp();
 
+  useMouseShake()
 
   return <div key={language}>
     <RootOverlay >

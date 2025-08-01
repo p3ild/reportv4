@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { Spin } from 'antd';
 import { get } from 'lodash';
 import { INIT_APP_TASK } from './constant';
+import { trans } from '@core/translation/i18n';
 
 
 
@@ -36,6 +37,10 @@ export const useCoreMetaState = create((set, get) => (
         },
 
         customReportData: {},
+        mouseShakeConfig: {
+            initialed: false,
+            callback: null
+        },
         _get: async (api) => {
             const networkUtils = get().networkUtils;
             if (!networkUtils) return "NetworkUtils is not loaded";
@@ -110,6 +115,32 @@ export const useCoreMetaState = create((set, get) => (
                 })
             },
 
+            setMouseShakeInitialed: (initialed) => {
+                set(state => ({
+                    mouseShakeConfig: {
+                        ...state.mouseShakeConfig,
+                        initialed
+                    }
+                }))
+            },
+
+            setMouseShakeCallback: (callback) => {
+                set(state => ({
+                    mouseShakeConfig: {
+                        ...state.mouseShakeConfig,
+                        callback
+                    }
+                }))
+            },
+
+            setMouseShakeConfig: (config) => {
+                set(state => ({
+                    mouseShakeConfig: {
+                        ...state.mouseShakeConfig,
+                        ...config
+                    }
+                }))
+            }
 
         }
     }

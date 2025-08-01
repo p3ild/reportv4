@@ -29,7 +29,7 @@
 
 /* FOLDER -  TITLE */
 .home .ant-tabs-tab-active {
-    @apply bg-[#2673a7] px-5 py-5;
+    @apply bg-[#4c7aff] px-5 py-5;
 }
 
 .home .ant-tabs-tab-active p {

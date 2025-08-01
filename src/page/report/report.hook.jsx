@@ -1,10 +1,9 @@
-import { useCorePickerState } from "@core/stateManage/corePickerState";
+import { getPickerStateByPath, useCorePickerState } from "@core/stateManage/corePickerState";
 import { getCustomReportStateByPath } from "@core/stateManage/customState";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
-import { setDefaultNameSpace, trans } from "@core/translation/i18n";
+import { setDefaultNameSpace } from "@core/translation/i18n";
 import { notification } from "antd";
-import { parse } from "date-fns";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
@@ -52,16 +51,65 @@ export const useUpdateParamURL = ({ periodSelected, orgSelected, listParam, loca
 export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
     let [
         instanceTarget,
+        reportTarget,
         setReportTarget,
-        listReport
+        setExcelOptions
     ] = useCoreMetaState(useShallow(state => ([
         state.instanceTarget,
+        state.reportTarget,
         state.actions.setReportTarget,
-        state.listReport
-    ])))
+        state.actions.setExcelOptions,
+    ])));
+
+    let [
+        setCorePicker,
+        setOrgPickerConfig,
+        setCustomPicker,
+        allowPeriodTypes
+    ] = useCorePickerState(useShallow(state => ([
+        state.actions.setCorePicker,
+        state.actions.setOrgPickerConfig,
+        state.actions.setCustomPicker,
+        state.allowPeriodTypes
+    ])));
 
     let [loaded, setLoaded] = useState(false);
     const { t, i18n } = useTranslation();
+
+
+    useEffect(
+        () => {
+            if (reportTarget) {
+                setOrgPickerConfig(undefined);
+                setCustomPicker(undefined);
+                //Default initExcelOptions
+                setExcelOptions({
+                    excelFileName: (reportTarget?.reportName || reportTarget?.reportCode || 'Báo cáo').toLocaleLowerCase().replace(/ /g, '_')
+                });
+            }
+        },
+        [reportTarget?.reportID]
+    )
+
+    useEffect(() => {
+        if (reportTarget && !reportTarget?.errors) {
+            let corePicker = getPickerStateByPath('corePicker')
+            let allowPeriodTypes = getPickerStateByPath('allowPeriodTypes')
+            let currentPeriodType = corePicker?.dataPeriodByType?.currentType;
+            let isSupportCurrentPeriodType = allowPeriodTypes
+                && allowPeriodTypes?.includes(currentPeriodType);
+
+            const isSelectedCore = !corePicker?.orgSelected?.error
+                && !!corePicker?.dataPeriodByType[currentPeriodType];
+
+            const runImmediately = isSupportCurrentPeriodType && isSelectedCore;
+
+            setCorePicker({
+                pickCompleted: !runImmediately ? undefined : Math.random()
+            })
+            getPickerStateByPath('actions.openCorePicker')?.(!runImmediately);
+        }
+    }, [allowPeriodTypes])
 
 
     useEffect(() => {
@@ -132,49 +180,12 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
                 }
             );
 
-
             setLoaded(true)
 
         })();
     }, [listParam]);
 
     return { loaded }
-}
-
-export const usePreparePicker = () => {
-    let [
-        reportTarget,
-        setGlobalOverlay,
-    ] = useCoreMetaState(useShallow(state => ([
-        state.reportTarget,
-        state.actions.setGlobalOverlay,
-    ])))
-
-    const [setCorePicker] = useCorePickerState(useShallow(state => ([state.actions.setCorePicker])));
-
-
-    const openPicker = useCallback((bool = true) => {
-        setGlobalOverlay({
-            isOpen: bool,
-            closeable: true,
-            type: {
-                key: 'corePicker',
-                title: trans('common:corePicker.title'),
-                // content: <CorePicker />
-            }
-        })
-    })
-
-    useEffect(() => {
-        if (reportTarget && !reportTarget?.errors) {
-            setCorePicker({
-                pickCompleted: false
-            })
-            openPicker(true);
-        }
-    }, [reportTarget])
-
-    return { openPicker }
 }
 
 export const useExportExcel = (

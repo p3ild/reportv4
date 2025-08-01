@@ -46,11 +46,9 @@ export function useOrgTreeByUser() {
             return orgTarget;
         }
 
-        let shouldApplyRules = true;
-        if (orgTarget.level == 1) {
+         if (orgTarget.level == 1) {
             let hasRootIndicator = orgGroupVisible.find(e => e.replace(/[!+-]/g, '') === 'root');
-            shouldApplyRules = hasRootIndicator;
-            orgTarget.support = true;
+             orgTarget.support = true;
             if (hasRootIndicator && hasRootIndicator.includes('-')) {
                 orgTarget.support = false;
             }

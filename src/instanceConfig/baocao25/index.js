@@ -16,9 +16,12 @@ class Config extends Base {
   listFolder = {
     core: {
       key: "core",
-      label: "Báo cáo cốt lõi",
+      label: "Báo cáo theo thông tư 23",
     },
-
+    A6: {
+      key: "a6",
+      label: "Sổ tử vong A6",
+    },
     other: {
       key: "other",
       label: "Báo cáo mẫu khác",
@@ -26,6 +29,18 @@ class Config extends Base {
   };
 
   listReport = [
+    {
+      key: "vs-aggregate",
+      folder: [this.listFolder.core],
+      displayName: "vs-aggregate",
+      getReportInstance: async () => await import("./p2ild/vs_aggregate"),
+    },
+    {
+      key: "b2",
+      folder: [this.listFolder.core],
+      displayName: "b2-tài chính",
+      getReportInstance: async () => await import("./p2ild/b2"),
+    },
     {
       key: "eOlFpQQhgL4",
       folder: [this.listFolder.core],

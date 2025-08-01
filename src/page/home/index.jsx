@@ -7,7 +7,10 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useShallow } from "zustand/react/shallow";
 import "./home.css";
-import { HiDocumentChartBar } from "react-icons/hi2";
+import { HiOutlineDocumentText } from "react-icons/hi2";
+import { LuFolderClosed, LuFolderOpen } from "react-icons/lu";
+import { useCorePickerState } from "@core/stateManage/corePickerState";
+
 
 
 export const Home = () => {
@@ -17,13 +20,23 @@ export const Home = () => {
         me,
         listFolder,
         activeFolder,
-        setActiveFolder
+        setActiveFolder,
+        setReportTarget
     ] = useCoreMetaState(useShallow(state => ([
         state.instanceTarget,
         state.me,
         state.listFolder,
         state.activeFolder,
         state.actions.setActiveFolder,
+        state.actions.setReportTarget
+    ])));
+
+    const [
+        setCorePicker,
+        setAllowPeriodTypes
+    ] = useCorePickerState(useShallow(state => ([
+        state.actions.setCorePicker,
+        state.actions.setAllowPeriodTypes
     ])));
     const { t, i18n } = useTranslation();
     const onReportClick = (item) => {
@@ -41,6 +54,20 @@ export const Home = () => {
             window.location.replace(reportSelected.link)
         }
     }
+
+    useEffect(
+        () => {
+            // Reset report config
+            setReportTarget(undefined);
+            setCorePicker({
+                pickCompleted: undefined
+            })
+            setAllowPeriodTypes(undefined);
+        },
+        []
+    );
+
+
 
     useEffect(e => {
         ; (async () => {
@@ -60,6 +87,7 @@ export const Home = () => {
             if (instanceTarget?.locale) {
                 await i18n?.addResourceBundle('en', 'INSTANCE_TRANS', instanceTarget?.locale?.en || {});
                 await i18n?.addResourceBundle('vi', 'INSTANCE_TRANS', instanceTarget?.locale?.vi || {});
+                await i18n.loadNamespaces('INSTANCE_TRANS')
             }
 
             if (activeFolder != '') {
@@ -72,49 +100,12 @@ export const Home = () => {
 
     }, [JSON.stringify(listFolder)]);
 
-    const convertApiDataToDataAsTree = () => {
-        let uiDataConverted = cloneDeep(listFolder).map(e => {
-            !e.child && (e.child = [])
-            e.labelText = t(`folderName.${e.key}`, {
-                ns: "INSTANCE_TRANS",
-                defaultValue: e.labelText || e.label
-            }).toUpperCase();
-            e.label = <FolderView folderName={e.labelText} folderSize={e.child.length} />;
-            let dataSource = e.child.map(item => {
-                return {
-                    key: item.id,
-                    label: item.displayName,
-                    link: item.link,
-                    path: item.path
-                }
-            });
-            e.children = <>
-                {/* <List className="h-[90%] overflow-auto"
-                    bordered
-                    itemLayout="horizontal"
-                    dataSource={dataSource}
-                    renderItem={(item, index) => (
-                        <List.Item className='report-title' onClick={onReportClick.bind(this, [item])}>
-                            <img className='icon-report' src="images/report-icon.svg" />
-                            <List.Item.Meta
-                                title={<p className='report-title'>{item.label}</p>}
-                            />
-                        </List.Item>
-                    )}
-                /> */}
-            </>
-            return e;
-        });
-
-        return uiDataConverted;
-    }
 
 
     const ReportList = () => {
         let targetFolder = listFolder.find(e => e.key == activeFolder)
         if (!targetFolder) return null;
         let forderName = t(`folderName.${targetFolder.key}`, {
-            ns: "INSTANCE_TRANS",
             defaultValue: targetFolder.labelText || targetFolder.label
         }).toUpperCase();
         let listChild = (targetFolder?.child || []).map(item => {
@@ -129,14 +120,18 @@ export const Home = () => {
 
             <div className="h-full w-full flex flex-col gap-2 justify-center">
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{t('common:reportList').toUpperCase()}</h2>
-                <p className="mt-2 text-lg leading-8 text-gray-600"> {forderName.toUpperCase()}</p>
+                <p className="text-lg leading-8 text-gray-600"> {forderName.toUpperCase()}</p>
                 {listChild.length > 0
-                    ? <div className="h-full p-2 overflow-scroll overflow-x-hidden  mr-3 flex flex-col gap-2 shadow-lg border rounded-lg">
+                    ? <div className="h-full p-1 overflow-scroll overflow-x-hidden flex flex-col shadow-lg border rounded-lg">
                         {listChild.map((item, childKey) => {
-                            return <div key={childKey}
-                                className=" group rounded-lg hover:bg-[#2673a7] hover:!text-white hover:ml-2 hover:text-lg hover:font-bold  items-center p-2 flex flex-row gap-2" onClick={onReportClick.bind(this, [item])}>
-                                <HiDocumentChartBar className="w-12 h-12 text-gray-800 group-hover:text-white" />
-                                <p className="w-full text-2xl group-hover:text-white">{item.label}</p>
+                            return <div key={childKey}>
+                                <div
+                                    className=" group rounded-lg hover:bg-[#4c7aff] hover:ml-2 hover:text-lg hover:font-bold  items-center p-2 flex flex-row gap-2"
+                                    onClick={onReportClick.bind(this, [item])}>
+                                    <HiOutlineDocumentText className="w-10 h-10 text-black group-hover:text-white" />
+                                    <p className="w-full text-xl text-black group-hover:text-white">{item.label}</p>
+                                </div>
+                                <div className="h-[1px] w-full place-self-center rounded-lg bg-gray-200 m-1"></div>
                             </div>
                         })}
                     </div>
@@ -144,37 +139,44 @@ export const Home = () => {
                 }
 
             </div>
-
     }
+
+    const FolderList = () => {
+        return <div className="h-full w-[25vw] flex flex-col gap-2 justify-center">
+            <div className="h-full p-2 overflow-scroll overflow-x-hidden flex flex-col gap-2 rounded-lg">
+                {listFolder.map((item, childKey) => {
+                    let forderName = t(`folderName.${item.key}`, {
+                        ns: "INSTANCE_TRANS",
+                        defaultValue: item.labelText || item.label
+                    }).toUpperCase();
+                    return <div key={childKey}>
+                        <div
+                            className={[
+                                'group rounded-xl hover:text-lg hover:font-bold items-center p-2 flex flex-row gap-2',
+                                item.key === activeFolder ? 'bg-[#4c7aff] text-white' : 'hover:bg-black/10',
+
+                            ].join(' ')}
+                            onClick={() => setActiveFolder(item.key)}
+                        >
+                            <div className="p-2  bg-opacity-50 text-4xl">
+                                {item.key === activeFolder ? <LuFolderOpen /> : <LuFolderClosed />}
+                            </div>
+                            <p className="w-full text-xl font-bold">{forderName}</p>
+                        </div>
+                    </div>
+                })}
+            </div>
+        </div>
+    }
+
     return <>
         {listFolder &&
-            <div className="home py-5 h-full flex flex-row">
-                <Tabs
-                    className="!h-full"
-                    tabPosition={"left"}
-                    items={convertApiDataToDataAsTree(listFolder)}
-                    onChange={
-                        (value) => {
-                            setActiveFolder(value)
-                        }
-                    }
-                    activeKey={activeFolder}
-                    defaultActiveKey={activeFolder}
-                />
+            <div className="home p-5 h-full flex flex-row gap-2">
+                <FolderList />
+                <div className="w-[2px] h-full place-self-center rounded-lg bg-gray-200"></div>
                 <ReportList />
             </div>
         }
     </>
 }
 
-// FolderView rewritten using Tailwind flex utilities
-const FolderView = ({ folderName, folderSize }) => {
-    return (
-        <div className="flex items-center">
-            <div className="p-2 rounded-lg bg-gray-100 bg-opacity-50 mr-6">
-                <Avatar size="medium" shape="square" src="images/folder-icon-1.png" />
-            </div>
-            <p className="folder-title text-left">{folderName.toUpperCase()}</p>
-        </div>
-    )
-}

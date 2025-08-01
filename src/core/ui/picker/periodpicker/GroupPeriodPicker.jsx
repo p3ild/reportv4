@@ -108,7 +108,11 @@ export default () => {
 
         setCorePicker({
             ...corePicker,
-            periodSelected: corePicker?.dataPeriodByType?.[currentType]
+            periodSelected: corePicker?.dataPeriodByType?.[currentType],
+            dataPeriodByType: {
+                ...corePicker?.dataPeriodByType,
+                currentType
+            }
         })
 
     },

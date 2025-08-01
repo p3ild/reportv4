@@ -1,79 +1,38 @@
 import { CloudDownloadOutlined, LeftCircleOutlined, PrinterOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { exportToExcel } from '@core/excelUtils';
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { trans } from "@core/translation/i18n";
 import { PrintElem } from "@core/utils/print";
-import { Affix, Flex, FloatButton, List, Result, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { Affix, FloatButton, List, Result, Typography } from "antd";
 import { useNavigate } from "react-router";
 import { useShallow } from "zustand/react/shallow";
-import { useCorePickerState } from '../../core/stateManage/corePickerState';
+import { getPickerStateByPath } from '../../core/stateManage/corePickerState';
 import Breadcumb from "./breadcumb";
 import './report.css';
-import { useListParam, usePreparePicker, useReportTarget } from "./report.hook";
-import { exportToExcel } from '@core/excelUtils';
-// import TableToExcel from "@linways/table-to-excel";
-
+import { useListParam, useReportTarget } from "./report.hook";
 
 export const Report = (metadata) => {
 
     const navigate = useNavigate();
-    let [initCompleted, setInitCompleted] = useState();
     let listParam = useListParam(
         {
-            // setOrgSelected, setPeriodSelected 
         }
     );
     let { loaded } = useReportTarget({
         listParam,
-        // setOrgSelected, 
-        setInitCompleted, ...metadata
+        ...metadata
     });
     let [
         reportTarget,
         excelOptions,
-        setExcelOptions,
         setGlobalOverlay,
     ] = useCoreMetaState(useShallow(state => [
         state.reportTarget,
         state.excelOptions,
-        state.actions.setExcelOptions,
         state.actions.setGlobalOverlay,
     ]))
 
-    const [
-        customPicker,
-        corePicker,
-        setCorePicker,
-        setCustomPicker,
-        setOrgPickerConfig
-    ] = useCorePickerState(
-        useShallow(state => ([
-            state.customPicker,
-            state.corePicker,
-            state.actions.setCorePicker,
-            state.actions.setCustomPicker,
-            state.actions.setOrgPickerConfig,
-
-        ])));
-
-
     let { default: ReportView, errors } = reportTarget || {}
-
-    let { openPicker } = usePreparePicker();
-
-
-    useEffect(
-        () => {
-            setOrgPickerConfig(undefined);
-            setCustomPicker(undefined);
-            //Default initExcelOptions
-            setExcelOptions({
-                excelFileName: (reportTarget?.reportName || reportTarget?.reportCode || 'Báo cáo').toLocaleLowerCase().replace(/ /g, '_')
-            });
-        },
-        [reportTarget]
-    )
-
 
 
     const NavBar = () => {
@@ -85,12 +44,9 @@ export const Report = (metadata) => {
                         setGlobalOverlay({
                             isOpen: false
                         })
-                        setCorePicker({
-                            corePicker,
-                        })
                     }} ><LeftCircleOutlined />  <span>{trans("common:button.back")}</span></button>
                     <button className="btn-primary flex space-x-2" onClick={() => {
-                        openPicker()
+                        getPickerStateByPath('actions.openCorePicker')?.();
                     }}>
                         <SettingOutlined /> <span>{trans("common:button.changeFilter")}</span>
                     </button>
@@ -144,13 +100,10 @@ export const Report = (metadata) => {
             return document.getElementsByClassName('report-content')[0]
         }} visibilityHeight={0} />
         {loaded && ReportView &&
-            <div className="report-content"
-                data-cols-width={excelOptions?.columnWidths}
-            >
+            <div className="report-content" data-cols-width={excelOptions?.columnWidths}>
                 <ReportView
                     {
                     ...{
-                        openPicker
                     }}
                 />
             </div>

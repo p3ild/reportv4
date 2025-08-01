@@ -5,7 +5,7 @@
 @layer base {
 
     .btn-primary {
-        @apply text-white bg-[#2673a7] hover:bg-[#2673a7]/90 focus:ring-1 focus:outline-none focus:ring-gray-900/80 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:focus:ring-gray-900/55 mx-1 my-1;
+        @apply text-white bg-[#4c7aff] hover:bg-[#4c7aff]/90 focus:ring-1 focus:outline-none focus:ring-gray-900/80 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:focus:ring-gray-900/55 mx-1 my-1;
     }
 
     .btn-primary svg {
