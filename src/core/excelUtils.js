@@ -1,3 +1,5 @@
+// import TableToExcel from "./excel-parser/tableToExcel";
+import TableToExcel from "./excel-parser/tableToExcel";
 import { wait } from "./network";
 import { getPickerStateByPath } from "./stateManage/corePickerState";
 import { getCoreMetaStateByPath } from "./stateManage/metadataState";
@@ -62,8 +64,9 @@ export async function exportToExcel() {
         TableToExcel.convert(clone, {
             name: defaultNameReport + ".xlsx",
             autoStyle: false,
+            font: "Times New Roman",
             sheet: {
-                name: "Sheet 1"
+                name: "Sheet 1",
             }
         });
         revertConvertNumericCells()
