@@ -1,7 +1,7 @@
 
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { Avatar, Empty, Tabs } from "antd";
-import { cloneDeep } from 'lodash';
+import { cloneDeep, upperFirst } from 'lodash';
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
@@ -122,14 +122,14 @@ export const Home = () => {
                 <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{t('common:reportList').toUpperCase()}</h2>
                 <p className="text-lg leading-8 text-gray-600"> {forderName.toUpperCase()}</p>
                 {listChild.length > 0
-                    ? <div className="h-full p-1 overflow-scroll overflow-x-hidden flex flex-col shadow-lg border rounded-lg">
+                    ? <div className="h-full p-1 flex flex-col overflow-auto shadow-lg border rounded-lg">
                         {listChild.map((item, childKey) => {
                             return <div key={childKey}>
                                 <div
-                                    className=" group rounded-lg hover:bg-[#4c7aff] hover:ml-2 hover:text-lg hover:font-bold  items-center p-2 flex flex-row gap-2"
+                                    className=" group rounded-lg  hover:border-l-[10px] border-primary hover:ml-2 hover:text-lg hover:font-bold  items-center p-2 flex flex-row gap-2"
                                     onClick={onReportClick.bind(this, [item])}>
-                                    <HiOutlineDocumentText className="w-10 h-10 text-black group-hover:text-white" />
-                                    <p className="w-full text-xl text-black group-hover:text-white">{item.label}</p>
+                                    <HiOutlineDocumentText className="w-10 h-10 text-black " />
+                                    <p className="w-full text-xl text-black ">{upperFirst(item.label.toLowerCase())}</p>
                                 </div>
                                 <div className="h-[1px] w-full place-self-center rounded-lg bg-gray-200 m-1"></div>
                             </div>
@@ -142,8 +142,8 @@ export const Home = () => {
     }
 
     const FolderList = () => {
-        return <div className="h-full w-[25vw] flex flex-col gap-2 justify-center">
-            <div className="h-full p-2 overflow-scroll overflow-x-hidden flex flex-col gap-2 rounded-lg">
+        return <div className="h-full w-[25vw] overflow-auto flex flex-col gap-2 justify-center">
+            <div className="h-full p-2 flex flex-col gap-2 rounded-lg">
                 {listFolder.map((item, childKey) => {
                     let forderName = t(`folderName.${item.key}`, {
                         ns: "INSTANCE_TRANS",
@@ -153,7 +153,7 @@ export const Home = () => {
                         <div
                             className={[
                                 'group rounded-xl hover:text-lg hover:font-bold items-center p-2 flex flex-row gap-2',
-                                item.key === activeFolder ? 'bg-[#4c7aff] text-white' : 'hover:bg-black/10',
+                                item.key === activeFolder ? 'bg-primary text-white' : 'hover:bg-black/10',
 
                             ].join(' ')}
                             onClick={() => setActiveFolder(item.key)}
@@ -173,7 +173,7 @@ export const Home = () => {
         {listFolder &&
             <div className="home p-5 h-full flex flex-row gap-2">
                 <FolderList />
-                <div className="w-[2px] h-full place-self-center rounded-lg bg-gray-200"></div>
+                {/* <div className="w-[1px] h-full place-self-center rounded-lg bg-gray-200"></div> */}
                 <ReportList />
             </div>
         }

@@ -64,25 +64,25 @@ export const PreviewSelected = (props) => {
 
         <div className="bg-white rounded-lg p-3 flex flex-col gap-y-5 text-gray-800 shadow-lg border border-gray-200">
             <div className="mb-2">
-                <div className="flex items-center gap-2 mb-1 bg-gray-300 px-2 py-1 rounded-md">
+                <div className="flex items-center gap-2 mb-1 bg-gray-200 text-black px-2 py-1 rounded-md">
                     <LiaGlobeSolid className="w-[1.5rem] h-[1.5rem]" />
-                    <h3 className="text-base text-gray-900 font-bold">{trans('common:orgPicker')}</h3>
+                    <h3 className="text-base text-black font-bold">{trans('common:orgPicker')}</h3>
                 </div>
                 <Orgpicker required />
             </div>
 
             <div className="mb-2">
-                <div className="flex items-center gap-2 mb-1 bg-gray-300 px-2 py-1 rounded-md">
+                <div className=" flex items-center gap-2 mb-1 bg-gray-200 text-black px-2 py-1 rounded-md">
                     <BsCalendar2WeekFill className="w-[1.2rem] h-[1.2rem]" />
-                    <h3 className="text-base text-gray-900 font-bold"> {trans('common:periodPicker.title')}</h3>
+                    <h3 className="text-base text-black font-bold"> {trans('common:periodPicker.title')}</h3>
                 </div>
                 <GroupPeriodPicker />
             </div>
 
             <div className="mb-2">
-                <div className="flex items-center gap-2 mb-1 bg-gray-300 px-2 py-1 rounded-md">
+                <div className="flex items-center gap-2 mb-1 bg-gray-200 text-black px-2 py-1 rounded-md">
                     <PiNotebookFill className="w-[1.5rem] h-[1.5rem]" />
-                    <h3 className="text-base text-gray-900 font-bold">Lưu ý</h3>
+                    <h3 className="text-base text-black font-bold">Lưu ý</h3>
                 </div>
 
                 <div className={`flex flex-col leading-tight justify-center px-2 py-1 font-semibold`}>

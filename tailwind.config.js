@@ -8,11 +8,14 @@ module.exports = withMT({
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  colors: {
-    'primary': '#1fb6ff',
-    'secondary': ''
-  },
+
   theme: {
+    colors: {
+
+      'primary': '#4c7aff',
+      'accent': '#EA9256',
+      'secondary': ''
+    },
     screens: {
       'xs': '475px',
       'sm': '640px',
