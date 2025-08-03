@@ -15,7 +15,7 @@ export default () => {
     return <>
         {
             version &&
-            <div key={language} className="flex flex-0 flex-none justify-end p-5 !text-xs">
+            <div key={language} className=" bg-gray-100 flex flex-0 flex-none justify-end p-5 !text-xs">
                 <div className="flex flex-row items-center">
                     VERSION: {version?.versionDhis} - {version?.versionApp}
                     <Divider type="vertical" />
