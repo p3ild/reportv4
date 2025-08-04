@@ -6,6 +6,7 @@ import '../common/circular37-mui.css'
 import { optionPickerDate, orgPickerConfig } from "./constant";
 import { useCorePickerState } from "@core/stateManage/corePickerState";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
+import { Main } from "./test/main";
 export const reportCode = "Báo cáo 4 (TYT)"
 export const reportName = "HOẠT ĐỘNG CHĂM SÓC BÀ MẸ"
 export default () => {
@@ -75,6 +76,7 @@ export default () => {
     }, [orgReportName, data, errors]);
 
     return <div className="report-container">
+        return <Main />
         {TableMemo}
     </div>
 }

@@ -47,11 +47,12 @@ export const TableData = function (props) {
     return <div className="p-2">
         <div className="sticky left-0 !w-full">
             {
-                <table
+                ReportHeader || <table
                     style={{ border: 0 }} className=' mb-5 sticky left-0'>
                     <tbody>
                         {reportCode && <tr>
-                            <td style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
+                            <td style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}
+                            >
                                 <p>{reportCode || ''}</p>
                             </td>
                         </tr>}

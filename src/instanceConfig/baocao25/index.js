@@ -8,6 +8,7 @@ export { locale, classifyingOrgSelected };
 class Config extends Base {
   // Server configuration
   BASE_URL = "https://dev.tkyt.vn/bc25";
+  // BASE_URL = "https://baocao.tkyt.vn";
 
   init = async () => {
     getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.year]);
@@ -30,10 +31,28 @@ class Config extends Base {
 
   listReport = [
     {
-      key: "vs-aggregate",
+      key: "SCPeFETGN8x",
       folder: [this.listFolder.core],
+      displayName: "ICD10",
+      getReportInstance: async () => await import("./p2ild/icd10"),
+    },
+    {
+      key: "bzTX9jvywsh",
+      folder: [this.listFolder.A6],
+      displayName: "a6 theo tt37",
+      getReportInstance: async () => await import("./p2ild/a6"),
+    },
+    {
+      key: "jTlHI1Ahjtg",
+      folder: [this.listFolder.A6],
+      displayName: "vs-event",
+      getReportInstance: async () => await import("./p2ild/vs_a6_event"),
+    },
+    {
+      key: "UWBW0xLXb8f",
+      folder: [this.listFolder.A6],
       displayName: "vs-aggregate",
-      getReportInstance: async () => await import("./p2ild/vs_aggregate"),
+      getReportInstance: async () => await import("./p2ild/vs_a6_aggregate"),
     },
     {
       key: "b2",

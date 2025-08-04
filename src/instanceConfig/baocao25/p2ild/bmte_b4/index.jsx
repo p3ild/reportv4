@@ -8,6 +8,7 @@ import { useCorePickerState } from "@core/stateManage/corePickerState";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 export const reportCode = "Báo cáo 4"
 export const reportName = "HOẠT ĐỘNG CHĂM SÓC BÀ MẸ"
+export { orgPickerConfig };
 export default () => {
     const [
         instanceTarget,
@@ -44,7 +45,7 @@ export default () => {
         () => {
             setExcelOptions({
                 columnWidths: '10,30',
-                excelFileName: reportCode.toLocaleLowerCase().replace(/ /g, '_')
+                // excelFileName: reportCode.toLocaleLowerCase().replace(/ /g, '_')
             });
             setOrgPickerConfig(orgPickerConfig)
             setAllowPeriodTypes(optionPickerDate);

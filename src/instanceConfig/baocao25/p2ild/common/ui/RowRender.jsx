@@ -81,16 +81,18 @@ export const listingRowByOuGroup = async (props) => {
             })
         }) || [];
     } else {
-        listRow = [
-            getDataEachRow({
-                ...props,
-                apiData,
-                orgUnit: undefined,
-                orgName: "",
-                includeTotalRow,
-                listColumnConfig,
-            })
-        ]
+        listRow = (!apiData.rows || apiData.rows.length == 0)
+            ? []
+            : [
+                getDataEachRow({
+                    ...props,
+                    apiData,
+                    orgUnit: undefined,
+                    orgName: "",
+                    includeTotalRow,
+                    listColumnConfig,
+                })
+            ]
     }
 
 
@@ -107,7 +109,7 @@ export const listingRowByOuGroup = async (props) => {
                     ...colConfig,
                     excelOpts: {
                         'data-f-bold': true,
-                        ...(colConfig.excelOpts || {})
+                        ...(colConfig?.excelOpts || {})
                     },
                 }
             });
@@ -123,6 +125,7 @@ export const listingRowByOuGroup = async (props) => {
                     includeCo: false,
                     customDimension,
                 })
+
                 listRowTotal = [
                     getDataEachRow({
                         ...props,
@@ -265,10 +268,12 @@ export const ListColumnConfigBuilder = ({ listColumnConfig }) => {
 }
 
 export const findColByKey = ({ listColumnConfig, key, index }) => {
+    return;
     return listColumnConfig.find(e => e.key == key);
 }
 
 export const findColStyleByKey = (data) => {
+    return;
     let col = findColByKey(data);
     let style = {
         ...(col?.colStyle || {}),
