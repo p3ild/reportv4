@@ -10,12 +10,15 @@ export const useCorePickerState = create((set, get) => (
             orgSelected: undefined,
             dataPeriodByType: {},
         },
-
+        orgTreeData: undefined,
         orgPickerConfig: undefined,
         customPicker: undefined,
         allowPeriodTypes: [],
 
         actions: {
+            setOrgTreeData: (orgTreeData) => {
+                set(state => ({ orgTreeData }));
+            },
             openCorePicker(bool = true) {
                 getCoreMetaStateByPath("actions.setGlobalOverlay")({
                     isOpen: bool,

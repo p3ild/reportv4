@@ -24,9 +24,11 @@ export function useOrgTreeByUser() {
     )));
 
     const [
-        orgPickerConfig
+        orgPickerConfig,
+        setOrgTreeData
     ] = useCorePickerState(useShallow(state => ([
         state.orgPickerConfig,
+        state.actions.setOrgTreeData
     ])))
 
     const [
@@ -46,9 +48,9 @@ export function useOrgTreeByUser() {
             return orgTarget;
         }
 
-         if (orgTarget.level == 1) {
+        if (orgTarget.level == 1) {
             let hasRootIndicator = orgGroupVisible.find(e => e.replace(/[!+-]/g, '') === 'root');
-             orgTarget.support = true;
+            orgTarget.support = true;
             if (hasRootIndicator && hasRootIndicator.includes('-')) {
                 orgTarget.support = false;
             }
@@ -139,8 +141,8 @@ export function useOrgTreeByUser() {
         }
     })
 
-    const orgTreeData = useMemo(() => {
-        if (!me?.orgViewData) return undefined
+    useEffect(() => {
+        if (!me?.orgViewData) return undefined;
         const tree = cloneDeep(me?.orgViewData)?.map(e => {
             return e?.organisationUnits.map(x => {
                 let orgMapped = generateEachOrgData({
@@ -155,15 +157,18 @@ export function useOrgTreeByUser() {
                 orgSelected: undefined
             })
         }
-        return resultOrgTree
+        setOrgTreeData(resultOrgTree);
     }, [me?.orgViewData, orgPickerConfig])
 
-
-    return { orgTreeData, setCorePicker, networkUtils, corePicker }
 }
 export const OrgError = (orgSelected) => <><Tag color='red'>{orgSelected.displayName}</Tag> không hỗ trợ xuất báo cáo này. Vui lòng chọn đơn vị khác</>
 export default (props) => {
-    const { orgTreeData, setCorePicker, corePicker } = useOrgTreeByUser();
+    const { setCorePicker, corePicker, orgTreeData } = useCorePickerState(useShallow(state => ({
+        setCorePicker: state.actions.setCorePicker,
+        corePicker: state.corePicker,
+        orgTreeData: state.orgTreeData
+    })))
+    useOrgTreeByUser();
     let [value, setValue] = useState(undefined);
     let [currentPath, setCurrentPath] = useState([]);
     let [expandedKeys, setTreeExpandedKeys] = useState();
@@ -180,7 +185,7 @@ export default (props) => {
         const rootOrg = orgTreeData[0]
         const rootPath = [`${rootOrg.id}_${rootOrg.displayName}`]
 
-        const targetPath = expandedKeys || corePicker?.orgSelected?.path || rootPath
+        let targetPath = expandedKeys || corePicker?.orgSelected?.path || rootPath
 
         let foundOrg = null;
         if (targetPath && Array.isArray(targetPath)) {
@@ -207,7 +212,6 @@ export default (props) => {
         } else {
             rootOrg.path = rootPath;
             orgSelected = rootOrg
-            orgSelected.path = targetPath
         }
 
         !orgSelected.support && (orgSelected = { error: OrgError(orgSelected) })

@@ -3,6 +3,7 @@ import TableToExcel from "./excel-parser/tableToExcel";
 import { wait } from "./network";
 import { getPickerStateByPath } from "./stateManage/corePickerState";
 import { getCoreMetaStateByPath } from "./stateManage/metadataState";
+import { compareString } from "./utils/stringutils";
 
 
 export async function exportToExcel() {
@@ -51,9 +52,15 @@ export async function exportToExcel() {
 
         const link = document.createElement("a");
         let periods = corePicker?.periodSelected?.outputDataDhis2?.split(';');
+        let listReport = getCoreMetaStateByPath('listReport');
+        let reportTarget = getCoreMetaStateByPath('reportTarget');
+        let currentReportData = listReport?.find(e => e.id == reportTarget?.reportID);
         let defaultNameReport =
             [
-                excelOptions.excelFileName || 'BaoCao',
+                excelOptions.excelFileName
+                || compareString.cleanStr(
+                    currentReportData?.displayName
+                ) || 'BaoCao',
                 corePicker.orgSelected.displayName,
                 periods?.[0],
                 periods?.length > 1 ? periods?.[periods?.length - 1] : undefined

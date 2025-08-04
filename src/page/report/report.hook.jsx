@@ -5,13 +5,13 @@ import { setDefaultNameSpace } from "@core/translation/i18n";
 import { notification } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { createSearchParams, useSearchParams } from "react-router-dom";
+import { createSearchParams, useLocation, useSearchParams } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
 
 
 export function useListParam() {
     const [searchParams] = useSearchParams();
-    let [listParam, setListParam] = useState([]);
+    let [listParam, setListParam] = useState({});
 
     useEffect(() => {
         let result = {};
@@ -20,7 +20,7 @@ export function useListParam() {
             result[param] = value;
         }
         setListParam(result);
-    }, []);
+    }, [searchParams.get('id')]);
 
     return listParam;
 }
@@ -42,7 +42,7 @@ export const useUpdateParamURL = ({ periodSelected, orgSelected, listParam, loca
 
         listPramUrlsTemp = createSearchParams(listPramUrlsTemp)
         setNewParams({ listPramUrlsTemp })
-    }, [periodSelected, orgSelected, listParam])
+    }, [periodSelected, orgSelected, JSON.stringify(listParam)]) // Fix: Use JSON.stringify to create stable reference
 
     return newParams
 }
@@ -65,13 +65,16 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
         setCorePicker,
         setOrgPickerConfig,
         setCustomPicker,
-        allowPeriodTypes
+        allowPeriodTypes,
+        orgTreeData
     ] = useCorePickerState(useShallow(state => ([
         state.actions.setCorePicker,
         state.actions.setOrgPickerConfig,
         state.actions.setCustomPicker,
-        state.allowPeriodTypes
+        state.allowPeriodTypes,
+        state.orgTreeData
     ])));
+
 
     let [loaded, setLoaded] = useState(false);
     const { t, i18n } = useTranslation();
@@ -79,6 +82,7 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
 
     useEffect(
         () => {
+            setLoaded(false)
             if (reportTarget) {
                 setOrgPickerConfig(undefined);
                 setCustomPicker(undefined);
@@ -92,28 +96,34 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
     )
 
     useEffect(() => {
+        getPickerStateByPath('actions.openCorePicker')?.();
+        return;
         if (reportTarget && !reportTarget?.errors) {
-            let corePicker = getPickerStateByPath('corePicker')
-            let allowPeriodTypes = getPickerStateByPath('allowPeriodTypes')
-            let currentPeriodType = corePicker?.dataPeriodByType?.currentType;
-            let isSupportCurrentPeriodType = allowPeriodTypes
-                && allowPeriodTypes?.includes(currentPeriodType);
+            getPickerStateByPath('actions.openCorePicker')?.();
+            if (orgTreeData?.length != 0 && allowPeriodTypes?.length != 0) {
+                getPickerStateByPath('actions.openCorePicker')?.();
+                let corePicker = getPickerStateByPath('corePicker')
+                let currentPeriodType = corePicker?.dataPeriodByType?.currentType;
+                let isSupportCurrentPeriodType = allowPeriodTypes
+                    && allowPeriodTypes?.includes(currentPeriodType);
 
-            const isSelectedCore = !corePicker?.orgSelected?.error
-                && !!corePicker?.dataPeriodByType[currentPeriodType];
+                const isSelectedCore = !corePicker?.orgSelected?.error && corePicker?.orgSelected?.support
+                    && !!corePicker?.dataPeriodByType[currentPeriodType];
 
-            const runImmediately = isSupportCurrentPeriodType && isSelectedCore;
+                const runImmediately = false// isSupportCurrentPeriodType && isSelectedCore;
 
-            setCorePicker({
-                pickCompleted: !runImmediately ? undefined : Math.random()
-            })
-            getPickerStateByPath('actions.openCorePicker')?.(!runImmediately);
+                setCorePicker({
+                    pickCompleted: !runImmediately ? undefined : Math.random()
+                })
+                getPickerStateByPath('actions.openCorePicker')?.(!runImmediately);
+            }
+
         }
-    }, [allowPeriodTypes])
+    }, [reportTarget, allowPeriodTypes, orgTreeData])
 
 
     useEffect(() => {
-        if (!listParam || listParam.length == 0) return undefined;
+        if (!listParam || Object.keys(listParam).length === 0) return undefined; // Fix: Check object keys instead of length
         (async () => {
             //Find target report over key ID
             let reportImport = await instanceTarget?.listReport?.find(e => e.key == listParam.id)?.getReportInstance();
