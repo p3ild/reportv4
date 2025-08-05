@@ -1,6 +1,7 @@
-import { DownOutlined } from '@ant-design/icons';
-import { Cascader, Flex, Spin, Tag } from "antd";
-import { cloneDeep, debounce, flatten } from "lodash";
+import { wait } from '@core/network';
+import { compareString } from '@core/utils/stringutils';
+import { Cascader, Spin, Tag } from "antd";
+import { cloneDeep, flatten } from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { useCorePickerState } from "../../../stateManage/corePickerState";
@@ -9,8 +10,6 @@ import { trans } from "../../../translation/i18n";
 import { CustomCard } from "../../utils/customCard";
 import CustomPickerElement from "../CustomPickerElement";
 import './orgpicker.css';
-import { compareString } from '@core/utils/stringutils';
-import { wait } from '@core/network';
 
 export function useOrgTreeByUser() {
     const [
@@ -126,7 +125,7 @@ export function useOrgTreeByUser() {
         }
     }
 
-    //Update orgTree for new report config
+    //When new report config apply, update orgTree data
     useEffect(() => {
         if (!me?.orgViewData || !orgPickerConfig) return undefined;
         const tree = cloneDeep(me?.orgViewData)?.map(e => {
@@ -139,8 +138,7 @@ export function useOrgTreeByUser() {
         }).filter(e => e != undefined);
         let resultOrgTree = flatten(tree).filter(e => e);
         setOrgTreeData(resultOrgTree);
-    }, [me?.orgViewData, orgPickerConfig])
-
+    }, [me?.orgViewData?.[0]?.organisationUnits?.[0]?.id, JSON.stringify(orgPickerConfig)])
 }
 export const OrgError = (orgSelected) => <><Tag color='red'>{orgSelected.displayName}</Tag> không hỗ trợ xuất báo cáo này. Vui lòng chọn đơn vị khác</>
 export default (props) => {
@@ -158,10 +156,11 @@ export default (props) => {
         state.orgPickerConfig,
     ])))
 
-    const getDefaultValue = useCallback(() => {
-        if (!orgTreeData?.[0]) {
+    let defaultValue = useMemo(() => {
+        if (!orgTreeData) {
             return 'Không có đơn vị hỗ trợ xuất báo cáo'
         }
+
 
         const rootOrg = orgTreeData[0]
         const rootPath = [`${rootOrg.id}_${rootOrg.displayName}`]
@@ -199,13 +198,16 @@ export default (props) => {
 
         //Prevent setState when renderring
         wait(150).then(() => {
+            // console.log('defaultValue::Update orgSelected.support:', orgTreeData?.[0]?.support)
             setCorePicker({ orgSelected })
             setCurrentPath(orgSelected?.path)
         })
 
         return orgSelected?.support ? orgSelected.path : undefined
 
-    }, [orgTreeData, expandedKeys, corePicker?.orgSelected?.path])
+    }, [
+        orgTreeData
+    ])
 
     const filter = (inputValue, path) => {
         const cleanInput = compareString.cleanStr(inputValue)
@@ -282,7 +284,7 @@ export default (props) => {
                         key: currentPath?.join('_'),
                         className: "w-full custom-org-select h-fit",
                         variant: 'borderless',
-                        defaultValue: getDefaultValue(),
+                        defaultValue,
                         autoClearSearchValue: true,
                         allowClear: true,
                         showSearch: { filter },
@@ -299,8 +301,8 @@ export default (props) => {
         },
         [
             orgTreeData,
-            orgPickerConfig?.orgGroupVisible?.join('|'),
-            currentPath?.join('|')
+            // orgPickerConfig?.orgGroupVisible?.join('|'),
+            // currentPath?.join('|')
         ]
     )
 

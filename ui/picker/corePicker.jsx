@@ -1,7 +1,7 @@
 
 import { useCorePickerState } from "@core/stateManage/corePickerState"
 
-import { BsCalendar2WeekFill, BsThreeDots } from "react-icons/bs";
+import { BsCalendar2WeekFill, BsGearFill, BsQuestion, BsQuestionCircle, BsQuestionCircleFill, BsThreeDots } from "react-icons/bs";
 import { LiaGlobeSolid } from "react-icons/lia";
 import { PiNotebookFill } from "react-icons/pi";
 
@@ -12,6 +12,7 @@ import Orgpicker from "./orgPicker/orgpicker";
 import GroupPeriodPicker from "./periodpicker/GroupPeriodPicker";
 import { NoticeBox } from "./notice";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { Checkbox, Switch, Tooltip } from "antd";
 
 export default () => {
 
@@ -43,13 +44,6 @@ export const PreviewSelected = (props) => {
         ]
     )))
 
-    // Get current date for footer
-    const currentDate = (`hôm nay: ` + new Date().toLocaleDateString('vi-VI', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    })).toUpperCase()
 
     // Get organization and period info
     const periodInfo = corePicker?.periodSelected
@@ -121,8 +115,35 @@ export const PreviewSelected = (props) => {
                 </div>
             </div>
 
-            <div className="flex justify-between items-center text-xs text-gray-700 border-t border-gray-400 pt-2">
-                <span className="font-mono font-medium">{currentDate}</span>
+            <div className="mb-2">
+                <div className=" flex items-center gap-2 mb-1 bg-gray-200 text-black px-2 py-1 rounded-md">
+                    <BsGearFill className="w-[1.2rem] h-[1.2rem]" />
+                    <h3 className="text-base text-black font-bold"> {trans('common:otherSettings')}</h3>
+                </div>
+                <div className="p-2">
+                    <Tooltip
+                        title={
+                            <p className='text-[0.9rem] whitespace-pre-line'>{`Khi bật, hệ thống sẽ tự động bỏ qua bước chọn đơn vị và thời điểm nếu các lựa chọn hiện tại phù hợp với báo cáo mới.`}</p>
+                        }>
+                        <Checkbox
+                            {
+                            ...{
+                                checked: corePicker?.autoLoadReport,
+                                onChange: (e) => {
+                                    setCorePicker({ autoLoadReport: e.target.checked })
+                                }
+                            }
+                            }>
+                            <div className="flex  flex-row items-center gap-2">
+                                <p className="text-sm text-wrap">Tự động tải báo cáo</p>
+
+                            </div >
+                        </Checkbox>
+
+                    </Tooltip >
+
+                </div>
+
             </div>
         </div >
     )
