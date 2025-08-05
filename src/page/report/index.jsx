@@ -137,15 +137,28 @@ export const ReportList = ({ type }) => {
 
     ])));
 
-    const [setCorePicker, setAllowPeriodTypes, setOrgTreeData, openCorePicker] = useCorePickerState(useShallow(state => [
+    const [setCorePicker, setOrgPickerConfig, setCustomPicker, setOrgTreeData, openCorePicker] = useCorePickerState(useShallow(state => [
         state.actions.setCorePicker,
-        state.actions.setAllowPeriodTypes,
+        state.actions.setOrgPickerConfig,
+        state.actions.setCustomPicker,
         state.actions.setOrgTreeData,
         state.actions.openCorePicker
     ]
     ))
 
     const onReportClick = (item) => {
+        // Reset report config
+        setReportTarget(undefined);
+        setCorePicker({
+            pickCompleted: undefined
+        })
+        setOrgPickerConfig(undefined);
+        setCustomPicker(undefined);
+        setOrgTreeData(undefined);
+        // setAllowPeriodTypes([]);
+        
+        openCorePicker();
+
         let reportSelected = item[0];
 
         let reportID = reportSelected.key;
@@ -198,14 +211,6 @@ export const ReportList = ({ type }) => {
             }}
             onChange={(selectedKeys, info, extra) => {
                 if (info[info.length - 1].disabled) return;
-                // Reset report config
-                setReportTarget(undefined);
-                setCorePicker({
-                    pickCompleted: undefined
-                })
-                setOrgTreeData(undefined);
-                // setAllowPeriodTypes([]);
-                openCorePicker();
                 onReportClick([
                     info[info.length - 1]
                 ])

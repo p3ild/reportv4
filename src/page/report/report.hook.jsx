@@ -62,12 +62,14 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
     ])));
 
     let [
+        corePicker,
         setCorePicker,
         setOrgPickerConfig,
         setCustomPicker,
         allowPeriodTypes,
         orgTreeData
     ] = useCorePickerState(useShallow(state => ([
+        state.corePicker,
         state.actions.setCorePicker,
         state.actions.setOrgPickerConfig,
         state.actions.setCustomPicker,
@@ -84,8 +86,7 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
         () => {
             setLoaded(false)
             if (reportTarget) {
-                setOrgPickerConfig(undefined);
-                setCustomPicker(undefined);
+
                 //Default initExcelOptions
                 setExcelOptions({
                     excelFileName: (reportTarget?.reportName || reportTarget?.reportCode || 'Báo cáo').toLocaleLowerCase().replace(/ /g, '_')
@@ -96,30 +97,29 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
     )
 
     useEffect(() => {
-        getPickerStateByPath('actions.openCorePicker')?.();
-        return;
         if (reportTarget && !reportTarget?.errors) {
-            getPickerStateByPath('actions.openCorePicker')?.();
-            if (orgTreeData?.length != 0 && allowPeriodTypes?.length != 0) {
-                getPickerStateByPath('actions.openCorePicker')?.();
-                let corePicker = getPickerStateByPath('corePicker')
+            if (corePicker?.orgSelected?.support && allowPeriodTypes?.length != 0) {
                 let currentPeriodType = corePicker?.dataPeriodByType?.currentType;
                 let isSupportCurrentPeriodType = allowPeriodTypes
-                    && allowPeriodTypes?.includes(currentPeriodType);
-
-                const isSelectedCore = !corePicker?.orgSelected?.error && corePicker?.orgSelected?.support
+                    && allowPeriodTypes?.includes(currentPeriodType)
                     && !!corePicker?.dataPeriodByType[currentPeriodType];
 
-                const runImmediately = false// isSupportCurrentPeriodType && isSelectedCore;
+                let isSupportOrg = !corePicker?.orgSelected?.error && corePicker?.orgSelected?.support
 
-                setCorePicker({
-                    pickCompleted: !runImmediately ? undefined : Math.random()
-                })
-                getPickerStateByPath('actions.openCorePicker')?.(!runImmediately);
+
+                const runImmediately = isSupportCurrentPeriodType && isSupportOrg;
+
+                // When open a report, default is open dialog picker. This funtion run at the last
+                if (runImmediately
+                    && !corePicker?.pickCompleted // Only run when change report
+                ) { 
+                    setCorePicker({ pickCompleted: Math.random() })
+                    getPickerStateByPath('actions.openCorePicker')?.(false);
+                }
             }
 
         }
-    }, [reportTarget, allowPeriodTypes, orgTreeData])
+    }, [corePicker?.orgSelected?.support, allowPeriodTypes])
 
 
     useEffect(() => {

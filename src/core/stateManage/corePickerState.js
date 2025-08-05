@@ -17,7 +17,17 @@ export const useCorePickerState = create((set, get) => (
 
         actions: {
             setOrgTreeData: (orgTreeData) => {
-                set(state => ({ orgTreeData }));
+
+                set(state => ({
+                    orgTreeData,
+                    corePicker: {
+                        ...state.corePicker,
+                        orgSelected: {
+                            ...state.corePicker.orgSelected,
+                            support: undefined
+                        },
+                    }
+                }));
             },
             openCorePicker(bool = true) {
                 getCoreMetaStateByPath("actions.setGlobalOverlay")({
