@@ -14,11 +14,9 @@ import { wait } from '@core/network';
 
 export function useOrgTreeByUser() {
     const [
-        networkUtils,
         me,
     ] = useCoreMetaState(useShallow(state => (
         [
-            state.networkUtils,
             state.me,
         ]
     )));
@@ -30,16 +28,6 @@ export function useOrgTreeByUser() {
         state.orgPickerConfig,
         state.actions.setOrgTreeData
     ])))
-
-    const [
-        customPicker,
-        corePicker,
-        setCorePicker] = useCorePickerState(
-            useShallow(state => ([
-                state.customPicker,
-                state.corePicker,
-                state.actions.setCorePicker,
-            ])));
 
 
     const checkSupport = (orgTarget, orgGroupVisible) => {
@@ -92,10 +80,7 @@ export function useOrgTreeByUser() {
         return orgTarget;
     }
 
-    const generateEachOrgData = useCallback(({
-        orgTarget,
-        ORG_TREE_DEEP
-    }) => {
+    const generateEachOrgData = ({ orgTarget }) => {
         let { orgGroupVisible, levelsToHideIfEmpty } = orgPickerConfig || {}
 
         const processedOrg = checkSupport(orgTarget, orgGroupVisible);
@@ -139,10 +124,11 @@ export function useOrgTreeByUser() {
 
             return orgTitle.join(' ');
         }
-    })
+    }
 
+    //Update orgTree for new report config
     useEffect(() => {
-        if (!me?.orgViewData) return undefined;
+        if (!me?.orgViewData || !orgPickerConfig) return undefined;
         const tree = cloneDeep(me?.orgViewData)?.map(e => {
             return e?.organisationUnits.map(x => {
                 let orgMapped = generateEachOrgData({
@@ -152,11 +138,6 @@ export function useOrgTreeByUser() {
             });
         }).filter(e => e != undefined);
         let resultOrgTree = flatten(tree).filter(e => e);
-        if (!resultOrgTree || resultOrgTree.length == 0) {
-            setCorePicker({
-                orgSelected: undefined
-            })
-        }
         setOrgTreeData(resultOrgTree);
     }, [me?.orgViewData, orgPickerConfig])
 
@@ -257,9 +238,6 @@ export default (props) => {
         setCorePicker({
             orgSelected
         })
-
-
-
     }
 
     const displayRender = (label) => {
