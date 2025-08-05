@@ -15,11 +15,19 @@ export default () => {
     return <>
         {
             version &&
-            <div key={language} className=" bg-gray-100 flex flex-0 flex-none justify-end p-5 !text-xs">
-                <div className="flex flex-row items-center">
+            <div key={language} className=" bg-gray-100 flex flex-0 flex-none justify-between items-center p-4 !text-xs">
+                <p className="text-black font-xl font-bold">{(new Date().toLocaleDateString('vi-VI', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })).toUpperCase()}
+                </p>
+                <p className="flex flex-row items-center text-black font-xl font-bold">
                     VERSION: {version?.versionDhis} - {version?.versionApp}
                     <Divider type="vertical" />
                     <Select
+                        size="small"
                         placeholder={trans('common:selectLanguage')}
                         onChange={(val) => {
                             i18n.changeLanguage(val);
@@ -31,7 +39,7 @@ export default () => {
                             { value: 'vi', label: 'Tiếng Việt' }
                         ]}
                     />
-                </div>
+                </p>
             </div>
         }
     </>

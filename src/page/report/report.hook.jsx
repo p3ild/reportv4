@@ -53,7 +53,7 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
         instanceTarget,
         reportTarget,
         setReportTarget,
-        setExcelOptions
+        setExcelOptions,
     ] = useCoreMetaState(useShallow(state => ([
         state.instanceTarget,
         state.reportTarget,
@@ -64,17 +64,13 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
     let [
         corePicker,
         setCorePicker,
-        setOrgPickerConfig,
-        setCustomPicker,
         allowPeriodTypes,
-        orgTreeData
+        openCorePicker
     ] = useCorePickerState(useShallow(state => ([
         state.corePicker,
         state.actions.setCorePicker,
-        state.actions.setOrgPickerConfig,
-        state.actions.setCustomPicker,
         state.allowPeriodTypes,
-        state.orgTreeData
+        state.actions.openCorePicker
     ])));
 
 
@@ -86,7 +82,7 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
         () => {
             setLoaded(false)
             if (reportTarget) {
-
+                openCorePicker();
                 //Default initExcelOptions
                 setExcelOptions({
                     excelFileName: (reportTarget?.reportName || reportTarget?.reportCode || 'Báo cáo').toLocaleLowerCase().replace(/ /g, '_')
@@ -97,29 +93,41 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
     )
 
     useEffect(() => {
-        if (reportTarget && !reportTarget?.errors) {
-            if (corePicker?.orgSelected?.support && allowPeriodTypes?.length != 0) {
-                let currentPeriodType = corePicker?.dataPeriodByType?.currentType;
-                let isSupportCurrentPeriodType = allowPeriodTypes
-                    && allowPeriodTypes?.includes(currentPeriodType)
-                    && !!corePicker?.dataPeriodByType[currentPeriodType];
+        let orgSelected = getPickerStateByPath('corePicker.orgSelected');
 
-                let isSupportOrg = !corePicker?.orgSelected?.error && corePicker?.orgSelected?.support
+        if (
+            reportTarget && !reportTarget?.errors // report ready
+            && corePicker?.autoLoadReport // Check auto load report feature
+            && allowPeriodTypes?.length != 0 // periodReady
+            && orgSelected // orgReady
+        ) {
+            // console.log('check load immediately:', orgSelected?.support)
 
 
-                const runImmediately = isSupportCurrentPeriodType && isSupportOrg;
+            // return;
+            let currentPeriodType = corePicker?.dataPeriodByType?.currentType;
+            let isSupportCurrentPeriodType = allowPeriodTypes
+                && allowPeriodTypes?.includes(currentPeriodType)
+                && !!corePicker?.dataPeriodByType[currentPeriodType];
 
-                // When open a report, default is open dialog picker. This funtion run at the last
-                if (runImmediately
-                    && !corePicker?.pickCompleted // Only run when change report
-                ) { 
-                    setCorePicker({ pickCompleted: Math.random() })
-                    getPickerStateByPath('actions.openCorePicker')?.(false);
-                }
+            let isSupportOrg = !corePicker?.orgSelected?.error && orgSelected.support;
+
+
+            const runImmediately = isSupportCurrentPeriodType && isSupportOrg;
+
+            // return;
+            // When open a report, default is open dialog picker. This funtion run at the last
+            if (runImmediately
+                && !corePicker?.pickCompleted // Only run when change report
+            ) {
+                setCorePicker({ pickCompleted: Math.random() })
+                getPickerStateByPath('actions.openCorePicker')?.(false);
+            } else {
+                getPickerStateByPath('actions.openCorePicker')?.(true);
             }
-
         }
-    }, [corePicker?.orgSelected?.support, allowPeriodTypes])
+
+    }, [corePicker?.orgSelected?.support, allowPeriodTypes.join('_')])
 
 
     useEffect(() => {

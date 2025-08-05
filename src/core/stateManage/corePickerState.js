@@ -9,12 +9,12 @@ export const useCorePickerState = create((set, get) => (
             periodSelected: undefined,
             orgSelected: undefined,
             dataPeriodByType: {},
+            autoLoadReport: false,
         },
         orgTreeData: undefined,
-        orgPickerConfig: undefined,
+        orgPickerConfig: {},
         customPicker: undefined,
         allowPeriodTypes: [],
-
         actions: {
             setOrgTreeData: (orgTreeData) => {
 
@@ -24,7 +24,7 @@ export const useCorePickerState = create((set, get) => (
                         ...state.corePicker,
                         orgSelected: {
                             ...state.corePicker.orgSelected,
-                            support: undefined
+                            support: !orgTreeData ? undefined : state.corePicker.orgSelected?.support
                         },
                     }
                 }));
@@ -44,8 +44,7 @@ export const useCorePickerState = create((set, get) => (
                 set(state => {
                     let newCorePicker = {
                         ...state.corePicker,
-                        ...corePicker,
-                        rePick: Math.random()
+                        ...corePicker
                     };
                     return {
                         corePicker: newCorePicker

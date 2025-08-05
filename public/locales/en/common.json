@@ -4,6 +4,7 @@
     "selectMoreOptions": "Options",
     "required": "Required",
     "noReport": "No report",
+    "otherSettings": "Settings",
     "periodPicker": {
         "selectType": {
             "date": "Date",
