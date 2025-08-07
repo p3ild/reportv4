@@ -69,7 +69,7 @@ const PeriodPicker = (props) => {
     case periodType === 'month':
       defaultPrefix = t('common:periodPicker.month')
       outputFormat = 'YYYYMM';
-      inputFormat = 'MM-YYYY';
+      inputFormat = 'MM/YYYY';
       labelFormat = `[${t('common:periodPicker.month')}] ` + inputFormat;
       genOutput = ({ start, end }) => {
         let outputFormat = end
