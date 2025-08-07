@@ -11,12 +11,11 @@ import { Tabs } from "antd";
 import { getCustomReportStateByPath } from "@core/stateManage/customState";
 
 export default () => {
+
     const [
-        instanceTarget,
-        networkUtils,
+        me
     ] = useCoreMetaState(useShallow(state => ([
-        state.instanceTarget,
-        state.networkUtils,
+        state.me
     ])));
 
     const [
@@ -42,16 +41,17 @@ export default () => {
             setAllowPeriodTypes([
                 PERIOD_TYPE.month,
                 PERIOD_TYPE.month2,
+                PERIOD_TYPE.year,
             ]);
             setOrgPickerConfig({
-                // orgGroupVisible: [
-                //     '-root',
-                //     '-' + ORG_GROUP.TINH_DVHC,
-                //     '-' + ORG_GROUP.XA_DVHC,
-                //     ORG_GROUP.XA_TYT
-
-                // ],
-                // levelsToHideIfEmpty: [2, 3]
+                orgGroupVisible: [
+                    '-root',
+                    (!me.isSuperuser ? '-' : '') + ORG_GROUP.TINH_DVHC,
+                    ORG_GROUP.XA_DVHC,
+                    ORG_GROUP.XA_TYT,
+                    ORG_GROUP.XA_CSYT_KHAC
+                ],
+                levelsToHideIfEmpty: [2, 3]
             })
         },
         []
@@ -63,7 +63,8 @@ export default () => {
             ...{
                 reportCode: <></>,
                 style: {
-                    width: '4000px'
+                    tableLayout: 'fixed',
+                    width: '3000px'
                 },
                 reportName: "SỔ THEO DÕI TỬ VONG (Thí điểm)",
                 orgReportName,

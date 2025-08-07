@@ -2,49 +2,50 @@
 
 
 export function HeaderUILayout({ listColumnConfig, title }) {
+    const defaultWidth = "w-[130px]"
     return <thead>
         <tr>
             <th className="w-[50px]"
             >TT</th>
-            <th className="w-[100px] "
+            <th className={`${defaultWidth}`}
             >Ngày tháng năm ghi sổ</th>
-            <th className="w-[100px] "
+            <th className={`${defaultWidth}`}
             >Ngày tháng năm nhập liệu vào phần mềm</th>
-            <th
+            <th className="w-[170px]"
             >Đơn vị nhập</th>
-            <th
+            <th className="w-[150px]"
             >Họ và tên</th>
-            <th
+            <th className={`${defaultWidth}`}
             >Giới tính</th>
-            <th
+            <th className={`${defaultWidth}`}
             >Ngày tháng năm sinh</th>
-            <th
+            <th className={`${defaultWidth}`}
             >ĐDCN/ Giấy tờ tùy thân</th>
-            <th
+            <th className="w-[130px]"
             >Địa chỉ</th>
-            <th
+            <th className={`${defaultWidth}`}
             >Nghề nghiệp</th>
-            <th
+            <th className={`${defaultWidth}`}
             >Dân tộc</th>
-            <th
+            <th className={`${defaultWidth}`}
             >Ngày tháng tử  vong</th>
-            <th
+            <th className={`${defaultWidth}`}
             >Nơi tử vong</th>
-            <th
+            <th className="w-[150px]"
             >Nguyên nhân chính gây tử vong</th>
-            <th
+            <th className="w-[150px]"
             >Mã VN</th>
             <th className="w-[150px]"
             >Đã khám/điều trị tại CSYT trong vòng 30 ngày trước khi tử vong</th>
-            <th
+            <th className="w-[150px]"
             >Được CBYT chăm sóc  khi tử vong</th>
-            <th
+            <th className={`${defaultWidth}`}
             >Được cấp giấy báo tử</th>
-            <th
+            <th className={`${defaultWidth}`}
             >Người thu thập</th>
-            <th
+            <th className="w-[170px]"
             >Số điện thoại người nhà của trường hợp tử vong</th>
-            <td align="center">Ghi chú</td>
+            <th>Ghi chú</th>
         </tr>
         <tr>
             {

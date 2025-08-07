@@ -91,7 +91,7 @@ const DataTable = ({
                     label: ou.displayName,
                     blocks: item.blocks,
                   }))
-                  .sort((a, b) => a.label.localeCompare(b.label)),
+                  .sort((a, b) => b.label.localeCompare(a.label)),
               }
             : {
                 children: item.children.map((child) => {
@@ -124,7 +124,7 @@ const DataTable = ({
                         label: ou.displayName,
                         blocks: child.blocks,
                       }))
-                      .sort((a, b) => a.label.localeCompare(b.label)),
+                      .sort((a, b) => b.label.localeCompare(a.label)),
                   };
                 }),
               }),
@@ -140,7 +140,7 @@ const DataTable = ({
             id: ou.id,
             label: ou.displayName,
           }))
-          .sort((a, b) => a.label.localeCompare(b.label));
+          .sort((a, b) => b.label.localeCompare(a.label));
       // return ROW_GENERATE_FOR_COMMUNE_LEVEL.map((item) => ({
       //   id: item.id,
       //   label: item.label,

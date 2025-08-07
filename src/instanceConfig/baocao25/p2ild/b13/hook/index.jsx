@@ -33,11 +33,11 @@ export const useLoadData = (props) => {
         }
         try {
             let targetAction = await import('../actions/CurrentlyOrgSelected')
-            await targetAction.getDataCommon(props)
+            let data = await targetAction.getDataCommon(props)
+            console.log(data)
 
             // setTableHeader(targetAction.HeaderUI)
         } catch (err) {
-
             setError(err)
         } finally {
             setGlobalOverlay({

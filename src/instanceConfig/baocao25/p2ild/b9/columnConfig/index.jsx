@@ -3,6 +3,8 @@ import { Flex } from "antd";
 import { getValueDE } from "../../common/DataValueUtils";
 import { RenderValue } from "../../common/ui";
 import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
+import { ORG_GROUP } from "../constant";
+import { getPickerStateByPath } from "@core/stateManage/corePickerState";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
@@ -71,12 +73,15 @@ export const getListColumnConfig = ({ }) => {
                     "data-a-wrap": "true",
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: [""]
-                        }) + "";
+                    let orgFlatMap = getPickerStateByPath('orgFlatMap')
+                    let value =
+                    orgFlatMap[props.orgUnit]?.organisationUnitGroups.map(x => x.id).some(m => [ORG_GROUP.TUYEN_XA, ORG_GROUP.TUYEN_TINH, ORG_GROUP.TUYEN_TRUNG_UONG, ORG_GROUP.TINH_YTTN].includes(m))
+                            ? 1
+                            : Object.values(orgFlatMap)
+                                .filter(e =>
+                                    e.ancestors.map(x => x.id).join('_').includes(props.orgUnit)
+                                    && e.organisationUnitGroups.map(x => x.id).includes(ORG_GROUP.TUYEN_XA)
+                                ).length
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -470,7 +475,7 @@ export const getListColumnConfig = ({ }) => {
                     7
                 ]
                     .includes(colIdx)) {
-                    e.colClassName =( e.colClassName || '') + ' w-[2vw]'
+                    e.colClassName = (e.colClassName || '') + ' w-[2vw]'
                 } else {
                     e.colClassName = (e.colClassName || '') + ' w-[5vw]'
                 }

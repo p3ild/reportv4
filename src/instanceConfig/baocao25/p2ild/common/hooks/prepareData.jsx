@@ -1,7 +1,8 @@
+import { useCorePickerState } from "@core/stateManage/corePickerState";
+import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { useCoreMetaState } from "../../../../../core/stateManage/metadataState";
-import { useCorePickerState } from "../../../../../core/stateManage/corePickerState";
+
 
 export const usePrepareData = ({ }) => {
     const [loaded, setLoaded] = useState(false);

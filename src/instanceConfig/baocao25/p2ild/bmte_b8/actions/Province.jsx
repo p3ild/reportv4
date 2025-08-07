@@ -15,13 +15,13 @@ export const getDataCommon = async (props) => {
     let reqPublicHealthGroup = [
         {
             orgUnitGroup: [
-                ORG_GROUP.TW_CSYT_CSSKBM,
-             ],
+                ORG_GROUP.TW_CSYT_CSSK_TE,
+            ],
             includeTotalRow: ["I", <p>Tuyến TW, Y tế ngành</p>],
         },
         {
             orgUnitGroup: [
-                ORG_GROUP.TINH_CSYT_CONG_CSSKBM
+                ORG_GROUP.TINH_CSYT_CONG_CSSK_TE
             ],
             includeTotalRow: ["II", <p>TUYẾN TỈNH</p>]
         },
@@ -36,7 +36,7 @@ export const getDataCommon = async (props) => {
     let reqPrivateHealthGroup = [
         {
             orgUnitGroup: [
-                ORG_GROUP.TINH_YTTN_CSSKBM
+                ORG_GROUP.TINH_YTTN_CSSK_TE
             ],
             includeTotalRow: ["B", <p>Y tế tư nhân</p>]
         }
@@ -64,7 +64,7 @@ export const getDataCommon = async (props) => {
                     ...reqProps
                 }).then(res => {
                     res.listRow[0][0].className = 'sticky-row-1';
-                    
+
                     reqPrivateHealthGroup[idx] = {
                         ...reqPrivateHealthGroup[idx],
                         ...res

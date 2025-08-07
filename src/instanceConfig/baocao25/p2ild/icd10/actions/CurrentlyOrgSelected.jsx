@@ -70,7 +70,6 @@ export const getDataCommon = async (props) => {
     const _get = getCoreMetaStateByPath('_get')
 
 
-    console.log(props)
     let json = await _get('/api/optionSets/OXH5bk60BAx.json?fields=id,name,options[id,name,code,displayName,attributeValues,translations,sortOrder]');
 
 
@@ -94,19 +93,7 @@ export const getDataCommon = async (props) => {
 
 
     const pullICD10TT37 = async ({ result, page, pagesize, callBackOnCompelete }) => {
-
         let ouTarget = props.orgUnit;
-        let ouGroupLegendID = $('#selectLegend').val();
-
-        if (![undefined, 'undefined'].includes(ouGroupLegendID)) {
-
-            //Api by join ou
-            // let temp = legendData?.find(e => e.id == ouGroupLegendID)?.organisationUnits
-            // if (temp) ouTarget = temp;
-
-            //API by ouGroup
-            ouTarget = `OU_GROUP-${ouGroupLegendID};${ouTarget}`
-        }
         let api = `/api/analytics/events/query/OXMrd8oAmoG.json?dimension=pe:${props.period}&dimension=ou:${ouTarget}&dimension=ifbJ4AaAfFA&dimension=E1CA5ybd7GG&dimension=fgwGV3PWZTI&dimension=S7p0pDTsVjW&dimension=Adojv33Izrp&dimension=JwoiOADNWSU&dimension=gufyNU7ZgR1&dimension=cTBCMyhf9b2&dimension=ORZnYwOC0E0&dimension=XPfzjZVywVR&dimension=Xfi5zfhnMjb&dimension=QsqILOYIL4D&dimension=cpIQEtVoyq5&dimension=wEvOu9QQyaU&dimension=kYhZfwahHs4&dimension=qWfrkgx3wur&dimension=S54r4Rb0CG0&dimension=gzaIFkV0dAE&stage=dL7pqw4eWsg&displayProperty=NAME&outputType=EVENT&pageSize=${pagesize}&page=${page}`
         let fetchPage = await _get(api);
         let data = fetchPage;
@@ -124,7 +111,7 @@ export const getDataCommon = async (props) => {
         }
     }
     let values = []
-    pullICD10TT37(
+    await pullICD10TT37(
         {
             result: {},
             page: 1,//startPage

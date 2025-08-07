@@ -60,10 +60,8 @@ const B12 = () => {
         `/api/analytics?dimension=dx:${[
           ...DATA_ELEMENTS_TABLE_1,
           ...DATA_ELEMENTS_TABLE_2,
-        ].join(";")},ou:${
-          corePicker.orgSelected.id
-        };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${
-          corePicker.periodSelected.outputDataDhis2
+        ].join(";")},ou:${corePicker.orgSelected.id
+        };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${corePicker.periodSelected.outputDataDhis2
         }`
       );
       const valueIndex = findHeaderIndex(result, "value");

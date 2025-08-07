@@ -23,13 +23,19 @@ class Config extends Base {
       key: "a6",
       label: "Sổ tử vong A6",
     },
-    other: {
-      key: "other",
-      label: "Báo cáo mẫu khác",
-    },
+    // other: {
+    //   key: "other",
+    //   label: "Báo cáo mẫu khác",
+    // },
   };
 
   listReport = [
+    {
+      key: "qCzOvTJTt5q",
+      folder: [this.listFolder.core],
+      displayName: "qCzOvTJTt5q",
+      getReportInstance: async () => await import("./p2ild/b13"),
+    },
     {
       key: "SCPeFETGN8x",
       folder: [this.listFolder.core],
@@ -114,6 +120,12 @@ class Config extends Base {
       key: "C290QB6SfjZ",
       displayName: "bmte_x3",
       getReportInstance: async () => await import("./p2ild/bmte_x3"),
+    },
+    {
+      folder: [this.listFolder.core],
+      key: "IL0TrfanQdq",
+      displayName: "vu_bmte_x3",
+      getReportInstance: async () => await import("./p2ild/vu_bmte_x3"),
     },
     {
       key: "mV9DjhMHvEp",

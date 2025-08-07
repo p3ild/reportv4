@@ -1,21 +1,28 @@
 import { Flex } from "antd";
-import { cloneDeep } from "lodash";
+import { cloneDeep, set } from "lodash";
 import { DATA_TYPE, getValueDE, numberWithThousands, roundNumber } from "../../common/DataValueUtils";
 import { fetchAnalyticsData } from "../../common/request/request";
 import { RenderValue } from "../../common/ui";
 import { ApproveButton } from "../../common/ui/ApproveButtonTT37";
-import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
+import { getDisableColDataObject, ListColumnConfigBuilder } from "../../common/ui/RowRender";
 import { faker } from '@faker-js/faker';
 import { numToLocaleString } from "@core/utils/stringutils";
+import { ORG_GROUP } from "../constant";
+import { getPickerStateByPath } from "@core/stateManage/corePickerState";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
         listColumnConfig: [
             {
                 key: "stt",
-                freezeColWidth: '2vw',
                 label: 'STT',
+                colStyle: {
+                    width: '5px'
+                },
                 excelOpts: {
+                    style: {
+                        // width: '10px',
+                    },
                     "data-a-wrap": "true",
                     "data-a-h": "center",
                     "data-a-v": "center"
@@ -32,7 +39,6 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "orgName",
-                freezeColWidth: '7vw',
                 colDataClassName: '!text-left !text-nowrap',
                 excelOpts: {
                     "data-a-wrap": "true"
@@ -249,11 +255,13 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
+                    let de = isOrgCommune(props) ? ['xR1SRHBmOSl'] : ['SL8sVvRQK6P']
+
                     let value = //faker.number.int({ min: 1000, max: 9999, }) || 
                         getValueDE({
                             jsonDhis: props.apiData,
                             org: props.orgUnit,
-                            de: ['SL8sVvRQK6P']
+                            de
                         }) + "";
                     return {
                         value,
@@ -289,6 +297,9 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
+                    if (
+                        isOrgCommune(props)
+                    ) return getDisableColDataObject()
                     let value = //faker.number.int({ min: 1000, max: 9999, }) || 
                         getValueDE({
                             jsonDhis: props.apiData,
@@ -309,6 +320,9 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
+                    if (
+                        isOrgCommune(props)
+                    ) return getDisableColDataObject()
                     let value = //faker.number.int({ min: 1000, max: 9999, }) || 
                         getValueDE({
                             jsonDhis: props.apiData,
@@ -342,19 +356,19 @@ export const getListColumnConfig = ({ }) => {
                 }
             }
         ].filter(e => e).map((e, colIdx) => {
-            e.colDataClassName = e.colDataClassName || ''
-            if (!e.freezeColWidth) {
-                if ([
-                    7
-                ]
-                    .includes(colIdx)) {
-                    e.colClassName = e.colClassName || e.colClassName + ' w-[2vw]'
-                } else {
-                    e.colClassName = e.colClassName || e.colClassName + ' w-[5vw]'
-                }
-            }
-
+            e.colDataClassName = e.colDataClassName || '';
+            let width;
+            if (![0, 1].includes(colIdx)) width = '1vw'
+            if (colIdx == 0) width = '10px'
+            e.colStyle = { ...e.colStyle, width }
             return e
         })
     });
+}
+
+let isOrgCommune = (props) => {
+    let { orgUnit, orgUnitGroup } = props;
+    let orgDisplayData = getPickerStateByPath('orgFlatMap')[orgUnit];
+    return [ORG_GROUP.XA_TYT, ORG_GROUP.XA_CSYT_KHAC].some(x => orgDisplayData.organisationUnitGroups.map(e => e.id).includes(x))
+        || orgUnitGroup.every(m => [ORG_GROUP.XA_DVHC].includes(m))
 }

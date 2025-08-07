@@ -38,12 +38,12 @@ export default () => {
             setExcelOptions({
                 // excelOnlyTable: true,
             });
-            // setOrgPickerConfig({
+            setOrgPickerConfig({
             //     orgGroupVisible: [
             //         ORG_GROUP.TINH_DVHC,
             //         ORG_GROUP.XA,
             //     ],
-            // })
+            })
             setAllowPeriodTypes([
                 PERIOD_TYPE.month,
                 PERIOD_TYPE.month2

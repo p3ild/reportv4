@@ -39,7 +39,8 @@ export const listingRowByOuGroup = async (props) => {
         overrideResult,
         rowBold,
         periodQueryType,
-        approvalConfig
+        approvalConfig,
+        sortOrgUnits
     } = props;
     let apiData = await fetchAnalyticsData({
         dx,
@@ -65,21 +66,26 @@ export const listingRowByOuGroup = async (props) => {
 
     let listRow = []
     if (ouQueryType != 'filter') {
-        listRow = apiData.metaData?.dimensions?.ou?.sort(function (a, b) {
-            if (apiData.metaData.items[a].name < apiData.metaData.items[b].name) return -1;
-            if (apiData.metaData.items[a].name > apiData.metaData.items[b].name) return 1;
-            return 0;
-        })?.map((eachOrg, orgIdx, arr) => {
-            return getDataEachRow({
-                ...props,
-                apiData,
-                orgUnit: eachOrg,
-                orgName: apiData?.metaData?.items?.[eachOrg]?.name,
-                includeTotalRow,
-                orgIdx,
-                listColumnConfig,
-            })
-        }) || [];
+        listRow =
+            ((sortOrgUnits
+                ? sortOrgUnits(apiData.metaData?.dimensions?.ou, props)
+                : apiData.metaData?.dimensions?.ou?.sort(function (a, b) {
+                    if (apiData.metaData.items[a].name < apiData.metaData.items[b].name) return -1;
+                    if (apiData.metaData.items[a].name > apiData.metaData.items[b].name) return 1;
+                    return 0;
+                })
+            ) || [])
+                ?.map((eachOrg, orgIdx, arr) => {
+                    return getDataEachRow({
+                        ...props,
+                        apiData,
+                        orgUnit: eachOrg,
+                        orgName: apiData?.metaData?.items?.[eachOrg]?.name,
+                        includeTotalRow,
+                        orgIdx,
+                        listColumnConfig,
+                    })
+                }) || [];
     } else {
         listRow = (!apiData.rows || apiData.rows.length == 0)
             ? []
@@ -291,8 +297,8 @@ export const findColStyleByKey = (data) => {
 
 export const getDisableColDataObject = () => {
     return {
-        colClassName: 'bg-gray-300',
-        view: <></>,
+        colClassName: '!bg-gray-300',
+        view: <p className="flex flex-col font-bold"></p>,
         value: 0,
     }
 }

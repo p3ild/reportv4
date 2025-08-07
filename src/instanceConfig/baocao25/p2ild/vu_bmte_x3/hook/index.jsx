@@ -1,9 +1,8 @@
+import { parallel } from "async";
 import { useEffect, useState } from "react";
 import { usePrepareData } from "../../common/hooks/prepareData";
-import { HeaderUILayoutTable1, ORG_SELECTED_TYPE, SectionHeaderTable1, } from "../constant";
 import { getListColumnConfig } from "../columnConfig";
-import { parallel, reflect } from "async";
-import { BaseError } from "../../common/BaseError";
+import { HeaderUILayoutTable1, SectionHeaderTable1 } from "../constant";
 
 export const useLoadData = (props) => {
     const {
@@ -36,43 +35,14 @@ export const useLoadData = (props) => {
             // approvalHook,
             orgUnit: orgSelected.id,
             period: period?.outputDataDhis2,
-            orgSelected,
-            listColumnConfig: getListColumnConfig(props),
-            defaultCol: 16 - 2,
-            dx: [
-                'xR1SRHBmOSl',
-                'EbgigboTmrd',
-                'OOvABOGvmwx',
-                'XCOxyF9ZvFn',
-                'VJVi4KCxpzU',
-                'ojeJgOjf9vm',
-                'nOKoSAWmBaJ',
-                'HjOtfiHHCVv',
-                'ycVdXnxxwHs',
-                'hoegsBrTcwt',
-                'SL8sVvRQK6P',
-                'hMHRO6boyNh',
-                'dBlYwCRZr0b',
-                'KzU9muBt4Le',
-                'eqChBVhTqkF'
-            ]
+            orgSelected
         }
         try {
             let orgType = orgSelected?.orgType?.key;
             let targetAction;
             switch (orgType) {
-                case ORG_SELECTED_TYPE.COUNTRY.key:
-                    targetAction = await import('../actions/Country')
-                    break;
-                case ORG_SELECTED_TYPE.PROVINCE.key:
-                    targetAction = await import('../actions/Province');
-                    break;
-                case ORG_SELECTED_TYPE.COMMUNE.key:
-                    targetAction = await import('../actions/Commune');
-                    break;
                 default:
                     targetAction = await import('../actions/CurrentlyOrgSelected')
-                // throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
             }
             {
 
@@ -109,7 +79,7 @@ export const useLoadData = (props) => {
             // setTableHeader(targetAction.HeaderUI)
         } catch (err) {
 
-            setError(err)
+            // setError(err)
         } finally {
             setGlobalOverlay({
                 isOpen: false

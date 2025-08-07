@@ -127,7 +127,7 @@ export const TableData = function (props) {
                                                 data-b-a-s='thin'
                                                 {...cell?.excelOpts}
                                                 key={cellIdx}
-                                                className={(cell?.colClassName || "") + ' ' + (cell?.colDataClassName || "")}
+                                                className={(cell?.colDataClassName || "") + ' ' + (cell?.colClassName || "")}
                                                 name={cell?.name}
                                                 style={style}>
                                                 {cell?.view || 'render_error'}

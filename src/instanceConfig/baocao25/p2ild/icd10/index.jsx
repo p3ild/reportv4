@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { TableData } from "../common/ui/MultiTableUI";
 import { useLoadData } from "./hook";
 import '../common/circular37-mui.css'
 import { optionPickerDate, orgPickerConfig } from "./constant";
@@ -47,12 +46,9 @@ export default () => {
         () => {
             setExcelOptions({
                 columnWidths: '10,30',
-                // excelFileName: reportCode.toLocaleLowerCase().replace(/ /g, '_')
             });
             setOrgPickerConfig(orgPickerConfig)
             setAllowPeriodTypes(optionPickerDate);
-
-
         },
         []
     )

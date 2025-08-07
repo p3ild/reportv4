@@ -61,14 +61,13 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
                 rowSpan={4}
             >Tên cơ sở y tế</th>
             <th {...excelConfig}
-                rowSpan={4}>Tổng số</th>
-            <th {...excelConfig}
-                colSpan={8}>Số mới thực hiện Biện pháp tránh thai hiện đại</th>
+                colSpan={9}>Số mới thực hiện Biện pháp tránh thai hiện đại</th>
             <th {...excelConfig}
                 colSpan={5}>Phá thai</th>
         </tr>
         <tr>
-
+            <th {...excelConfig}
+                rowSpan={3}>Tổng số</th>
             <th {...excelConfig}
                 colSpan={8}>Trong đó</th>
             <th {...excelConfig}
@@ -95,7 +94,7 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
             <th {...excelConfig}
                 rowSpan={2}>Số phá thai trên 12 tuần</th>
             <th {...excelConfig}
-                rowSpan={2}>Trđ: Số phá thai mới VTN</th>
+                rowSpan={2}>Trđ: Số phá thai tuổi VTN</th>
         </tr>
         <tr>
             <th {...excelConfig}>Thuốc tiêm</th>

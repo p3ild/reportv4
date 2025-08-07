@@ -54,10 +54,8 @@ export const useLoadData = (props) => {
                 case ORG_SELECTED_TYPE.PROVINCE.key:
                     props.orgUnitGroup = [ORG_GROUP.XA_DVHC];
                     break;
-                case ORG_SELECTED_TYPE.COMMUNE.key:
-                    break;
                 default:
-                    throw new Error(`Đơn vị ${orgSelected.displayName} không được hỗ trợ xem báo cáo này`);
+                    break
             }
             {
                 targetAction = await import('../actions/CurrentlyOrgSelected')

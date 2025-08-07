@@ -15,7 +15,7 @@ export const getDataCommon = async (props) => {
     let reqPublicHealthGroup = [
         {
             orgUnitGroup: [
-                ORG_GROUP.TW_CSYT_CSSKBM,
+                ORG_GROUP.TW_CSYT_CSSK_BM,
              ],
             includeTotalRow: ["I", <p>Tuyến TW, Y tế ngành</p>],
         },
@@ -36,7 +36,7 @@ export const getDataCommon = async (props) => {
     let reqPrivateHealthGroup = [
         {
             orgUnitGroup: [
-                ORG_GROUP.TINH_YTTN_CSSKBM
+                ORG_GROUP.TINH_YTTN_CSSK_BM
             ],
             includeTotalRow: ["B", <p>Y tế tư nhân</p>]
         }

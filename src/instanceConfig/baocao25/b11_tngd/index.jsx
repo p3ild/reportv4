@@ -51,8 +51,7 @@ const Tndg = () => {
         return _get(
           `/api/analytics.json?dimension=dx:${elements.join(
             ";"
-          )}&dimension=ou:${ou}&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&completedOnly=false&outputIdScheme=UID&filter=pe:${
-            corePicker.periodSelected.startDate
+          )}&dimension=ou:${ou}&showHierarchy=false&hierarchyMeta=false&includeMetadataDetails=true&includeNumDen=true&skipRounding=false&completedOnly=false&outputIdScheme=UID&filter=pe:${corePicker.periodSelected.outputDataDhis2
           }`
         );
       });
@@ -98,7 +97,7 @@ const Tndg = () => {
       })
       .sort((a, b) => {
         if (a && b) {
-          return a.name.localeCompare(b.name);
+          return b.name.localeCompare(a.name);
         }
         return 0;
       });
@@ -114,25 +113,28 @@ const Tndg = () => {
       //const org = rawData[tableKey]?.metaData?.items[id];
       //console.log(corePicker.orgSelected);
       const isTotal =
-        corePicker.orgSelected.children.length > 0 &&
+        corePicker.orgSelected?.children?.length > 0 &&
         id === corePicker.orgSelected.id;
       // id === corePicker.orgSelected.id && corePicker.orgSelected.level <= 3;
 
       return (
         <tr id={id} key={id}>
           {isTotal ? (
-            <td
-              data-f-name="Times New Roman"
-              colSpan={2}
-              style={{ fontWeight: "bold" }}
-              data-a-h="center"
-              data-a-v="middle"
-              data-f-bold="true"
-              data-a-wrap="true"
-              data-b-a-s="thin"
-            >
-              Tổng số
-            </td>
+            (
+              <>
+                <td></td>
+                <td
+                  data-f-name="Times New Roman"
+                  style={{ fontWeight: "bold" }}
+                  data-a-h="center"
+                  data-a-v="middle"
+                  data-f-bold="true"
+                  data-a-wrap="true"
+                  data-b-a-s="thin"
+                >
+                  Tổng số
+                </td></>
+            )
           ) : (
             <>
               <td
@@ -188,17 +190,13 @@ const Tndg = () => {
       PERIOD_TYPE.month,
       PERIOD_TYPE.month2,
       PERIOD_TYPE.year,
-      PERIOD_TYPE.sixMonth,
-      PERIOD_TYPE.biWeek,
     ]);
 
     getPickerStateByPath("actions.setOrgPickerConfig")({
       orgGroupVisible: [
         ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
-        ORG_GROUP.TUYEN_TINH,
-        ORG_GROUP.XA_CSYT_KHAC,
-        ORG_GROUP.XA,
+        ORG_GROUP.XA_TYT
       ],
       // levelsToHideIfEmpty: [3]
     });
@@ -341,8 +339,8 @@ const Tndg = () => {
                 style={{ width: "13%" }}
                 rowSpan={
                   corePicker &&
-                  corePicker.orgSelected &&
-                  corePicker.orgSelected.level === 1
+                    corePicker.orgSelected &&
+                    corePicker.orgSelected.level === 1
                     ? 2
                     : 2
                 }
@@ -353,8 +351,8 @@ const Tndg = () => {
                 data-b-a-s="thin"
               >
                 {corePicker &&
-                corePicker.orgSelected &&
-                corePicker.orgSelected.level === 1
+                  corePicker.orgSelected &&
+                  corePicker.orgSelected.level === 1
                   ? "Tỉnh"
                   : "Trạm y tế cấp xã"}
               </th>
@@ -823,8 +821,8 @@ const Tndg = () => {
                 style={{ width: "13%" }}
                 rowSpan={
                   corePicker &&
-                  corePicker.orgSelected &&
-                  corePicker.orgSelected.level === 1
+                    corePicker.orgSelected &&
+                    corePicker.orgSelected.level === 1
                     ? 2
                     : 2
                 }
@@ -835,8 +833,8 @@ const Tndg = () => {
                 data-b-a-s="thin"
               >
                 {corePicker &&
-                corePicker.orgSelected &&
-                corePicker.orgSelected.level === 1
+                  corePicker.orgSelected &&
+                  corePicker.orgSelected.level === 1
                   ? "Tỉnh"
                   : "Trạm y tế cấp xã"}
               </th>
@@ -1316,8 +1314,8 @@ const Tndg = () => {
                 style={{ width: "13%" }}
                 rowSpan={
                   corePicker &&
-                  corePicker.orgSelected &&
-                  corePicker.orgSelected.level === 1
+                    corePicker.orgSelected &&
+                    corePicker.orgSelected.level === 1
                     ? 2
                     : 2
                 }
@@ -1328,8 +1326,8 @@ const Tndg = () => {
                 data-b-a-s="thin"
               >
                 {corePicker &&
-                corePicker.orgSelected &&
-                corePicker.orgSelected.level === 1
+                  corePicker.orgSelected &&
+                  corePicker.orgSelected.level === 1
                   ? "Tỉnh"
                   : "Trạm y tế cấp xã"}
               </th>

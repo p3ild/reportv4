@@ -40,6 +40,7 @@ export const useLoadData = (props) => {
             listColumnConfig: getListColumnConfig(props),
             defaultCol: 23 - 2,
             dx: [
+                // 'Bu8BJMiHMAd',
                 "c6jDQSQhVpR",
                 "I1vZQ4MI5hP",
                 "QfSJtngOK7c",
