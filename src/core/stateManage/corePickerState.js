@@ -11,15 +11,17 @@ export const useCorePickerState = create((set, get) => (
             dataPeriodByType: {},
             autoLoadReport: false,
         },
+        orgFlatten: {},
         orgTreeData: undefined,
         orgPickerConfig: {},
         customPicker: undefined,
         allowPeriodTypes: [],
         actions: {
-            setOrgTreeData: (orgTreeData) => {
+            setOrgTreeData: (orgTreeData, orgFlatMap) => {
 
                 set(state => ({
                     orgTreeData,
+                    orgFlatMap,
                     corePicker: {
                         ...state.corePicker,
                         orgSelected: {
@@ -33,6 +35,9 @@ export const useCorePickerState = create((set, get) => (
                 getCoreMetaStateByPath("actions.setGlobalOverlay")({
                     isOpen: bool,
                     closeable: true,
+                    hiddenMode: {
+                        isEnabled: false,
+                    },
                     type: {
                         key: 'corePicker',
                         title: trans('common:corePicker.title'),

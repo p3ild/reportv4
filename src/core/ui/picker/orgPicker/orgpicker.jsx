@@ -1,10 +1,10 @@
 import { wait } from '@core/network';
 import { compareString } from '@core/utils/stringutils';
 import { Cascader, Spin, Tag } from "antd";
-import { cloneDeep, flatten } from "lodash";
+import { cloneDeep, debounce, flatten, set } from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { useCorePickerState } from "../../../stateManage/corePickerState";
+import { getPickerStateByPath, useCorePickerState } from "../../../stateManage/corePickerState";
 import { useCoreMetaState } from "../../../stateManage/metadataState";
 import { trans } from "../../../translation/i18n";
 import { CustomCard } from "../../utils/customCard";
@@ -14,131 +14,142 @@ import './orgpicker.css';
 export function useOrgTreeByUser() {
     const [
         me,
+        reportTarget
     ] = useCoreMetaState(useShallow(state => (
         [
             state.me,
+            state.reportTarget,
         ]
     )));
 
     const [
         orgPickerConfig,
-        setOrgTreeData
+        setOrgTreeData,
     ] = useCorePickerState(useShallow(state => ([
         state.orgPickerConfig,
         state.actions.setOrgTreeData
     ])))
 
+    //When new report config apply, update orgTree data
+    useEffect(() => {
+        deboundUpdateTree(me)
+    }, [me?.orgViewData, orgPickerConfig?.orgGroupVisible?.join('|'), reportTarget?.reportID])
+}
+const deboundUpdateTree = debounce((me) => {
+    if (!me?.orgViewData) return undefined;
+    let orgFlatMap = {}
+    const setAllOrg = (path, value) => {
+        set(orgFlatMap, path, value)
+    }
+    const tree = cloneDeep(me?.orgViewData)?.map(e => {
+        return e?.organisationUnits.map(x => {
+            let orgMapped = generateEachOrgData({
+                setAllOrg,
+                orgTarget: x
+            });
+            return orgMapped
+        });
+    }).filter(e => e != undefined);
+    let resultOrgTree = flatten(tree).filter(e => e);
+    getPickerStateByPath('actions.setOrgTreeData')(resultOrgTree, orgFlatMap);
+}, 300);
 
-    const checkSupport = (orgTarget, orgGroupVisible) => {
-        if (!orgGroupVisible?.length) {
-            orgTarget.support = true;
-            return orgTarget;
-        }
+const generateEachOrgData = ({ orgTarget, setAllOrg }) => {
+    let { orgGroupVisible, levelsToHideIfEmpty } = getPickerStateByPath('orgPickerConfig') || {}
+    setAllOrg(orgTarget.id, orgTarget)
+    const processedOrg = checkSupport(orgTarget, orgGroupVisible);
+    if (!processedOrg) {
+        return undefined;
+    }
+    orgTarget = processedOrg;
 
-        if (orgTarget.level == 1) {
-            let hasRootIndicator = orgGroupVisible.find(e => e.replace(/[!+-]/g, '') === 'root');
-            orgTarget.support = true;
-            if (hasRootIndicator && hasRootIndicator.includes('-')) {
-                orgTarget.support = false;
-            }
-            return orgTarget;
-        }
+    orgTarget['title'] = generateOrgTitle(orgTarget)
+    orgTarget['label'] = generateOrgTitle(orgTarget)
+    orgTarget['value'] = orgTarget.id + '_' + orgTarget.title;
+    let isHaveChild = orgTarget?.children?.length > 0
 
-        let filteredOrgGroupVisible = orgGroupVisible.filter(e => e.replace(/[!+-]/g, '') !== 'root');
-
-        let visibleGroups = filteredOrgGroupVisible
-            .filter(e => !e.includes('!'))
-            .map(e => e.replace(/[!+-]/g, ''))
-
-        let excludedGroups = filteredOrgGroupVisible
-            .filter(e => e.includes('!'))
-            .map(e => e.replace('!', ''))
-            .map(e => e.replace(/[!+-]/g, ''));
-
-        let notSupportGroups = filteredOrgGroupVisible
-            .filter(e => e.includes('-'))
-            .map(e => e.replace(/[!+-]/g, ''))
+    orgTarget.children = orgTarget?.children?.map(orgChild => generateEachOrgData({ orgTarget: orgChild, setAllOrg }))
+        .filter(e => e != undefined)
+        .sort((a, b) => {
+            if (a.displayName < b.displayName) { return -1; }
+            if (a.displayName > b.displayName) { return 1; }
+            return 0;
+        });
 
 
-        let hasVisibleGroup = visibleGroups.length === 0 ||
-            orgTarget.organisationUnitGroups.some(x => visibleGroups.includes(x.id));
+    if (!isHaveChild && levelsToHideIfEmpty && levelsToHideIfEmpty?.includes(orgTarget.level)
+        && (
+            !orgTarget?.children ||
+            orgTarget?.children?.length == 0
+        )
 
-        let hasExcludedGroup = excludedGroups.length > 0 &&
-            orgTarget.organisationUnitGroups.some(x => excludedGroups.includes(x.id));
+    ) {
+        //Prevent hide org that is in orgGroupVisible
+        if (orgGroupVisible
+            && orgTarget.organisationUnitGroups.some(e => orgGroupVisible.some(x => x == e.id))
+        ) return orgTarget
+        return undefined;
 
-        if (!hasVisibleGroup || hasExcludedGroup) {
-            return undefined;
-        }
+    }
+    return orgTarget
 
+    function generateOrgTitle(org) {
+        let orgTitle = [
+            orgTarget.displayName,
+        ]
+
+        return orgTitle.join(' ');
+    }
+}
+
+const checkSupport = (orgTarget, orgGroupVisible) => {
+    if (!orgGroupVisible?.length) {
         orgTarget.support = true;
-
-        if (notSupportGroups.length > 0 && orgTarget.organisationUnitGroups.some(x => notSupportGroups.includes(x.id))) {
-            orgTarget.support = false;
-        }
-
         return orgTarget;
     }
 
-    const generateEachOrgData = ({ orgTarget }) => {
-        let { orgGroupVisible, levelsToHideIfEmpty } = orgPickerConfig || {}
-
-        const processedOrg = checkSupport(orgTarget, orgGroupVisible);
-        if (!processedOrg) {
-            return undefined;
+    if (orgTarget.level == 1) {
+        let hasRootIndicator = orgGroupVisible.find(e => e.replace(/[!+-]/g, '') === 'root');
+        orgTarget.support = true;
+        if (hasRootIndicator && hasRootIndicator.includes('-')) {
+            orgTarget.support = false;
         }
-        orgTarget = processedOrg;
-
-        orgTarget['title'] = generateOrgTitle(orgTarget)
-        orgTarget['label'] = generateOrgTitle(orgTarget)
-        orgTarget['value'] = orgTarget.id + '_' + orgTarget.title;
-        let isHaveChild = orgTarget?.children?.length > 0
-
-        orgTarget.children = orgTarget?.children?.map(orgChild => generateEachOrgData({ orgTarget: orgChild }))
-            .filter(e => e != undefined)
-            .sort((a, b) => {
-                if (a.displayName < b.displayName) { return -1; }
-                if (a.displayName > b.displayName) { return 1; }
-                return 0;
-            });
-        if (!isHaveChild && levelsToHideIfEmpty && levelsToHideIfEmpty?.includes(orgTarget.level)
-            && (
-                !orgTarget?.children ||
-                orgTarget?.children?.length == 0
-            )
-
-        ) {
-            //Prevent hide org that is in orgGroupVisible
-            if (orgGroupVisible
-                && orgTarget.organisationUnitGroups.some(e => orgGroupVisible.some(x => x == e.id))
-            ) return orgTarget
-            return undefined;
-
-        }
-        return orgTarget
-
-        function generateOrgTitle(org) {
-            let orgTitle = [
-                orgTarget.displayName,
-            ]
-
-            return orgTitle.join(' ');
-        }
+        return orgTarget;
     }
 
-    //When new report config apply, update orgTree data
-    useEffect(() => {
-        if (!me?.orgViewData || !orgPickerConfig) return undefined;
-        const tree = cloneDeep(me?.orgViewData)?.map(e => {
-            return e?.organisationUnits.map(x => {
-                let orgMapped = generateEachOrgData({
-                    orgTarget: x
-                });
-                return orgMapped
-            });
-        }).filter(e => e != undefined);
-        let resultOrgTree = flatten(tree).filter(e => e);
-        setOrgTreeData(resultOrgTree);
-    }, [me?.orgViewData?.[0]?.organisationUnits?.[0]?.id, JSON.stringify(orgPickerConfig)])
+    let filteredOrgGroupVisible = orgGroupVisible.filter(e => e.replace(/[!+-]/g, '') !== 'root');
+
+    let visibleGroups = filteredOrgGroupVisible
+        .filter(e => !e.includes('!'))
+        .map(e => e.replace(/[!+-]/g, ''))
+
+    let excludedGroups = filteredOrgGroupVisible
+        .filter(e => e.includes('!'))
+        .map(e => e.replace('!', ''))
+        .map(e => e.replace(/[!+-]/g, ''));
+
+    let notSupportGroups = filteredOrgGroupVisible
+        .filter(e => e.includes('-'))
+        .map(e => e.replace(/[!+-]/g, ''))
+
+
+    let hasVisibleGroup = visibleGroups.length === 0 ||
+        orgTarget.organisationUnitGroups.some(x => visibleGroups.includes(x.id));
+
+    let hasExcludedGroup = excludedGroups.length > 0 &&
+        orgTarget.organisationUnitGroups.some(x => excludedGroups.includes(x.id));
+
+    if (!hasVisibleGroup || hasExcludedGroup) {
+        return undefined;
+    }
+
+    orgTarget.support = true;
+
+    if (notSupportGroups.length > 0 && orgTarget.organisationUnitGroups.some(x => notSupportGroups.includes(x.id))) {
+        orgTarget.support = false;
+    }
+
+    return orgTarget;
 }
 export const OrgError = (orgSelected) => <><Tag color='red'>{orgSelected.displayName}</Tag> không hỗ trợ xuất báo cáo này. Vui lòng chọn đơn vị khác</>
 export default (props) => {
