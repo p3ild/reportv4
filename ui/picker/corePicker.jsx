@@ -1,18 +1,18 @@
 
-import { useCorePickerState } from "@core/stateManage/corePickerState"
+import { useCorePickerState } from "@core/stateManage/corePickerState";
 
-import { BsCalendar2WeekFill, BsGearFill, BsQuestion, BsQuestionCircle, BsQuestionCircleFill, BsThreeDots } from "react-icons/bs";
+import { BsCalendar2WeekFill, BsGearFill } from "react-icons/bs";
 import { LiaGlobeSolid } from "react-icons/lia";
 import { PiNotebookFill } from "react-icons/pi";
 
 import { trans } from "@core/translation/i18n";
+import { Checkbox, Tooltip } from "antd";
 import { upperFirst } from "lodash";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { useShallow } from "zustand/react/shallow";
+import { NoticeBox } from "./notice";
 import Orgpicker from "./orgPicker/orgpicker";
 import GroupPeriodPicker from "./periodpicker/GroupPeriodPicker";
-import { NoticeBox } from "./notice";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { Checkbox, Switch, Tooltip } from "antd";
 
 export default () => {
 
@@ -55,10 +55,9 @@ export const PreviewSelected = (props) => {
 
 
     return (
-
         <div className="bg-white rounded-lg p-3 flex flex-col gap-y-5 text-gray-800 shadow-lg border border-gray-200">
             <div className="mb-2">
-                <div className="flex items-center gap-2 mb-1 bg-gray-200 text-black px-2 py-1 rounded-md">
+                <div className="flex gap-2 mb-1 bg-gray-200 text-black px-2 py-1 rounded-md">
                     <LiaGlobeSolid className="w-[1.5rem] h-[1.5rem]" />
                     <h3 className="text-base text-black font-bold">{trans('common:orgPicker')}</h3>
                 </div>
@@ -99,14 +98,14 @@ export const PreviewSelected = (props) => {
                                     Vui lòng chọn đầy đủ đơn vị và thời điểm để xuất báo cáo.
                                 </NoticeBox>
                                 : <NoticeBox type="success" className={'my-[1px]'}>
-                                    <div className="flex flex-col gap-2">
+                                    <div className="flex flex-col gap-1">
                                         <p>
                                             Đã chọn đầy đủ đơn vị và thời điểm.
                                         </p>
-                                        <button id="btn-load-report" className="btn-primary w-fit bg-green-600 hover:bg-green-600/90 text-white gap-2"
+                                        <button id="btn-load-report" className="btn-primary w-fit bg-green-600 hover:bg-green-600/90 text-white gap-2 p-2 px-3"
                                             onClick={() => setCorePicker({ pickCompleted: Math.random() })}>
                                             {trans('common:button.loadReport')}
-                                            <FaArrowRightLong className="text-normal" />
+                                            <FaArrowRightLong className="text-normal animate-horizontalBound" />
                                         </button>
                                     </div>
                                 </NoticeBox>

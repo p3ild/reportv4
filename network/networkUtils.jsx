@@ -169,9 +169,10 @@ class NetworkUtils {
     }
 
 
-    getVersion = async function ({ host = this.INIT_HOST, auth = this.INIT_AUTH }) {
+    getSystemSettings = async function ({ host = this.INIT_HOST, auth = this.INIT_AUTH }) {
         let apiVersionDhis = [`${host}/api/system/info.json`];
         let apiVersionApp = [`${host}/api/apps`];
+        let apiSystemSettings = [`${host}/api/systemSettings`];
 
         let pullVersionDhis = await _axios({
             url: apiVersionDhis.join(''),
@@ -184,11 +185,20 @@ class NetworkUtils {
             auth: this.INIT_AUTH || auth,
             method: 'GET'
         });
+
+        let pullSystemSettings = await _axios({
+            url: apiSystemSettings.join(''),
+            auth: this.INIT_AUTH || auth,
+            method: 'GET'
+        });
+
+        let systemSettings = pullSystemSettings.data
         let versionApp = pullVersionApp.data.find(e => e.folderName.includes(import.meta.env.VITE_GLOBAL_KEY_APP))?.version
         let versionDhis = pullVersionDhis?.data?.version
         return {
             versionDhis,
-            versionApp
+            versionApp,
+            ...systemSettings
         }
     }
 
@@ -822,8 +832,9 @@ class NetworkUtils {
     }
     injectBasicMethod = (utilsModule) => {
         let host = this.INIT_HOST;
+        let auth = this.INIT_AUTH
         let headers = { Authorization: `ApiToken ${this.TOKEN}` };
-        utilsModule = utilsModule.init({ host, headers, _metaDataUtilsInput: this });
+        utilsModule = utilsModule.init({ host, auth,headers, _metaDataUtilsInput: this });
         utilsModule._post = this._post
         utilsModule._get = this._get
         utilsModule.NetworkUtils = this;

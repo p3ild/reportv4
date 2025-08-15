@@ -79,7 +79,7 @@ export const useMetadataAddition = () => {
     const [loaded, setLoaded] = useState(false);
     let [
         networkUtils, language, instanceTarget,
-        setVersion,
+        setSystemSettings,
         setMe,
         setListReport,
         setListFolder,
@@ -87,7 +87,7 @@ export const useMetadataAddition = () => {
         setLanguage
     ] = useCoreMetaState(useShallow(state => [
         state.networkUtils, state.language, state.instanceTarget,
-        state.actions.setVersion,
+        state.actions.setSystemSettings,
         state.actions.setMe,
         state.actions.setListReport,
         state.actions.setListFolder,
@@ -115,11 +115,17 @@ export const useMetadataAddition = () => {
                         }
                     },
                     {
-                        key: "VERSION",
+                        key: "SYSTEM_SETTINGS",
                         fetch: () => {
-                            return networkUtils.getVersion({}).then(version => setVersion(version));
+                            return networkUtils.getSystemSettings({}).then(settings => setSystemSettings(settings));
                         }
                     },
+                    // {
+                    //     key: "SYSTEM_SETTINGS",
+                    //     fetch: () => {
+                    //         return networkUtils.getSystemSettings({}).then(settings => setSystemSettings(settings));
+                    //     }
+                    // },
                     {
                         key: "LIST_REPORT",
                         fetch: () => {

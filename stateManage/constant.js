@@ -2,7 +2,7 @@ export const INIT_APP_TASK = {
     ME_DATA: {
         title: "Dữ liệu người dùng",
     },
-    VERSION: {
+    SYSTEM_SETTINGS: {
         title: "Dữ liệu cài đặt",
     },
     LIST_REPORT: {

@@ -1,10 +1,8 @@
-import { Flex, notification, Spin } from "antd";
-import { useEffect, useMemo, useRef } from "react";
+import { Flex, Input, notification, Spin } from "antd";
+import { Fragment, useEffect, useMemo, useRef } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { useCoreMetaState } from "../../stateManage/metadataState";
+import { getCoreMetaStateByPath, useCoreMetaState } from "../../stateManage/metadataState";
 import CorePicker from "../picker/corePicker";
-import { useCorePickerState } from "@core/stateManage/corePickerState";
-import { trans } from "@core/translation/i18n";
 import { RiCloseLine } from "react-icons/ri";
 
 export const OVERLAY_TYPE = {
@@ -72,24 +70,30 @@ export default (props) => {
     }, [globalOverlay?.isOpen]);
     const Header = () => {
         return (title || globalOverlay.closeable) &&
-            <div className="px-3 py-3 flex items-center justify-between flex-row w-full border-b-2 bg-gray-800 border-gray-200">
-                {title && <p className="p-1 text-white text-xl font-bold"> {title}</p>}
-                {globalOverlay?.closeable &&
-                    <RiCloseLine className="text-white w-7 h-7 hover:text-red-400" onClick={() => {
-                        setGlobalOverlay({
-                            ...globalOverlay,
-                            isOpen: false
-                        })
-                    }} />
-                }
+            <div className="w-full bg-gray-300 items-center justify-between flex flex-row flex-wrap font-semibold p-4  gap-2 border border-b-gray-500">
+                <p className="text-xl">{title}</p>
+                <button className="text-black text-bold hover:text-red-600">
+                    <RiCloseLine className="w-8 h-8"
+                        onClick={() => {
+                            setGlobalOverlay({
+                                ...globalOverlay,
+                                isOpen: false
+                            })
+                        }} />
+                </button>
+
+
+
             </div>
 
+
     }
-    return <div className={(globalOverlay?.isOpen ? "relative z-10" : "w-[0px] h-[0px] hidden")} aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div className="fixed inset-0 bg-gray-500/80 backdrop-blur-sm transition-opacity"></div>
-        <div ref={refDialog} className="w-screen fixed inset-0 z-10 ">
+
+    return <div className={(globalOverlay?.isOpen ? "relative z-50" : "w-[0px] h-[0px] hidden")} aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 bg-gray-500/80 backdrop-blur-[1.5px] transition-opacity"></div>
+        <div ref={refDialog} className="w-screen fixed inset-0 z-10">
             <div className="flex h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <div className={`w-[500px] desktopLow:w-[800px] relative transform overflow-hidden rounded-lg bg-white bg text-left  transition-all sm:my-8  ${type?.key == ROOT_OVERLAY_TEMPLATE.DEFAULT.key ? 'bg-opacity-0' : 'shadow-xl bg-opacity-90'}`}>
+                <div className={`w-[500px] desktopLow:w-[800px] relative transform overflow-hidden rounded-2xl bg-white bg text-left  transition-all sm:my-8  ${type?.key == ROOT_OVERLAY_TEMPLATE.DEFAULT.key ? 'bg-opacity-0' : 'shadow-xl bg-opacity-90'}`}>
                     <div gap={10} id={'flex-content flex flex-row'} ref={refContent} >
                         <Header />
 
@@ -109,3 +113,14 @@ export default (props) => {
         </div>
     </div>
 }
+
+
+document.addEventListener('keyup', function (event) {
+    if (event.key === "Escape") {
+        getCoreMetaStateByPath('actions.setGlobalOverlay')?.({
+            ...getCoreMetaStateByPath('globalOverlay'),
+            isOpen: false
+        })
+        // document.getElementById('your-dialog-box').remove()
+    }
+})
