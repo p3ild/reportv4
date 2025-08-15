@@ -36,12 +36,11 @@ export async function exportToExcel() {
         const format = function (template, context) {
             return template.replace(/{(\w+)}/g, (m, p) => context[p])
         };
-        let { revertConvertNumericCells } = convertNumericCells('en');
-
-
         const ori = document.getElementsByClassName('report-content')[0];
         let clone = ori.cloneNode(true);
+
         Array.from(clone.getElementsByClassName('no-print')).forEach(e => e.remove())
+        let { revertConvertNumericCells } = convertNumericCells(clone, 'en');
 
         //Excel get table only
         if (excelOptions?.excelOnlyTable) clone = document.getElementsByClassName('report-table-main')[0].getElementsByTagName('table')[0];
@@ -76,7 +75,7 @@ export async function exportToExcel() {
                 name: "Sheet 1",
             }
         });
-        revertConvertNumericCells()
+        // revertConvertNumericCells()
 
 
         //OldWay
@@ -97,7 +96,7 @@ async function exportToExcel_Datatable() {
 };
 
 
-function convertNumericCells(toLocale = 'en',) {
+function convertNumericCells(document, toLocale = 'en',) {
     const cells = Array.from(document.querySelectorAll('td'))
 
     let originalClones = []

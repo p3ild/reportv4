@@ -64,9 +64,6 @@ class Base {
     }
 
     init = async () => {
-        await getPickerStateByPath('actions.setAllowPeriodTypes')([
-            PERIOD_TYPE.year,
-        ]);
     }
 
 

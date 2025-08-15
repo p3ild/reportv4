@@ -1,5 +1,5 @@
 import mm from 'moment';
-import { isNumber, trim, chain, groupBy, toNumber } from 'lodash'
+import { isNumber, trim, chain, groupBy, toNumber, upperFirst as _upperFirst } from 'lodash'
 import { startOfMonth, endOfMonth, parse, format } from 'date-fns'
 export function convertDateToDHIS({ data, sourceFormat = 'DD/MM/YYYY', targetFormat = "YYYY-MM-DDTHH:mm:ss", isFormat }) {
     if (trim(data).length === 0) {
@@ -368,4 +368,8 @@ export const numToLocaleString = (str, opts) => {
     }
 
     return num;
+}
+
+export const upperFirst = (str) => {
+    return _upperFirst((str || "").toLowerCase())
 }

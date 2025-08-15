@@ -47,9 +47,7 @@ export const useCoreMetaState = create((set, get) => (
             return networkUtils._get({ api })
         },
         actions: {
-            setTriggerDownloadExcel(isDownloadExcelTrigger) {
-                set(state => ({ isDownloadExcelTrigger }))
-            },
+            setTriggerDownloadExcel: async (isDownloadExcelTrigger) => set(state => ({ isDownloadExcelTrigger })),
             setCustomReportData(newData, clear) {
                 set(state => {
                     if (clear) {
@@ -65,55 +63,20 @@ export const useCoreMetaState = create((set, get) => (
                     }
                 });
             },
-            setInitAppTask: async (initAppTask) => {
-                set(state => ({ initAppTask }));
-            },
-            setFirstLoadApp: async (bool) => {
-                set(state => ({ firstLoadApp: bool }));
-            },
-            setActiveFolder: async (activeFolder) => {
-                set(state => ({ activeFolder }));
-            },
-            setGlobalOverlay: async (globalOverlay) => {
-                set(state => ({ globalOverlay }));
-            },
-            setExcelOptions: (excelOptions, reset) => {
-                set(state => ({ excelOptions }));
-            },
+            setInitAppTask: async (initAppTask) => set(state => ({ initAppTask })),
+            setFirstLoadApp: async (bool) => set(state => ({ firstLoadApp: bool })),
+            setActiveFolder: async (activeFolder) => set(state => ({ activeFolder })),
+            setGlobalOverlay: async (globalOverlay) => set(state => ({ globalOverlay })),
+            setExcelOptions: (excelOptions, reset) => set(state => ({ excelOptions })),
             setInstanceTarget: async (instanceTarget) => { set(state => ({ instanceTarget })); },
             setReportTarget: async (reportTarget) => { set(state => ({ reportTarget })); },
-            setLanguage: async (language) => {
-                set(state => ({ language }));
-            },
+            setLanguage: async (language) => set(state => ({ language })),
 
-            setVersion: async (version) => {
-                set(state => ({ version }));
-            },
-            setMe: async (me) => {
-                set(state => ({ me }));
-            },
-            setListReport: async (listReport) => {
-                set(state => ({ listReport }));
-            },
-            setListFolder: async (listFolder) => {
-                set(state => ({ listFolder }));
-            },
-            setNetworkUtils: async (networkUtils) => {
-                set(state => ({ networkUtils }));
-            },
-
-            setApprovalData: async (approvalData) => {
-
-                set(state => {
-                    let newObj = {
-                        ...state.approvalData,
-                        ...approvalData
-                    };
-                    return {
-                        approvalData: newObj
-                    }
-                })
-            },
+            setSystemSettings: async (systemSettings) => set(state => ({ systemSettings })),
+            setMe: async (me) => set(state => ({ me })),
+            setListReport: async (listReport) => set(state => ({ listReport })),
+            setListFolder: async (listFolder) => set(state => ({ listFolder })),
+            setNetworkUtils: async (networkUtils) => set(state => ({ networkUtils })),
 
             setMouseShakeInitialed: (initialed) => {
                 set(state => ({
@@ -132,15 +95,6 @@ export const useCoreMetaState = create((set, get) => (
                     }
                 }))
             },
-
-            setMouseShakeConfig: (config) => {
-                set(state => ({
-                    mouseShakeConfig: {
-                        ...state.mouseShakeConfig,
-                        ...config
-                    }
-                }))
-            }
 
         }
     }
