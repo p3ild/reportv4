@@ -1,3 +1,4 @@
+import { getApprovalStateByPath } from "@core/stateManage/approvalState";
 import { getPickerStateByPath, useCorePickerState } from "@core/stateManage/corePickerState";
 import { getCustomReportStateByPath } from "@core/stateManage/customState";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
@@ -190,6 +191,7 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
             }
 
             getCustomReportStateByPath('actions.reset')();
+            getApprovalStateByPath('actions.reset')();
             reportImport && setReportTarget(
                 {
                     ...reportImport,

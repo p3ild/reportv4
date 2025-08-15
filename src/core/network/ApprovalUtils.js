@@ -1,4 +1,9 @@
-import { APPROVAL_TYPE } from "../hooks/useApproval";
+import { getApprovalStateByPath } from "@core/stateManage/approvalState";
+export const APPROVAL_TYPE = {
+    ACCEPT: 'Chấp nhận',
+    APPROVE: 'Phê duyệt',
+}
+export * from "@core/ui/approval/ButtonApproval";
 
 class ApprovalUtils {
     init = function ({
@@ -9,6 +14,7 @@ class ApprovalUtils {
         this.INIT_HOST = host;
         this.INIT_AUTH = auth;
         this.headers = headers
+        this.approvalState = getApprovalStateByPath()
         return this;
     }
 
@@ -36,10 +42,7 @@ class ApprovalUtils {
     }
 
     approve({ dsID, period, orgID, approvalType, payload, isBulk = true }) {
-        // if (isBulk) {
-        //     api = '/api/33/dataApprovals/approvals'
-
-        // }
+       
         let api = `/api/${approvalType == APPROVAL_TYPE.ACCEPT ? "dataAcceptances" : "dataApprovals"}?ds=${dsID}&pe=${period}&ou=${orgID}`;
         return this._post({ api })
     }
@@ -51,22 +54,6 @@ class ApprovalUtils {
 
     approvalBulk({ wf, pe, ou, approvalType }) {
         let bulk =
-        // {
-        //     "wf": [
-        //         "pBOMPrpg1QX", "lyLU2wR22tC"
-        //     ],
-        //     "pe": Array.isArray(period) ? period : [period],
-        //     "approvals": [
-        //         {
-        //             "ou": "cDw53Ej8rju",
-        //             "aoc": "ranftQIH5M9"
-        //         },
-        //         {
-        //             "ou": "cDw53Ej8rju",
-        //             "aoc": "fC3z1lcAW5x"
-        //         }
-        //     ]
-        // }
         {
             wf: Array.isArray(wf) ? wf : [wf],
             pe: Array.isArray(pe) ? pe : [pe],
@@ -80,22 +67,6 @@ class ApprovalUtils {
 
     unApprovalBulk({ wf, pe, ou, approvalType }) {
         let bulk =
-        // {
-        //     "wf": [
-        //         "pBOMPrpg1QX", "lyLU2wR22tC"
-        //     ],
-        //     "pe": Array.isArray(period) ? period : [period],
-        //     "approvals": [
-        //         {
-        //             "ou": "cDw53Ej8rju",
-        //             "aoc": "ranftQIH5M9"
-        //         },
-        //         {
-        //             "ou": "cDw53Ej8rju",
-        //             "aoc": "fC3z1lcAW5x"
-        //         }
-        //     ]
-        // }
         {
             wf: Array.isArray(wf) ? wf : [wf],
             pe: Array.isArray(pe) ? pe : [pe],
@@ -106,6 +77,130 @@ class ApprovalUtils {
         let api = `/api/33${approvalType == APPROVAL_TYPE.ACCEPT ? "/dataAcceptances/unacceptances" : "/dataApprovals/unapprovals"}`
         return this._post({ api, data: bulk })
     }
+
+
+    //======================================== Helper function ========================================
+    addGroupApproval = (props) => {
+        ; (async () => {
+            let { ds, wf, pe, org, key } = props;
+            let dsInfo = await this.getDsInfo({ ds })
+            wf = dsInfo.map(e => e.workflow);
+
+            if (!Array.isArray(pe)) {
+                pe = pe.split(';')
+            }
+            this.updateApprovalGroupByKey({
+                key, data: {
+                    reloaded: false
+                }
+            });
+
+            let fetchApprovalData = await this.fetchApprove({
+                wf,
+                period: pe,
+                orgID: org
+            })
+
+            let fetchNewState = this.addGroupApproval.bind(this, props);
+
+            let approvalObj = {
+                approvalData: fetchApprovalData,
+                reloaded: true,
+                fetchNewState,
+                unApprovalAll: this.unApprovalAll.bind({
+                    ...props,
+                    updateApprovalGroupByKey: this.updateApprovalGroupByKey.bind(this),
+                    unApprovalBulk: this.unApprovalBulk.bind(this),
+                    dsInfo,
+                    approvalData: fetchApprovalData,
+                    fetchNewState
+                }),
+                approvalAll: this.approvalAll.bind({
+                    ...props,
+                    updateApprovalGroupByKey: this.updateApprovalGroupByKey.bind(this),
+                    approvalBulk: this.approvalBulk.bind(this),
+                    dsInfo,
+                    approvalData: fetchApprovalData,
+                    fetchNewState
+                }),
+            }
+            this.updateApprovalGroupByKey({ key, data: approvalObj });
+        })()
+    }
+
+    updateApprovalGroupByKey = function ({ key, data }) {
+        let newApprovalData = this.approvalState.approvalData || {};
+        newApprovalData[key] = data
+        this.approvalState.actions.setApprovalData(newApprovalData);
+    }
+
+    unApprovalAll = async function (props) {
+        let { fetchNewState, approvalData, dsInfo, key, updateApprovalGroupByKey } = this;
+        let { approvalType } = props;
+        updateApprovalGroupByKey(
+            {
+                key,
+                data: {
+                    reloaded: false,
+                }
+            })
+
+        let listApproval = approvalData.filter(e =>
+            (
+                (//For APPROVE DATA
+                    approvalType == APPROVAL_TYPE.APPROVE && e.state == 'APPROVED_HERE')
+            )
+            ||
+            (//For ACCEPT DATA
+                approvalType == APPROVAL_TYPE.ACCEPT && e.state == "ACCEPTED_HERE"
+            )
+        ).map(e => ({
+            ou: e.ou,
+            wf: e.wf
+        }));
+        let dataApproval = await this.unApprovalBulk({
+            ...this,
+            approvalType,
+            ou: listApproval.map(e => e.ou),
+            wf: listApproval.map(e => e.wf)
+        })
+        await fetchNewState()
+    }
+
+    approvalAll = async function (props) {
+        let { fetchNewState, approvalData, dsInfo, key, updateApprovalGroupByKey } = this;
+        let { approvalType } = props;
+        updateApprovalGroupByKey(
+            {
+                key: key,
+                data: {
+                    reloaded: false,
+                }
+            });
+
+
+        let listApproval = approvalData.filter(e =>
+            (
+                (//For APPROVE DATA
+                    approvalType == APPROVAL_TYPE.APPROVE && e.state == 'UNAPPROVED_READY')
+            )
+            ||
+            (//For ACCEPT DATA
+                approvalType == APPROVAL_TYPE.ACCEPT && e.state == "APPROVED_HERE"
+            )
+        ).map(e => ({
+            ou: e.ou,
+            wf: e.wf
+        }));
+        let dataApproval = await this.approvalBulk({
+            ...this,
+            approvalType,
+            ou: listApproval.map(e => e.ou),
+            wf: listApproval.map(e => e.wf)
+        })
+        await fetchNewState()
+    }
+
 }
 
 export default new ApprovalUtils();
