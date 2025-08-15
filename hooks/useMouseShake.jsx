@@ -16,7 +16,7 @@ import { wait } from '@core/network'
 const useMouseShake = ({
     threshold = 30,
     timeWindow = 300,
-    minShakes = 3
+    minShakes = 5
 } = {}) => {
     const mousePositions = useRef([])
     const lastPosition = useRef({ x: 0, y: 0 })
