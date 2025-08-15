@@ -50,7 +50,7 @@ export function HeaderUILayout({ listColumnConfig, title }) {
         <tr>
             {
                 listColumnConfig.map((e, idx) =>
-                    <th key={idx}
+                    <th key={idx} className="col-no"
                     >{idx + 1}</th>
                 )
             }

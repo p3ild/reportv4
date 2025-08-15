@@ -110,52 +110,52 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
             </tr>
             <tr>
                 <th {...excelConfig}
-                    className="sticky-col-0"
+                    className="sticky-col-0 col-no"
                 >1</th>
                 <th {...excelConfig}
-                    className="sticky-col-1"
+                    className="sticky-col-1 col-no"
                 >2</th>
-                <th {...excelConfig} className={"!font-normal"}>3a</th>
-                <th {...excelConfig} className={"!font-normal"}>3b</th>
-                <th {...excelConfig} className={"!font-normal"}>4a</th>
-                <th {...excelConfig} className={"!font-normal"}>4b</th>
-                <th {...excelConfig} className={"!font-normal"}>5</th>
-                <th {...excelConfig} className={"!font-normal"}
+                <th {...excelConfig} className={"col-no"}>3a</th>
+                <th {...excelConfig} className={"col-no"}>3b</th>
+                <th {...excelConfig} className={"col-no"}>4a</th>
+                <th {...excelConfig} className={"col-no"}>4b</th>
+                <th {...excelConfig} className={"col-no"}>5</th>
+                <th {...excelConfig} className={"col-no"}
                     style={{
                         width: '100px'
                     }}
                 >6</th>
-                <th {...excelConfig} className={"!font-normal"}>7</th>
-                <th {...excelConfig} className={"!font-normal"}>8a</th>
-                <th {...excelConfig} className={"!font-normal"}>8b</th>
-                <th {...excelConfig} className={"!font-normal"}>8c</th>
-                <th {...excelConfig} className={"!font-normal"}>8d</th>
-                <th {...excelConfig} className={"!font-normal"}>9a</th>
-                <th {...excelConfig} className={"!font-normal"}>9b</th>
-                <th {...excelConfig} className={"!font-normal"}>10a</th>
-                <th {...excelConfig} className={"!font-normal"}>10b</th>
-                <th {...excelConfig} className={"!font-normal"}>10c</th>
-                <th {...excelConfig} className={"!font-normal"}>11a</th>
-                <th {...excelConfig} className={"!font-normal"}>11b</th>
-                <th {...excelConfig} className={"!font-normal"}>11c</th>
-                <th {...excelConfig} className={"!font-normal"}>12a</th>
-                <th {...excelConfig} className={"!font-normal"}>12b</th>
-                <th {...excelConfig} className={"!font-normal"}>13a</th>
-                <th {...excelConfig} className={"!font-normal"}>13b</th>
-                <th {...excelConfig} className={"!font-normal"}>14</th>
-                <th {...excelConfig} className={"!font-normal"}>15a</th>
-                <th {...excelConfig} className={"!font-normal"}>15b</th>
-                <th {...excelConfig} className={"!font-normal"}>16</th>
-                <th {...excelConfig} className={"!font-normal"}>17</th>
-                <th {...excelConfig} className={"!font-normal"}>18a</th>
-                <th {...excelConfig} className={"!font-normal"}>18b</th>
-                <th {...excelConfig} className={"!font-normal"}>18c</th>
-                <th {...excelConfig} className={"!font-normal"}>19</th>
-                <th {...excelConfig} className={"!font-normal"}>20</th>
-                <th {...excelConfig} className={"!font-normal"}>21a</th>
-                <th {...excelConfig} className={"!font-normal"}>21b</th>
-                <th {...excelConfig} className={"!font-normal"}>22a</th>
-                <th {...excelConfig} className={"!font-normal"}>22b</th>
+                <th {...excelConfig} className={"col-no"}>7</th>
+                <th {...excelConfig} className={"col-no"}>8a</th>
+                <th {...excelConfig} className={"col-no"}>8b</th>
+                <th {...excelConfig} className={"col-no"}>8c</th>
+                <th {...excelConfig} className={"col-no"}>8d</th>
+                <th {...excelConfig} className={"col-no"}>9a</th>
+                <th {...excelConfig} className={"col-no"}>9b</th>
+                <th {...excelConfig} className={"col-no"}>10a</th>
+                <th {...excelConfig} className={"col-no"}>10b</th>
+                <th {...excelConfig} className={"col-no"}>10c</th>
+                <th {...excelConfig} className={"col-no"}>11a</th>
+                <th {...excelConfig} className={"col-no"}>11b</th>
+                <th {...excelConfig} className={"col-no"}>11c</th>
+                <th {...excelConfig} className={"col-no"}>12a</th>
+                <th {...excelConfig} className={"col-no"}>12b</th>
+                <th {...excelConfig} className={"col-no"}>13a</th>
+                <th {...excelConfig} className={"col-no"}>13b</th>
+                <th {...excelConfig} className={"col-no"}>14</th>
+                <th {...excelConfig} className={"col-no"}>15a</th>
+                <th {...excelConfig} className={"col-no"}>15b</th>
+                <th {...excelConfig} className={"col-no"}>16</th>
+                <th {...excelConfig} className={"col-no"}>17</th>
+                <th {...excelConfig} className={"col-no"}>18a</th>
+                <th {...excelConfig} className={"col-no"}>18b</th>
+                <th {...excelConfig} className={"col-no"}>18c</th>
+                <th {...excelConfig} className={"col-no"}>19</th>
+                <th {...excelConfig} className={"col-no"}>20</th>
+                <th {...excelConfig} className={"col-no"}>21a</th>
+                <th {...excelConfig} className={"col-no"}>21b</th>
+                <th {...excelConfig} className={"col-no"}>22a</th>
+                <th {...excelConfig} className={"col-no"}>22b</th>
             </tr>
         </thead>
     </>

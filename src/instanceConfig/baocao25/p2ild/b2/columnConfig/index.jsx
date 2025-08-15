@@ -1,12 +1,8 @@
-import { Flex } from "antd";
-import { cloneDeep } from "lodash";
-import { DATA_TYPE, getValueDE, numberWithThousands, roundNumber } from "../../common/DataValueUtils";
-import { fetchAnalyticsData } from "../../common/request/request";
-import { RenderValue } from "../../common/ui";
-import { ApproveButton } from "../../common/ui/ApproveButtonTT37";
-import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
-import { faker } from '@faker-js/faker';
 import { numToLocaleString } from "@core/utils/stringutils";
+import { Flex } from "antd";
+import { getValueDE } from "../../common/DataValueUtils";
+import { RenderValue } from "../../common/ui";
+import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
@@ -39,27 +35,8 @@ export const getListColumnConfig = ({ }) => {
                     "data-a-wrap": "true",
                 },
                 render: (props) => {
-                    let { orgIdx, orgName, orgUnit, period, approvalConfig } = props;
-
-                    let { approvalKey, approvalVisible, approvalType } = approvalConfig || {};
-
                     return {
-                        view: <Flex vertical >
-                            <RenderValue {...{
-                                value: props.orgName,
-                                ...props,
-                            }}
-                            ></RenderValue>
-                            {/* {approvalConfig && ![APPROVAL_VISIBLE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
-                                    ...{
-                                        dsID: [rc7A].includes(reportCode) ? "MqtODSonraB" : "V8EEowMeUTO", period, orgID: orgUnit,
-                                        approvalKey,
-                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
-                                    }
-                                } />
-                            } */}
-                        </Flex>
+                        view: props.orgName
                     }
                 }
             },

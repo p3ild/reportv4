@@ -41,7 +41,7 @@ export const getDataCommon = async (props) => {
             listRow: provinceData,
             includeTotalRow: [provinceIdx + 1, provinceData[0][1].view],
         });
-        rowTotalProvince[0].className = 'sticky-row-1';
+        // rowTotalProvince[0].className = 'sticky-row-1';
         listRowTotalProvince.push(rowTotalProvince)
         return [
             rowTotalProvince,
@@ -60,7 +60,7 @@ export const getDataCommon = async (props) => {
         listRow: listRowTotalProvince,
         includeTotalRow: ["", <p>Tổng cộng</p>],
     });
-    rowTotalAll[0].className = 'sticky-row-0';
+    // rowTotalAll[0].className = 'sticky-row-0';
 
     listRow = [
         rowTotalAll,

@@ -1,7 +1,19 @@
 import { format, parse } from "date-fns"
 import { findColStyleByKey } from "../../common/ui/RowRender"
 import { Fragment } from "react"
+import { Tooltip } from "antd"
+import { FaRegQuestionCircle } from "react-icons/fa"
 
+function CustomTooltip({ title, children }) {
+    return (
+        <Tooltip title={title}>
+            <div className="flex flex-col items-center gap-1">
+                <span>{children}</span>
+                <FaRegQuestionCircle />
+            </div>
+        </Tooltip>
+    )
+}
 
 export function HeaderUILayoutTable1({ listColumnConfig, title }) {
     return <thead>
@@ -15,20 +27,25 @@ export function HeaderUILayoutTable1({ listColumnConfig, title }) {
                 {...findColStyleByKey({ listColumnConfig, key: 'org' })}
                 rowSpan={2}
             >Đơn vị</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin' rowSpan={2}>Số xã</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin' rowSpan={2}>Tổng số THTV trong kỳ báo cáo
-            </th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin' rowSpan={2}><CustomTooltip title="Tổng số xã trên địa bàn">Số xã</CustomTooltip></th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin' rowSpan={2}><CustomTooltip title="Tổng số trường hợp tử vong được nhật vào Sổ A6 từ các cách khác nhau (tự y tế phát hiện để nhập, từ tư pháp chuyển sang...). Các trường hợp tử vong này phải có ngày nhập vào Số A6 trong thời gian báo cáo, ngày tử vong có thể không trong kỳ báo cáo.">Tổng số THTV trong kỳ báo cáo</CustomTooltip></th>
             <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin' colSpan={8}>Trong đó, số trường hợp tử vong:</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Tư pháp chuyển sang</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Y tế ghi nhận</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Được ghi nhận bởi cả 2 hệ thống tại thời điểm trao đổi dữ liệu</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Tư pháp chuyển sang mà Y tế chưa có </th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Tư pháp chuyển sang mà Y tế chưa có, đã hoàn tất</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Số ngày trung bình giữa thời điểm Y tế ghi nhận trên A6 điện tử và ngày tử vong</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Không có giấy tờ tuỳ thân hoặc số định danh cá nhân</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>Có ngày tử vong trong kỳ báo cáo</th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang cho Y tế trong kỳ báo cáo theo ngày nhập và ngày tử vong (bao gồm cả trường hợp trùng với Y tế)">Tư pháp chuyển sang</CustomTooltip></th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Y tế ghi nhận và nhập trước vào sổ A6 trong kỳ báo cáo (bao gồm cả trường hợp trùng với Tư pháp)">Y tế ghi nhận</CustomTooltip></th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Y tế ghi nhận trùng với Tư pháp">Được ghi nhận bởi cả 2 hệ thống tại thời điểm trao đổi dữ liệu</CustomTooltip></th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang mà Y tế chưa có.">Tư pháp chuyển sang mà Y tế chưa có</CustomTooltip></th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang mà Y tế chưa có, sau đó Y tế đã hoàn tất thông tin.">Tư pháp chuyển sang mà Y tế chưa có, đã hoàn tất</CustomTooltip></th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title={<p className="flex flex-col">
+                <span>Số ngày trung bình giữa thời điểm Y tế ghi nhận trên Sổ A6 và Ngày tử vong (chỉ tính các trường hợp tử vong mà y tế tự ghi nhận - cột 6)</span>
+                <span className="whitespace-break-spaces">      <strong>Tử số</strong>: Tổng số ngày chênh lệch giữa Ngày nhập vào Sổ A6 và Ngày tử vong của tất cả các trường hợp tử vong được nhập vào Sổ A6 (không tính các trường hợp tử vong đẩy mới từ Tư pháp)</span>
+                <span className="whitespace-break-spaces">      <strong>Mẫu số</strong>: Số trường hợp tử vong do y tế ghi nhận</span>
+            </p>}>
+                Số ngày trung bình giữa thời điểm Y tế ghi nhận trên A6 điện tử và ngày tử vong
+            </CustomTooltip></th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong không có Giấy tờ tùy thân hoặc số định danh cá nhân.">Không có giấy tờ tuỳ thân hoặc số định danh cá nhân</CustomTooltip></th>
+            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong có Ngày nhập vào Sổ A6 và Ngày tử vong trong khoảng từ ngày đầu tiên đến ngày cuối cùng của kỳ báo cáo (bao gồm cả trường hợp tử vong y tế ghi nhận và  trường hợp tử vong tư pháp chuyển sang).">Có ngày tử vong trong kỳ báo cáo</CustomTooltip></th>
 
         </tr>
         <tr>

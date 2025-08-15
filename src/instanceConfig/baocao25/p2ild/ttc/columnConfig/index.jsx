@@ -39,27 +39,8 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let { orgIdx, orgName, orgUnit, period, approvalConfig } = props;
-
-                    let { approvalKey, approvalVisible, approvalType } = approvalConfig || {};
-
                     return {
-                        view: <Flex vertical >
-                            <RenderValue {...{
-                                value: props.orgName,
-                                ...props,
-                            }}
-                            ></RenderValue>
-                            {/* {approvalConfig && ![APPROVAL_VISIBLE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
-                                    ...{
-                                        dsID: [rc7A].includes(reportCode) ? "MqtODSonraB" : "V8EEowMeUTO", period, orgID: orgUnit,
-                                        approvalKey,
-                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
-                                    }
-                                } />
-                            } */}
-                        </Flex>
+                        view: props.orgName
                     }
                 }
             },

@@ -6,7 +6,7 @@ import { useLoadData } from "./hook";
 import '../common/circular37-mui.css'
 import { optionPickerDate, orgPickerConfig } from "./constant";
 import { useCorePickerState } from "@core/stateManage/corePickerState";
-export const reportCode = "Biểu thông tin chung"
+export const reportCode = "Báo cáo 1"
 export default () => {
     const [
         setAllowPeriodTypes,

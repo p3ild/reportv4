@@ -124,7 +124,7 @@ export const getDataCommon = async (props) => {
 
                 // TT37 data
                 var json = values[0];
-                let chapterCodeIndex = 15;
+                let chapterCodeIndex = 26;
                 var cleanrRedundancyData = json.rows.filter(e => !chapterCodes.includes(e[chapterCodeIndex]));
                 var uniqCleanrRedundancyData = uniqBy(cleanrRedundancyData, e => e[0])
                 var groupedData = groupBy(uniqCleanrRedundancyData, chapterCodeIndex);

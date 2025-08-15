@@ -4,20 +4,20 @@ import { TableData } from "../common/ui/MultiTableUI";
 import { useLoadData } from "./hook";
 import '../common/circular37-mui.css'
 import { optionPickerDate, orgPickerConfig } from "./constant";
-import { useCorePickerState } from "@core/stateManage/corePickerState";
-import { useCoreMetaState } from "@core/stateManage/metadataState";
+import { getPickerStateByPath, useCorePickerState } from "@core/stateManage/corePickerState";
+import { getCoreMetaStateByPath, useCoreMetaState } from "@core/stateManage/metadataState";
+import { APPROVAL_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
+import { getApprovalStateByPath } from "@core/stateManage/approvalState";
 export const reportCode = "Báo cáo 4"
 export const reportName = "HOẠT ĐỘNG CHĂM SÓC BÀ MẸ"
 export { orgPickerConfig };
 export default () => {
     const [
-        instanceTarget,
-        networkUtils,
         setExcelOptions,
+        networkUtils
     ] = useCoreMetaState(useShallow(state => ([
-        state.instanceTarget,
-        state.networkUtils,
         state.actions.setExcelOptions,
+        state.networkUtils,
     ])));
 
     const [
@@ -39,19 +39,43 @@ export default () => {
         dhis2Period
     } = useLoadData({ reportCode });
 
-    // let approvalHook = useApproval();
-
     useEffect(
         () => {
             setExcelOptions({
                 columnWidths: '10,30',
-                // excelFileName: reportCode.toLocaleLowerCase().replace(/ /g, '_')
             });
             setOrgPickerConfig(orgPickerConfig)
             setAllowPeriodTypes(optionPickerDate);
         },
         []
     )
+    const orgTestApprovalLevel3 = [
+        "HVmCafOLKm7",
+
+    ]
+    const orgTestApprovalLevel4 = [
+        'bKwZ9PZbUeg',//Điểm trạm 1 Nà Tăm
+        'KUGyHiitCy6'//Trạm Y tế xã Bản Bo 
+    ]
+
+    useEffect(() => {
+        ; (async () => {
+            if (!networkUtils) return;
+            // let approvalUtils = await getCoreMetaStateByPath('networkUtils.getApprovalUtils')();
+            // approvalUtils.addGroupApproval({
+            //     key: "LEVEL3",
+            //     ds: ['H4WdjchZhmF'],
+            //     pe: ['202501'],
+            //     org: orgTestApprovalLevel3
+            // })
+            // approvalUtils.addGroupApproval({
+            //     key: "LEVEL4",
+            //     ds: ['H4WdjchZhmF'],
+            //     pe: ['202501'],
+            //     org: orgTestApprovalLevel4
+            // })
+        })();
+    }, [networkUtils])
 
     const TableMemo = useMemo(() => {
         // return <></>

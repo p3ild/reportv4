@@ -1,65 +1,54 @@
-import { Flex } from "antd";
-import { cloneDeep } from "lodash";
-import { DATA_TYPE, getValueDE, numberWithThousands, roundNumber } from "../../common/DataValueUtils";
-import { fetchAnalyticsData } from "../../common/request/request";
-import { RenderValue } from "../../common/ui";
-import { ApproveButton } from "../../common/ui/ApproveButtonTT37";
-import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
-import { faker } from '@faker-js/faker';
+import { APPROVAL_ROW_TYPE, APPROVAL_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
 import { numToLocaleString } from "@core/utils/stringutils";
+import { getValueDE } from "../../common/DataValueUtils";
+import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
         listColumnConfig: [
             {
                 key: "stt",
-                freezeColWidth: '5vw',
                 label: 'STT',
+                isApprovalColumn: true,
                 excelOpts: {
                     "data-a-wrap": "true",
                     "data-a-h": "center",
                     "data-a-v": "center",
                     // "data-t":'n'
                 },
-                render: ({ orgIdx }) => {
-                    let value = orgIdx + 1;
+                render: (props) => {
+                    let value = props.orgIdx + 1;
+                    let { orgUnit, period, approvalConfig } = props;
+                    let { approvalKey, approvalVisible, approvalType, ds } = approvalConfig || {};
+
+
                     return {
-                        view: <RenderValue {...{
-                            value
-                        }}
-                        ></RenderValue>
+                        view: <div className="flex flex-row w-full items-center justify-center" >
+                            {approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey &&
+                                <ButtonApproval {
+                                    ...{
+                                        title: value,
+                                        dsID: ds[0],
+                                        orgID: orgUnit,
+                                        approvalKey,
+                                        period,
+                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
+                                    }
+                                } />
+                            }
+                        </div>
                     }
                 }
             },
             {
                 key: "orgName",
-                freezeColWidth: '13vw',
                 colDataClassName: '!text-left !text-nowrap',
                 excelOpts: {
                     "data-a-wrap": "true",
                 },
                 render: (props) => {
-                    let { orgIdx, orgName, orgUnit, period, approvalConfig } = props;
-
-                    let { approvalKey, approvalVisible, approvalType } = approvalConfig || {};
-
                     return {
-                        view: <Flex vertical >
-                            <RenderValue {...{
-                                value: props.orgName,
-                                ...props,
-                            }}
-                            ></RenderValue>
-                            {/* {approvalConfig && ![APPROVAL_VISIBLE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
-                                    ...{
-                                        dsID: [rc7A].includes(reportCode) ? "MqtODSonraB" : "V8EEowMeUTO", period, orgID: orgUnit,
-                                        approvalKey,
-                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
-                                    }
-                                } />
-                            } */}
-                        </Flex>
+                        view: props.orgName
                     }
                 }
             },
@@ -71,12 +60,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['WpK3CA1GiFB']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['WpK3CA1GiFB']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -91,12 +79,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['q9TgXtGb497']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['q9TgXtGb497']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -111,12 +98,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['cnzF1Wsyll7']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['cnzF1Wsyll7']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -131,12 +117,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['EfO3KDWNMde']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['EfO3KDWNMde']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -151,12 +136,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['JTBxLXQRhKp']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['JTBxLXQRhKp']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -171,12 +155,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['YgF4A2VhFm9']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['YgF4A2VhFm9']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -191,12 +174,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['fzWfb5NkUXR']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['fzWfb5NkUXR']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -211,12 +193,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['LSlYBmMhM5E']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['LSlYBmMhM5E']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -231,12 +212,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['mYN2cR5UuWb']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['mYN2cR5UuWb']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -251,12 +231,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['Nix9Ht2BTot']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['Nix9Ht2BTot']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -271,12 +250,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['eW3TnNPwPBA']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['eW3TnNPwPBA']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -291,12 +269,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['Rb7YZo0877Z']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['Rb7YZo0877Z']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -311,12 +288,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['Vov1ZBQDPGA']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['Vov1ZBQDPGA']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -331,12 +307,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['Wf8ywubJAEC']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['MZEU8meruHx']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -351,12 +326,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['QqPcpJ7yLhR']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['QqPcpJ7yLhR']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -371,12 +345,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['PZkzL05NpNg']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['PZkzL05NpNg']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -391,12 +364,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['SGDhfZGXzL2']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['niRcB5DsPI9']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -411,12 +383,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['CaUTXHA9zK5']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['CaUTXHA9zK5']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -431,12 +402,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['SZpvMstnLjc']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['SZpvMstnLjc']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -451,12 +421,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['DZ4gp6GzBkJ']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['DZ4gp6GzBkJ']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -471,12 +440,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['ckrGFqdrq1O']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['ckrGFqdrq1O']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -491,12 +459,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['Jpn3u1SCEI3']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['Jpn3u1SCEI3']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -511,12 +478,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['cdnqvBRbLNA']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['cdnqvBRbLNA']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -531,12 +497,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['SPFzGeY7ENH']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['SPFzGeY7ENH']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -551,12 +516,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['XGxKRz2pyqF']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['XGxKRz2pyqF']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -571,12 +535,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['NveBdKInM5m']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['NveBdKInM5m']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -591,12 +554,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['BrEASMFixuK']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['BrEASMFixuK']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -611,12 +573,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['wsyfR9oCbBg']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['wsyfR9oCbBg']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -631,12 +592,13 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['DWCz9b0uIkA']
-                        }) + "";
+
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['fzWfb5NkUXR.N13A1fU7DAu']
+                    }) + "";
+
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -651,12 +613,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['tQG9ii5Zh1g']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['tQG9ii5Zh1g']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -671,12 +632,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['j6cPf2NjluG']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['j6cPf2NjluG']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -691,12 +651,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['aTKuaZLHkMG']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['aTKuaZLHkMG']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -711,12 +670,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['MdnijP0QA7c']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['OofwmXf2vAi']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -731,12 +689,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['g8Rnn7j2ccS']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['g8Rnn7j2ccS']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -751,12 +708,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['ewHRN8vKSLo']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['ewHRN8vKSLo']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -771,12 +727,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['fMyhbxbf6mU']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['fMyhbxbf6mU']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)
@@ -791,12 +746,11 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let value = //faker.number.int({ min: 1000, max: 9999, }) || 
-                        getValueDE({
-                            jsonDhis: props.apiData,
-                            org: props.orgUnit,
-                            de: ['FowjUrhGgEr']
-                        }) + "";
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ['FowjUrhGgEr']
+                    }) + "";
                     return {
                         value,
                         view: numToLocaleString(value)

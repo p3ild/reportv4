@@ -15,23 +15,15 @@ export const getDataCommon = async (props) => {
 
     let orgFlatMap = getPickerStateByPath('orgFlatMap')
 
-    let reqProvinceGroup = [
-        {
-            orgUnitGroup: [
-                ORG_GROUP.TINH_KCB_COGIUONG_BV_DK,
-                ORG_GROUP.TINH_KCB_COGIUONG_BV_YHCT,
-                ORG_GROUP.TINH_KCB_COGIUONG_BV_PDL,
-                ORG_GROUP.TINH_KCB_COGIUONG_BV_PHCN,
-                ORG_GROUP.TINH_KCB_COGIUONG_BV_CKK,
-                ORG_GROUP.TINH_KCB_COGIUONG_BV_DKKV,
-                ORG_GROUP.TINH_KCB_COGIUONG_CSYT_KHAC,
-                ORG_GROUP.TINH_CSYT_KHONGGIUONG,
-            ],
-            ignoreInTotal: true,
-            includeTotalRow: ["II", <p>Tuyến tỉnh</p>],
-            ouQueryType: 'filter',
-            includeChild: false,
-        },
+    let reqPublicHealth_I = {
+        orgUnitGroup: [
+            ORG_GROUP.TW_CSYT_KCB,
+            ORG_GROUP.TW_YT_NGANH,
+        ],
+        includeTotalRow: ["I", <p>Tuyến TW, Y tế ngành</p>],
+    };
+
+    let reqPublicHealth_II = [
         {
             orgUnitGroup: [
                 ORG_GROUP.TINH_KCB_COGIUONG_BV_DK,
@@ -42,7 +34,7 @@ export const getDataCommon = async (props) => {
                 ORG_GROUP.TINH_KCB_COGIUONG_BV_DKKV,
                 ORG_GROUP.TINH_KCB_COGIUONG_CSYT_KHAC,
             ],
-            includeTotalRow: ["II.1", <p>Có giường</p>],
+            includeTotalRow: ["II.1", <p>Cơ sở có giường</p>],
             sortOptions: (data, { orgUnitGroup }) => {
                 if (!data) return [];
                 let filter = orgUnitGroup.map(e => {
@@ -57,96 +49,127 @@ export const getDataCommon = async (props) => {
             orgUnitGroup: [
                 ORG_GROUP.TINH_CSYT_KHONGGIUONG,
             ],
-            includeTotalRow: ["II.2", <p>Không giường</p>]
+            includeTotalRow: ["II.2", <p>Cơ sở không giường</p>]
         },
     ];
 
-    let reqPublicHealthGroup = [
-        {
-            orgUnitGroup: [
-                ORG_GROUP.TW_CSYT_KCB,
-                ORG_GROUP.TW_YT_NGANH,
-            ],
-            includeTotalRow: ["I", <p>Tuyến TW, Y tế ngành</p>],
-        },
-        ...reqProvinceGroup,
-        {
-            orgUnitGroup: [
-                ORG_GROUP.XA_DVHC
-            ],
-            includeTotalRow: ["III", <p>Tuyến xã</p>]
-        }
-    ];
+    let reqPublicHealth_III = {
+        orgUnitGroup: [
+            ORG_GROUP.XA_DVHC
+        ],
+        includeTotalRow: ["III", <p>Tuyến xã</p>]
+    }
 
-    let reqPrivateHealthGroup = [
-        {
-            orgUnitGroup: [
-                ORG_GROUP.TINH_YTTN_CSSK_BM
-            ],
-            includeTotalRow: ["B", <p>Y tế tư nhân</p>]
-        }
-    ]
+    let reqPrivateHealthGroup =
+    {
+        orgUnitGroup: [
+            ORG_GROUP.TINH_YTTN
+        ],
+        includeTotalRow: ["B", <p>Y tế tư nhân</p>]
+    }
 
 
-    let dataOrgGroupSet = await parallel(
+
+    await parallel(
         [
-            ...reqPublicHealthGroup.map((reqProps, idx) => {
+            cb => listingRowByOuGroup({
+                ...props,
+                ...reqPublicHealth_I,
+                sortOrgUnits: reqPublicHealth_I.sortOptions
+            }).then(res => {
+                res.listRow[0][0].className = 'sticky-row-2';
+                reqPublicHealth_I = {
+                    ...reqPublicHealth_I,
+                    ...res
+                };
+                cb(null, res)
+            }),
+            ...reqPublicHealth_II.map((reqProps, idx) => {
                 return cb => listingRowByOuGroup({
                     ...props,
                     ...reqProps,
                     sortOrgUnits: reqProps.sortOptions
                 }).then(res => {
                     res.listRow[0][0].className = 'sticky-row-2';
-                    reqPublicHealthGroup[idx] = {
-                        ...reqPublicHealthGroup[idx],
+                    reqPublicHealth_II[idx] = {
+                        ...reqPublicHealth_II[idx],
                         ...res
                     };
                     cb(null, res)
                 })
             }),
-            ...reqPrivateHealthGroup.map((reqProps, idx) => {
-                return cb => listingRowByOuGroup({
-                    ...props,
-                    ...reqProps
-                }).then(res => {
-                    res.listRow[0][0].className = 'sticky-row-1';
+            cb => listingRowByOuGroup({
+                ...props,
+                ...reqPublicHealth_III,
+            }).then(res => {
+                res.listRow[0][0].className = 'sticky-row-2';
+                reqPublicHealth_III = {
+                    ...reqPublicHealth_III,
+                    ...res
+                };
+                cb(null, res)
+            })
+            ,
+            cb => listingRowByOuGroup({
+                ...props,
+                ...reqPrivateHealthGroup
+            }).then(res => {
+                res.listRow[0][0].className = 'sticky-row-1';
 
-                    reqPrivateHealthGroup[idx] = {
-                        ...reqPrivateHealthGroup[idx],
-                        ...res
-                    };
-                    cb(null, res)
-                })
-            }),
+                reqPrivateHealthGroup = {
+                    ...reqPrivateHealthGroup,
+                    ...res
+                };
+                cb(null, res)
+            })
+
         ]
 
     )
+    // ==== Pull data completed! ====
 
-    let listRowPublicHealth = flatten(reqPublicHealthGroup.map(e => e.listRow));
-    let listRowPrivateHealth = flatten(reqPrivateHealthGroup.map(e => e.listRow));
 
-    let rowTotalPublicHealth = sumMultiRow({
+    // ==== A_II.PUBLIC PROVINCE ====
+    let rowTotal_PublicHealth_II = sumMultiRow({
         ...props,
-        listRow: reqPublicHealthGroup.filter(e => !e.ignoreInTotal).map(e => e.listRow[0]),
-        includeTotalRow: ["A", <p>Y tế công</p>]
-    })
-    rowTotalPublicHealth[0].className = 'sticky-row-1';
+        listRow: reqPublicHealth_II.map(e => e.listRow[0]),
+        includeTotalRow: ["II.2", <p>Tuyến tỉnh</p>]
+    });
 
-    let rowTotalAll = sumMultiRow({
+    // ==== A.PUBLIC HEALTH ====
+    let rowTotal_PublicHealth = sumMultiRow({
         ...props,
         listRow: [
-            rowTotalPublicHealth,
-            listRowPrivateHealth[0]
+            reqPublicHealth_I.listRow[0],
+            rowTotal_PublicHealth_II,
+            reqPublicHealth_III.listRow[0]
+        ],
+        includeTotalRow: ["A", <p>Y tế công</p>]
+    })
+    rowTotal_PublicHealth[0].className = 'sticky-row-1';
+
+    let rowList_publicHealth = [
+        rowTotal_PublicHealth,
+        ...reqPublicHealth_I.listRow,
+        rowTotal_PublicHealth_II,
+        ...flatten(reqPublicHealth_II.map(e => e.listRow)),
+        ...reqPublicHealth_III.listRow
+    ]
+
+    let rowTotal_All = sumMultiRow({
+        ...props,
+        listRow: [
+            rowTotal_PublicHealth,
+            reqPrivateHealthGroup.listRow[0]
         ],
         includeTotalRow: ["", <p>Tổng số</p>]
     })
-    rowTotalAll[0].className = 'sticky-row-0';
+    rowTotal_All[0].className = 'sticky-row-0';
 
     let listRow = [
-        rowTotalAll,
-        rowTotalPublicHealth,
-        ...listRowPublicHealth,
-        ...listRowPrivateHealth
+        rowTotal_All,
+        ...rowList_publicHealth,
+        ...reqPrivateHealthGroup.listRow
     ]
 
     return {

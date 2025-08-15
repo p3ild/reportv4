@@ -35,12 +35,7 @@ export const useLoadData = (props) => {
             // approvalHook,
             orgUnit: orgSelected.id,
             period: period?.outputDataDhis2,
-            orgSelected,
-            listColumnConfig: getListColumnConfig(props),
-            defaultCol: 39 - 2,
-            dx: [
-                'WpK3CA1GiFB.HllvX50cXC0'
-            ]
+            orgSelected
         }
         try {
             let orgType = orgSelected?.orgType?.key;

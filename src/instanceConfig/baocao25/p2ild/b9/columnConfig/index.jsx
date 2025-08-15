@@ -40,29 +40,8 @@ export const getListColumnConfig = ({ }) => {
                     // "data-t":'n'
                 },
                 render: (props) => {
-                    let { orgIdx, orgName, orgUnit, period, approvalConfig } = props;
-
-                    let { approvalKey, approvalVisible, approvalType } = approvalConfig || {};
-
                     return {
-                        excelOpts: {
-                        },
-                        view: <Flex vertical >
-                            <RenderValue {...{
-                                value: props.orgName,
-                                ...props,
-                            }}
-                            ></RenderValue>
-                            {/* {approvalConfig && ![APPROVAL_VISIBLE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
-                                    ...{
-                                        dsID: [rc7A].includes(reportCode) ? "MqtODSonraB" : "V8EEowMeUTO", period, orgID: orgUnit,
-                                        approvalKey,
-                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
-                                    }
-                                } />
-                            } */}
-                        </Flex>
+                        view: props.orgName
                     }
                 }
             },
@@ -73,15 +52,27 @@ export const getListColumnConfig = ({ }) => {
                     "data-a-wrap": "true",
                 },
                 render: (props) => {
-                    let orgFlatMap = getPickerStateByPath('orgFlatMap')
-                    let value =
-                    orgFlatMap[props.orgUnit]?.organisationUnitGroups.map(x => x.id).some(m => [ORG_GROUP.TUYEN_XA, ORG_GROUP.TUYEN_TINH, ORG_GROUP.TUYEN_TRUNG_UONG, ORG_GROUP.TINH_YTTN].includes(m))
+                    let orgFlatMap = getPickerStateByPath('orgFlatMap');
+
+                    //For orgGroupSet - Report Country
+                    let value = 0;
+                    if (props.idOrgGroupSet) {
+                        let orgGroup = props.idOrgGroupSet.split(':')[1]
+                        value = Object.values(orgFlatMap)
+                            .filter(e =>
+                                e.ancestors.map(x => x.id).join('_').includes(props.orgUnit)
+                                && e.organisationUnitGroups.map(x => x.id).includes(orgGroup)
+                            ).length
+                    } else {
+                        //Province report
+                        value = orgFlatMap[props.orgUnit]?.organisationUnitGroups.map(x => x.id).some(m => [ORG_GROUP.TUYEN_XA, ORG_GROUP.TUYEN_TINH, ORG_GROUP.TUYEN_TRUNG_UONG, ORG_GROUP.TINH_YTTN].includes(m))
                             ? 1
                             : Object.values(orgFlatMap)
                                 .filter(e =>
                                     e.ancestors.map(x => x.id).join('_').includes(props.orgUnit)
                                     && e.organisationUnitGroups.map(x => x.id).includes(ORG_GROUP.TUYEN_XA)
                                 ).length
+                    }
                     return {
                         value,
                         view: numToLocaleString(value)

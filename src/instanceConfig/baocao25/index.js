@@ -3,6 +3,7 @@ import Base from "@core/base/ReportBase";
 import { getPickerStateByPath } from "@core/stateManage/corePickerState";
 import { classifyingOrgSelected } from "./p2ild/common/request/utils";
 import locale from "./locale.json";
+import "./index.css";
 export { locale, classifyingOrgSelected };
 
 class Config extends Base {
@@ -11,7 +12,7 @@ class Config extends Base {
   // BASE_URL = "https://baocao.tkyt.vn";
 
   init = async () => {
-    getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.year]);
+    // getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.month]);
   };
 
   listFolder = {
@@ -30,18 +31,6 @@ class Config extends Base {
   };
 
   listReport = [
-    {
-      key: "qCzOvTJTt5q",
-      folder: [this.listFolder.core],
-      displayName: "qCzOvTJTt5q",
-      getReportInstance: async () => await import("./p2ild/b13"),
-    },
-    {
-      key: "SCPeFETGN8x",
-      folder: [this.listFolder.core],
-      displayName: "ICD10",
-      getReportInstance: async () => await import("./p2ild/icd10"),
-    },
     {
       key: "bzTX9jvywsh",
       folder: [this.listFolder.A6],
@@ -117,15 +106,9 @@ class Config extends Base {
     },
     {
       folder: [this.listFolder.core],
-      key: "C290QB6SfjZ",
-      displayName: "bmte_x3",
-      getReportInstance: async () => await import("./p2ild/bmte_x3"),
-    },
-    {
-      folder: [this.listFolder.core],
       key: "IL0TrfanQdq",
       displayName: "vu_bmte_x3",
-      getReportInstance: async () => await import("./p2ild/vu_bmte_x3"),
+      getReportInstance: async () => await import("./p2ild/bmte_x3"),
     },
     {
       key: "mV9DjhMHvEp",
@@ -151,6 +134,18 @@ class Config extends Base {
       folder: [this.listFolder.core],
       displayName: "TÌNH HÌNH BỆNH TẬT VÀ TỬ VONG TẠI BỆNH VIỆN THEO ICD 10",
       getReportInstance: async () => await import("./b14_icd10"),
+    },
+    {
+      key: "qCzOvTJTt5q",
+      folder: [this.listFolder.core],
+      displayName: "qCzOvTJTt5q",
+      getReportInstance: async () => await import("./p2ild/b13"),
+    },
+    {
+      key: "SCPeFETGN8x",
+      folder: [this.listFolder.core],
+      displayName: "b14-ICD10",
+      getReportInstance: async () => await import("./p2ild/b14_icd10"),
     },
   ];
 }

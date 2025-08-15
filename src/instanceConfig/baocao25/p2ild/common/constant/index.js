@@ -69,6 +69,16 @@ export const ORG_GROUP = {
   // "Vùng_Đồng_bằng_sông_Cửu_Long": "vNu8mOy7Rdg",
   // "Vùng_Đồng_bằng_sông_Hồng": "YpvY3ghB2WW",
 };
+
+export const DATASET = {
+  BMTE_B4_TYT: 'H4WdjchZhmF',
+  BMTE_B4: 'qmHOBSh3e7c',
+  BMTE_B5: 'doDhUa33IQr',
+  BMTE_B6: 'slZ3BACPnzP',
+  BMTE_B7: 'OzgHVXWePlJ',
+  BMTE_B8: 'PWTIzTyc2xs',
+}
+
 export const ORG_GROUP_SET = {
   TUYEN: "VO3DdltSDqy",
 };

@@ -5,9 +5,9 @@ export * from './TableHeader'
 export * from '../../common/constant'
 
 export const optionPickerDate = [
+    PERIOD_TYPE.year,
     PERIOD_TYPE.month,
     PERIOD_TYPE.month2,
-    // PERIOD_TYPE.year,
 ]
 
 export const orgPickerConfig = {

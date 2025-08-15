@@ -37,6 +37,7 @@ export const useLoadData = (props) => {
             orgUnit: orgSelected.id,
             period: period?.outputDataDhis2,
             orgSelected,
+            periodSelected: period,
             listColumnConfig: getListColumnConfig(props),
             defaultCol: 16 - 2,
             dx: [

@@ -2,14 +2,13 @@ import { RenderValue } from ".";
 import { numberWithThousands } from "../DataValueUtils";
 import { fetchAnalyticsData } from "../request/request";
 import { cloneDeep, omit, sum, toNumber, zip } from 'lodash'
-import { ApproveButton } from "./ApproveButtonTT37";
 import { Flex } from "antd";
-import { APPROVAL_VISIBLE, ButtonApproval } from "@core/hooks/useApproval";
 import { numToLocaleString } from "@core/utils/stringutils";
+import { APPROVAL_ROW_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
 /** return rows as array.
- *  Flow: query api -> 
- * 
- */
+*  Flow: query api -> 
+* 
+*/
 export const ORG_ALLOW_APPROVE = {
     CHILD_ROW: "CHILD_ROW",
     TOTAL_ROW: "TOTAL_ROW",
@@ -52,10 +51,34 @@ export const listingRowByOuGroup = async (props) => {
         orgUnitGroup,
         includeCo: false,
         customDimension,
-        periodQueryType
-    }).catch(e => e)
-    let listOrgUID = apiData.metaData?.dimensions?.ou || [];
-    let listOrgApproval = approvalConfig?.approvalVisible == APPROVAL_VISIBLE.PARENT ? [orgUnit] : listOrgUID
+    }).catch(e => {
+        let totalRow = [...(includeTotalRow || []), ...Array(DEFAULT_COL_LENGTH).fill(0)].map((e, cellIdx) => {
+            return {
+                view: <RenderValue {...{
+                    options: {
+                        rowBold: true
+                    }, value: e,
+                    //Ignore width apply to <p> tag
+                    ...omit(listColumnConfig[cellIdx], ['colStyle']),
+                }}
+                />,
+                value: e,
+                ...listColumnConfig[cellIdx],
+            }
+        });
+        return {
+            listRow: [totalRow],
+            ...e,
+            props
+        }
+    });
+    if (apiData.errorCode) {
+        return apiData
+    }
+
+
+    let listOrgUID = apiData.metaData?.dimensions?.ou;
+    let listOrgApproval = approvalConfig?.approvalRowType == APPROVAL_ROW_TYPE.PARENT ? [orgUnit] : listOrgUID
     approvalConfig && props.approvalUtils.addGroupApproval({
         ds: approvalConfig?.ds,
         wf: undefined,
@@ -164,7 +187,7 @@ export let sumMultiRow = (props) => {
         orgUnit, period,
         approvalConfig
     } = props
-    let { approvalVisible, approvalKey } = approvalConfig || {};
+    let { approvalRowType, approvalKey } = approvalConfig || {};
     listRow = listRow.filter(e => e);
     let colSum =
         listRow.length > 0
@@ -185,24 +208,33 @@ export let sumMultiRow = (props) => {
         }
     })
         .map((e, idx, arr) => {
+            let approvalVisibleConfig = listColumnConfig[idx].isApprovalColumn
+                && approvalConfig
+                && ![APPROVAL_ROW_TYPE.CHILD].includes(approvalRowType);
+            let classExtend = 'flex-col ';
+            if (listColumnConfig[idx].isApprovalColumn) {
+                classExtend = 'flex-row items-center justify-center'
+            }
 
             return {
-
-                view: <div {...{
-                }} className="flex flex-col font-bold">
-                    {numToLocaleString(e)}
-                    {listColumnConfig[idx].isApprovalColumn
-                        && approvalConfig && ![APPROVAL_VISIBLE.CHILD].includes(approvalVisible)
-                        && <ButtonApproval {
+                view: <div
+                    className={"flex font-bold " + classExtend}>
+                    {
+                        !approvalVisibleConfig && <>{numToLocaleString(e)}</>
+                    }
+                    {
+                        approvalVisibleConfig && <ButtonApproval {
                             ...{
+                                title: numToLocaleString(e),
                                 ...approvalConfig,
-                                isApproveAll: [APPROVAL_VISIBLE.BOTH].includes(approvalVisible) && true,
+                                isApproveAll: [APPROVAL_ROW_TYPE.BOTH].includes(approvalRowType) && true,
                                 orgID: orgUnit,
                                 period,
                                 dsID: approvalConfig.ds[0]
                             }
-                        } />}
-                </div>,
+                        } />
+                    }
+                </div >,
                 value: e,
                 ...listColumnConfig[idx],
                 excelOpts: {
@@ -297,8 +329,9 @@ export const findColStyleByKey = (data) => {
 
 export const getDisableColDataObject = () => {
     return {
+        emptyValue: true,
         colClassName: '!bg-gray-300',
-        view: <p className="flex flex-col font-bold"></p>,
+        view: <p className="flex flex-col text-deep-orange-600 font-bold"></p>,
         value: 0,
     }
 }

@@ -8,7 +8,7 @@ import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { format } from "date-fns";
 import { Tabs } from "antd";
 import { getCustomReportStateByPath } from "@core/stateManage/customState";
-export const reportCode = "BÁO CÁO TÌNH HÌNH TỬ VONG TỪ CỘNG ĐỒNG"
+export const reportCode = "Báo cáo 13"
 export const reportName = "BÁO CÁO TÌNH HÌNH TỬ VONG TỪ CỘNG ĐỒNG"
 export default () => {
     const [
@@ -168,36 +168,36 @@ export default () => {
                                 <tbody id="tableICD">
 
                                     <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                        <td>6</td>
-                                        <td>7</td>
-                                        <td>8</td>
-                                        <td>9</td>
-                                        <td>10</td>
-                                        <td>11</td>
-                                        <td>12</td>
-                                        <td>13</td>
-                                        <td>14</td>
-                                        <td>15</td>
-                                        <td>16</td>
-                                        <td>17</td>
-                                        <td>18</td>
-                                        <td>19</td>
-                                        <td>20</td>
-                                        <td>21</td>
-                                        <td>22</td>
-                                        <td>23</td>
-                                        <td>24</td>
-                                        <td>25</td>
-                                        <td>26</td>
-                                        <td>27</td>
-                                        <td>28</td>
-                                        <td>29</td>
-                                        <td>30</td>
+                                        <td className="italic">1</td>
+                                        <td className="italic">2</td>
+                                        <td className="italic">3</td>
+                                        <td className="italic">4</td>
+                                        <td className="italic">5</td>
+                                        <td className="italic">6</td>
+                                        <td className="italic">7</td>
+                                        <td className="italic">8</td>
+                                        <td className="italic">9</td>
+                                        <td className="italic">10</td>
+                                        <td className="italic">11</td>
+                                        <td className="italic">12</td>
+                                        <td className="italic">13</td>
+                                        <td className="italic">14</td>
+                                        <td className="italic">15</td>
+                                        <td className="italic">16</td>
+                                        <td className="italic">17</td>
+                                        <td className="italic">18</td>
+                                        <td className="italic">19</td>
+                                        <td className="italic">20</td>
+                                        <td className="italic">21</td>
+                                        <td className="italic">22</td>
+                                        <td className="italic">23</td>
+                                        <td className="italic">24</td>
+                                        <td className="italic">25</td>
+                                        <td className="italic">26</td>
+                                        <td className="italic">27</td>
+                                        <td className="italic">28</td>
+                                        <td className="italic">29</td>
+                                        <td className="italic">30</td>
                                     </tr>
                                 </tbody>
                             </table>

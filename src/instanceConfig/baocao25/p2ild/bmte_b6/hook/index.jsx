@@ -36,6 +36,7 @@ export const useLoadData = (props) => {
             // approvalHook,
             orgUnit: orgSelected.id,
             period: period?.outputDataDhis2,
+            periodSelected: period,
             orgSelected,
             listColumnConfig: getListColumnConfig(props),
             defaultCol: 17 - 2,

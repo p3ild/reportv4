@@ -7,6 +7,7 @@ import { ApproveButton } from "../../common/ui/ApproveButtonTT37";
 import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 import { faker } from '@faker-js/faker';
 import { numToLocaleString } from "@core/utils/stringutils";
+import { APPROVAL_ROW_TYPE, APPROVAL_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
@@ -15,18 +16,31 @@ export const getListColumnConfig = ({ }) => {
                 key: "stt",
                 freezeColWidth: '3vw',
                 label: 'STT',
+                isApprovalColumn: true,
                 excelOpts: {
                     "data-a-wrap": "true",
                     "data-a-h": "center",
                     "data-a-v": "center"
                 },
-                render: ({ orgIdx }) => {
-                    let value = orgIdx + 1;
+                render: (props) => {
+                    let value = props.orgIdx + 1;
+                    let { orgUnit, period, approvalConfig } = props;
+                    let { approvalKey, approvalVisible, approvalType, ds } = approvalConfig || {};
                     return {
-                        view: <RenderValue {...{
-                            value
-                        }}
-                        ></RenderValue>
+                        view: <div className="flex flex-row w-full items-center justify-center" >
+                            {approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey &&
+                                <ButtonApproval {
+                                    ...{
+                                        title: value,
+                                        dsID: ds[0],
+                                        orgID: orgUnit,
+                                        approvalKey,
+                                        period,
+                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
+                                    }
+                                } />
+                            }
+                        </div>
                     }
                 }
             },
@@ -38,27 +52,8 @@ export const getListColumnConfig = ({ }) => {
                     "data-a-wrap": "true"
                 },
                 render: (props) => {
-                    let { orgIdx, orgName, orgUnit, period, approvalConfig } = props;
-
-                    let { approvalKey, approvalVisible, approvalType } = approvalConfig || {};
-
                     return {
-                        view: <Flex vertical >
-                            <RenderValue {...{
-                                value: props.orgName,
-                                ...props,
-                            }}
-                            ></RenderValue>
-                            {/* {approvalConfig && ![APPROVAL_VISIBLE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
-                                    ...{
-                                        dsID: [rc7A].includes(reportCode) ? "MqtODSonraB" : "V8EEowMeUTO", period, orgID: orgUnit,
-                                        approvalKey,
-                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
-                                    }
-                                } />
-                            } */}
-                        </Flex>
+                        view: props.orgName
                     }
                 }
             },

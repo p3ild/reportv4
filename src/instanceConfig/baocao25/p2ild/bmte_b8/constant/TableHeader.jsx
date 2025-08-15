@@ -114,32 +114,32 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
             <th {...excelConfig}>Số {`>`} 4000 gram</th>
         </tr>
         <tr>
-            <th className="sticky-col-0 !font-normal" style={{ width: '30px' }}>1</th>
-            <th className="sticky-col-1 !font-normal" style={{ width: '130px' }}>2</th>
-            <th className={"!font-normal"}>3</th>
-            <th className={"!font-normal"}>4a</th>
-            <th className={"!font-normal"}>4b</th>
-            <th className={"!font-normal"}>5a</th>
-            <th className={"!font-normal"}>5b</th>
-            <th className={"!font-normal"}>5c</th>
-            <th className={"!font-normal"}>6</th>
-            <th className={"!font-normal"}>7</th>
-            <th className={"!font-normal"}>8</th>
-            <th className={"!font-normal"}>9</th>
-            <th className={"!font-normal"}>10</th>
-            <th className={"!font-normal"}>11a</th>
-            <th className={"!font-normal"}>11b</th>
-            <th className={"!font-normal"}>11c</th>
-            <th className={"!font-normal"}>12</th>
-            <th className={"!font-normal"}>13a</th>
-            <th className={"!font-normal"}>13b</th>
-            <th className={"!font-normal"}>14</th>
-            <th className={"!font-normal"}>15</th>
-            <th className={"!font-normal"}>16</th>
-            <th className={"!font-normal"}>17a</th>
-            <th className={"!font-normal"}>17b</th>
-            <th className={"!font-normal"}>18a</th>
-            <th className={"!font-normal"}>18b</th>
+            <th className="sticky-col-0 col-no" style={{ width: '30px' }}>1</th>
+            <th className="sticky-col-1 col-no" style={{ width: '130px' }}>2</th>
+            <th className={"col-no"}>3</th>
+            <th className={"col-no"}>3a</th>
+            <th className={"col-no"}>3b</th>
+            <th className={"col-no"}>3c</th>
+            <th className={"col-no"}>3d</th>
+            <th className={"col-no"}>3e</th>
+            <th className={"col-no"}>3f</th>
+            <th className={"col-no"}>3g</th>
+            <th className={"col-no"}>4</th>
+            <th className={"col-no"}>4a</th>
+            <th className={"col-no"}>4b</th>
+            <th className={"col-no"}>5</th>
+            <th className={"col-no"}>6</th>
+            <th className={"col-no"}>6a</th>
+            <th className={"col-no"}>7</th>
+            <th className={"col-no"}>8</th>
+            <th className={"col-no"}>8a</th>
+            <th className={"col-no"}>9</th>
+            <th className={"col-no"}>10</th>
+            <th className={"col-no"}>11</th>
+            <th className={"col-no"}>12</th>
+            <th className={"col-no"}>12a</th>
+            <th className={"col-no"}>13</th>
+            <th className={"col-no"}>13a</th>
         </tr>
     </thead>
 }

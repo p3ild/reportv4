@@ -8,11 +8,9 @@ export const usePrepareData = ({ }) => {
     const [loaded, setLoaded] = useState(false);
     const [orgSelected, setOrgSelected] = useState(false);
     const [
-        networkUtils,
         instanceTarget,
         setGlobalOverlay,
     ] = useCoreMetaState(useShallow(state => [
-        state.networkUtils,
         state.instanceTarget,
         state.actions.setGlobalOverlay,
     ]));

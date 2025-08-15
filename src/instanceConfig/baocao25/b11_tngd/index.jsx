@@ -41,7 +41,7 @@ const Tndg = () => {
         ou = `LEVEL-WhQd3l5lhwv;OU_GROUP-uyuiasZ82O4;${corePicker.orgSelected.id}`;
       } else {
         //ou = corePicker.orgSelected.id;
-        ou = `LEVEL-DlpICkLnkZl;OU_GROUP-eHs95ggJw7J;OU_GROUP-OHWM3DxkeMR;${corePicker.orgSelected.id}`;
+        ou = `LEVEL-DlpICkLnkZl;OU_GROUP-${ORG_GROUP.XA_TYT};${corePicker.orgSelected.id}`;
       }
     }
     try {

@@ -85,27 +85,27 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
         </tr>
         <tr>
             <th {...excelConfig}
-                className="sticky-col-0"
+                className="sticky-col-0 col-no"
             >1</th>
             <th {...excelConfig}
-                className="sticky-col-1"
+                className="sticky-col-1 col-no"
             >2</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>3</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>4</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>5</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>6</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>7</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>8</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>9</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>10</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>11</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>12</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>13</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>14</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>15</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>16</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>17</th>
-            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"!font-normal"}>18</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>3</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>4</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>5</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>6</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>7</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>8</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>9</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>10</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>11</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>12</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>13</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>14</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>15</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>16</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>17</th>
+            <th data-a-h="center" data-a-v="middle" data-a-wrap="true" data-b-a-s='thin' className={"col-no"}>18</th>
         </tr>
     </thead>
 }
