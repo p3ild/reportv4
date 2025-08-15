@@ -1,16 +1,17 @@
 import { wait } from '@core/network';
+import { getPickerStateByPath, useCorePickerState } from "@core/stateManage/corePickerState";
+import { useCoreMetaState } from "@core/stateManage/metadataState";
+import { trans } from "@core/translation/i18n";
+import { CustomCard } from "@core/ui/utils/customCard";
 import { compareString } from '@core/utils/stringutils';
 import { Cascader, Spin, Tag } from "antd";
 import { cloneDeep, debounce, flatten, set } from "lodash";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { getPickerStateByPath, useCorePickerState } from "../../../stateManage/corePickerState";
-import { useCoreMetaState } from "../../../stateManage/metadataState";
-import { trans } from "../../../translation/i18n";
-import { CustomCard } from "../../utils/customCard";
 import CustomPickerElement from "../CustomPickerElement";
 import './orgpicker.css';
 
+// ==================== CUSTOM HOOKS ====================
 export function useOrgTreeByUser() {
     const [
         me,
@@ -24,10 +25,8 @@ export function useOrgTreeByUser() {
 
     const [
         orgPickerConfig,
-        setOrgTreeData,
     ] = useCorePickerState(useShallow(state => ([
         state.orgPickerConfig,
-        state.actions.setOrgTreeData
     ])))
 
     //When new report config apply, update orgTree data
@@ -35,6 +34,8 @@ export function useOrgTreeByUser() {
         deboundUpdateTree(me)
     }, [me?.orgViewData, orgPickerConfig?.orgGroupVisible?.join('|'), reportTarget?.reportID])
 }
+
+// ==================== UTIL FUNCTIONS ====================
 const deboundUpdateTree = debounce((me) => {
     if (!me?.orgViewData) return undefined;
     let orgFlatMap = {}
@@ -51,9 +52,29 @@ const deboundUpdateTree = debounce((me) => {
         });
     }).filter(e => e != undefined);
     let resultOrgTree = flatten(tree).filter(e => e);
+
+    // ======== 
+    if (resultOrgTree.length > 1) {
+        let orgDisplayName = 'Đơn vị được quản lý';
+        let id = resultOrgTree[0].parent.id
+        resultOrgTree = [
+            {
+                level: resultOrgTree[0].level - 1,
+                displayName: orgDisplayName,
+                id,
+                title: orgDisplayName,
+                label: orgDisplayName,
+                value: id + '_' + orgDisplayName,
+                children: resultOrgTree,
+                support: false,
+                organisationUnitGroups: []
+            }
+        ]
+    }
+
+
     getPickerStateByPath('actions.setOrgTreeData')(resultOrgTree, orgFlatMap);
 }, 300);
-
 const generateEachOrgData = ({ orgTarget, setAllOrg }) => {
     let { orgGroupVisible, levelsToHideIfEmpty } = getPickerStateByPath('orgPickerConfig') || {}
     setAllOrg(orgTarget.id, orgTarget)
@@ -152,6 +173,8 @@ const checkSupport = (orgTarget, orgGroupVisible) => {
     return orgTarget;
 }
 export const OrgError = (orgSelected) => <><Tag color='red'>{orgSelected.displayName}</Tag> không hỗ trợ xuất báo cáo này. Vui lòng chọn đơn vị khác</>
+
+// ==================== MAIN COMPONENT ====================
 export default (props) => {
     const { setCorePicker, corePicker, orgTreeData } = useCorePickerState(useShallow(state => ({
         setCorePicker: state.actions.setCorePicker,
@@ -159,13 +182,10 @@ export default (props) => {
         orgTreeData: state.orgTreeData
     })))
     useOrgTreeByUser();
-    let [value, setValue] = useState(undefined);
     let [currentPath, setCurrentPath] = useState([]);
     let [expandedKeys, setTreeExpandedKeys] = useState();
 
-    const [orgPickerConfig] = useCorePickerState(useShallow(state => ([
-        state.orgPickerConfig,
-    ])))
+
 
     let defaultValue = useMemo(() => {
         if (!orgTreeData) {
@@ -246,11 +266,11 @@ export default (props) => {
         !orgSelected.support && (orgSelected = { error: OrgError(orgSelected) })
 
 
-        setValue(selectedKeys[selectedKeys.length - 1])
         setTreeExpandedKeys(selectedKeys);
         setCorePicker({
             orgSelected
         })
+        import.meta.env.DEV && console.log('onChange::orgSelected:', orgSelected)
     }
 
     const displayRender = (label) => {
@@ -286,53 +306,40 @@ export default (props) => {
 
     }
 
-
-    const TreeSelectMemo = useMemo(
-        () => {
-            return <div className={' p-1 px-3'}>
-                <Cascader
-                    {...{
-                        key: currentPath?.join('_'),
-                        className: "w-full custom-org-select h-fit",
-                        variant: 'borderless',
-                        defaultValue,
-                        autoClearSearchValue: true,
-                        allowClear: true,
-                        showSearch: { filter },
-                        changeOnSelect: true,
-                        size: "small",
-                        onChange,
-                        maxTagTextLength: 1,
-                        maxTagCount: 1,
-                        options: orgTreeData,
-                        displayRender,
-                    }}
-                />
-            </div>
-        },
-        [
-            orgTreeData,
-            // orgPickerConfig?.orgGroupVisible?.join('|'),
-            // currentPath?.join('|')
-        ]
-    )
-
+    let loading = !orgTreeData
     return <CustomCard
-        {
-        ...{
+        {...{
             required: true,
-            className: `w-full h-fit basis-1/2`,
-            content: <>
-                {orgTreeData
-                    ?
-                    <CustomPickerElement label={trans('common:selectOrg')} labelClass={`z-10`}>
-                        <div className="rounded-lg border border-1 border-black/20">
-                            {TreeSelectMemo}
-                        </div>
-                    </CustomPickerElement> :
-                    <Spin />}
-            </>
-        }
-        }
-    />
+            className: 'w-full h-fit basis-1/2',
+        }}
+    >
+        <>
+            {
+                <CustomPickerElement className={loading ? 'w-20' : 'w-full'} label={trans('common:selectOrg')} labelClass={`z-10`}>
+                    <div className="p-1 px-2 rounded-lg border border-1 border-black/20">
+                        {!loading
+                            ? <Cascader
+                                {...{
+                                    loading,
+                                    key: currentPath?.join('_'),
+                                    className: "w-full custom-org-select h-fit",
+                                    variant: 'borderless',
+                                    defaultValue,
+                                    autoClearSearchValue: true,
+                                    allowClear: true,
+                                    showSearch: { filter },
+                                    changeOnSelect: true,
+                                    size: "small",
+                                    onChange,
+                                    maxTagTextLength: 1,
+                                    maxTagCount: 1,
+                                    options: orgTreeData,
+                                    displayRender,
+                                }}
+                            /> : <Spin />}
+                    </div>
+
+                </CustomPickerElement>}
+        </>
+    </CustomCard>
 }
