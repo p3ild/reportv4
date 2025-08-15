@@ -5,9 +5,17 @@
 
 
 @layer base {
+    body {
+        font-family: var(--default-font-family,
+                ui-sans-serif,
+                system-ui,
+                sans-serif,
+                "Apple Color Emoji",
+                "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+    }
 
     .btn-primary {
-        @apply text-white bg-primary  hover:bg-primary/90 hover:text-white focus:ring-1 focus:outline-none focus:ring-gray-900/80 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:focus:ring-gray-900/55 mx-1 my-1;
+        @apply text-white bg-primary hover:bg-primary/90 hover:text-white focus:ring-1 focus:outline-none focus:ring-gray-900/80 rounded-lg text-sm px-3 py-1 desktopLow:text-xs desktopLow:px-2 desktopLow:py-1  text-center inline-flex items-center dark:focus:ring-gray-900/55 mx-1 my-1;
     }
 
     .btn-primary svg {

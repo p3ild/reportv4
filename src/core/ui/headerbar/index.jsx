@@ -13,17 +13,17 @@ export function usePrepareDataHeader() {
 
     const [
         networkUtils,
-        version,
+        systemSettings,
         me
     ] = useCoreMetaState(useShallow(state => [
         state.networkUtils,
-        state.version,
+        state.systemSettings,
         state.me,
 
     ]));
 
     useEffect(() => {
-        if (networkUtils && me && version) {
+        if (networkUtils && me && systemSettings) {
             (async () => {
                 let data = await networkUtils.getDataHeaderBar.call(networkUtils, {});
 
@@ -32,11 +32,11 @@ export function usePrepareDataHeader() {
                     // apiVersion: version.versionDhis,
                     // version: version.versionDhis
                     serverVersion: {
-                        full: version?.versionDhis,
+                        full: systemSettings?.versionDhis,
                     },
                     appName,
                     appVersion: {
-                        full: version?.versionApp || '1.0.0',
+                        full: systemSettings?.versionApp || '1.0.0',
                         major: 1,
                         minor: 1,
                         patch: 1,
@@ -47,7 +47,7 @@ export function usePrepareDataHeader() {
                         contextPath: networkUtils.INIT_HOST,
                         dateFormat: 'yyyy-mm-dd',
                         instanceBaseUrl: networkUtils.INIT_HOST,
-                        version: version.versionDhis
+                        version: systemSettings.versionDhis
                     }
                 });
                 setCustomProviderData({
@@ -78,7 +78,7 @@ export function usePrepareDataHeader() {
             })()
         }
 
-    }, [networkUtils, me, version]);
+    }, [networkUtils, me, systemSettings]);
 
 
 
@@ -93,13 +93,12 @@ export function CustomHeaderBar({
     return (
         <div>
             {
-                true &&
-                //dataHeaderBar?.menuModule &&
                 <Provider config={providerData}>
                     <CustomDataProvider
                         data={customProviderData}>
-                        <HeaderBar appName={appName}
-                            style={{ marginBottom: '10px' }}
+                        <HeaderBar
+                            appName={appName}
+                            style={{ marginBottom: '1px' }}
                         />
                     </CustomDataProvider>
                 </Provider>}

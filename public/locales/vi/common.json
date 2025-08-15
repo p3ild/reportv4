@@ -57,14 +57,14 @@
     },
     "button": {
         "back": "Quay lại danh sách báo cáo",
-        "changeFilter": "Chọn đơn vị và thời điểm",
+        "changeFilter": "Chọn đơn vị & thời điểm",
         "excel": "Xuất excel",
         "close": "Đóng",
         "loadReport": "Xuất báo cáo",
         "printReport": "In báo cáo"
     },
     "corePicker": {
-        "title": "Đơn vị và Thời điểm"
+        "title": "Đơn vị & Thời điểm"
     },
     "reportList-baocao": "Danh sách báo cáo phần mềm thống kê y tế",
     "reportList": "Danh sách báo cáo",
