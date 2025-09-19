@@ -29,8 +29,8 @@ export const useDefiningInstance = () => {
             let processEnvTargetInstance = import.meta.env.VITE_TARGET_BUILD_INSTANCE;
             let tmp;
             switch (processEnvTargetInstance) {
-                case 'BAOCAO25':
-                    tmp = await import('../../instanceConfig/baocao25');
+                case 'INFLUENZA_NEW_ORG_STRUCTURE':
+                    tmp = await import('../../instanceConfig/influenza');
                     break;
                 default:
                     tmp = Promise.resolve(undefined);

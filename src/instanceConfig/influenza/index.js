@@ -7,7 +7,7 @@ export { classifyingOrgSelected, locale };
 class Config extends Base {
   // Server configuration
   // BASE_URL = "https://dev.tkyt.vn/bc25";
-  BASE_URL = "https://baocao.tkyt.vn";
+  BASE_URL = "https://flu.kcb.vn/influenzanew";
 
   init = async () => {
     // getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.month]);
@@ -16,34 +16,26 @@ class Config extends Base {
   listFolder = {
     core: {
       key: "core",
-      label: "Báo cáo theo thông tư 23",
-    },
-    A6: {
-      key: "a6",
-      label: "Sổ tử vong A6",
-    },
-    // other: {
-    //   key: "other",
-    //   label: "Báo cáo mẫu khác",
-    // },
+      label: "Báo cáo chung",
+    }
   };
 
   listReport = [
     {
       key: "bzTX9jvywsh",
-      folder: [this.listFolder.A6],
+      folder: [this.listFolder.core],
       displayName: "a6 theo tt37",
       getReportInstance: async () => await import("./p2ild/a6"),
     },
     {
       key: "jTlHI1Ahjtg",
-      folder: [this.listFolder.A6],
+      folder: [this.listFolder.core],
       displayName: "vs-event",
       getReportInstance: async () => await import("./p2ild/vs_a6_event"),
     },
     {
       key: "UWBW0xLXb8f",
-      folder: [this.listFolder.A6],
+      folder: [this.listFolder.core],
       displayName: "vs-aggregate",
       getReportInstance: async () => await import("./p2ild/vs_a6_aggregate"),
     },
