@@ -1,5 +1,5 @@
 import { Divider, Select, Tabs } from "antd"
-import PeriodPicker from "./periodpicker"
+import PeriodPicker, { PERIOD_TYPE } from "./periodpicker"
 import { useEffect, useMemo, useState } from "react"
 import { useShallow } from "zustand/react/shallow"
 import { useTranslation } from "react-i18next"
@@ -113,8 +113,7 @@ export default () => {
                 ...corePicker?.dataPeriodByType,
                 currentType
             }
-        })
-
+        });
     },
         [
             JSON.stringify({ types, currentPeriodType })
@@ -125,68 +124,61 @@ export default () => {
             return types.includes(currentPeriodType) ? e == currentPeriodType : true
         })
 
-    return <CustomCard
-        {
-        ...{
-            required: true,
-            className: `w-full `,
-            title: trans('common:periodPicker.title')
-        }
-        }
-    >
-        <CustomPickerElement
-            label={
-                upperFirst(('Chọn ' + trans('common:periodPicker.title')).toLowerCase())
-            }>
-            <div className="flex flex-row px-3 gap-3 rounded-lg border border-1 border-black/20 w-fit flex-wrap md:flex-nowrap justify-center">
-                <SelectType setCurrentPeriodType={setCurrentPeriodType} />
-                <KeepAlive
-                    cacheKey={currentPeriodType}
-                >
-                    <PeriodPicker
-                        prefix={<></>}
-                        antdOpts={{
-                            locale,
-                            variant: 'borderless'
-                        }}
-                        onChange={(props) => {
-                            let { fromTo, start, end, result } = props || {};
-                            let dataConverted = {
-                                periodSelected: undefined
-                            }
+    return <CustomPickerElement
+        className="!w-[80%] desktopLow:!w-fit"
+        label={
+            upperFirst(('Chọn ' + trans('common:periodPicker.title')).toLowerCase())
+        }>
+        <div className="flex flex-row w-full px-1 gap-3 rounded-lg border border-1 border-black/20 flex-wrap md:flex-nowrap justify-between">
+            <SelectType setCurrentPeriodType={setCurrentPeriodType} />
+            <KeepAlive
+                cacheKey={currentPeriodType}
+            >
+                <PeriodPicker
+                    prefix={<></>}
+                    antdOpts={{
+                        locale,
+                        variant: 'borderless'
+                    }}
+                    onChange={(props) => {
+                        let { fromTo, start, end, result } = props || {};
+                        let dataConverted = {
+                            periodSelected: undefined
+                        }
+                        dataConverted.dataPeriodByType = corePicker?.dataPeriodByType || {};
+                        dataConverted.dataPeriodByType[currentPeriodType] = dataConverted.periodSelected;
+                        if (props) {
+                            dataConverted = {
+                                periodSelected: {
+                                    type: typeTaget,
+
+                                    startDate: start.outputFormat,
+                                    labelStartDate: start.labelFormat,
+
+                                    endDate: end?.outputFormat,
+                                    labelEndDate: end?.labelFormat,
+
+                                    outputDataDhis2: result?.outputFormat || `${start.outputFormat}${end?.outputFormat ? ('...' + end?.outputFormat) : ''}`,
+
+                                    fromTo,
+                                    errors: undefined,
+                                },
+
+                            };
+
                             dataConverted.dataPeriodByType = corePicker?.dataPeriodByType || {};
                             dataConverted.dataPeriodByType[currentPeriodType] = dataConverted.periodSelected;
-                            if (props) {
-                                dataConverted = {
-                                    periodSelected: {
-                                        type: typeTaget,
-
-                                        startDate: start.outputFormat,
-                                        labelStartDate: start.labelFormat,
-
-                                        endDate: end?.outputFormat,
-                                        labelEndDate: end?.labelFormat,
-
-                                        outputDataDhis2: result?.outputFormat || `${start.outputFormat}${end?.outputFormat ? ('...' + end?.outputFormat) : ''}`,
-
-                                        fromTo,
-                                        errors: undefined,
-                                    },
-
-                                };
-
-                                dataConverted.dataPeriodByType = corePicker?.dataPeriodByType || {};
-                                dataConverted.dataPeriodByType[currentPeriodType] = dataConverted.periodSelected;
-                            }
+                        }
 
 
-                            setCorePicker(dataConverted);
-                        }}
-                        periodType={typeTaget} required />
-                </KeepAlive>
-            </div>
-        </CustomPickerElement>
-    </CustomCard>
+                        setCorePicker(dataConverted);
+                        corePicker.autoLoadReport && setCorePicker({ pickCompleted: Math.random() })
+
+                    }}
+                    periodType={typeTaget} required />
+            </KeepAlive>
+        </div>
+    </CustomPickerElement>
 }
 
 const SelectType = ({ setCurrentPeriodType }) => {
@@ -199,6 +191,8 @@ const SelectType = ({ setCurrentPeriodType }) => {
         state.corePicker,
         state.actions.setCorePicker
     ]));
+
+    const { t } = useTranslation();
 
     let types = allowPeriodTypes.filter(e => e);
     let currentPeriodType = corePicker?.dataPeriodByType?.currentType;
@@ -228,7 +222,7 @@ const SelectType = ({ setCurrentPeriodType }) => {
 
     return <Select
         key={JSON.stringify({ currentPeriodType, types })}
-        className="min-w-[150px] ml-[-5px]"
+        className="min-w-[150px] ml-[-5px] flex-grow"
         onClick={(e) => e.stopPropagation()}
         placeholder={'Kỳ dữ liệu'}
         variant='borderless'
@@ -238,13 +232,13 @@ const SelectType = ({ setCurrentPeriodType }) => {
                 let opts = {
                     key: index,
                     value: index,
-                    label: useTrans(`common:periodPicker.selectType.${type}`)
+                    label: t(`common:periodPicker.selectType.${type}`)
                 }
                 return opts
             })
         }
         defaultValue={(() => {
-            return useTrans(`common:periodPicker.selectType.${currentPeriodType || types[0]}`)
+            return t(`common:periodPicker.selectType.${currentPeriodType || types[0] || PERIOD_TYPE.month}`)
         })()}
         onChange={onChange}
     />

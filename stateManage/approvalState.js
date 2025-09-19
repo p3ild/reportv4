@@ -6,9 +6,11 @@ export const useApprovalState = create((set, get) => ({
     supportApproval: false,
     approvalData: {},
 
-    // UI settings
-    showIcon: false,
-    showButton: true,
+    // UI settings grouped into single object
+    uiSettings: {
+        showIcon: false,
+        showButton: true
+    },
 
     actions: {
         setSupportApproval: (supportApproval) => {
@@ -16,14 +18,17 @@ export const useApprovalState = create((set, get) => ({
                 supportApproval
             }))
         },
-        setShowIcon: (showIcon) => {
+        setUISettings: (newSettings) => {
             set(state => ({
-                showIcon
+                uiSettings: {
+                    ...state.uiSettings,
+                    ...newSettings
+                }
             }))
         },
-        setShowButton: (showButton) => {
+        setActiveApprovalAllKey: (activeApprovalAllKey) => {
             set(state => ({
-                showButton
+                activeApprovalAllKey
             }))
         },
         setApprovalData: async (approvalData) => {
@@ -45,7 +50,11 @@ export const useApprovalState = create((set, get) => ({
         reset() {
             set(state => ({
                 approvalData: {},
-                supportApproval: false
+                supportApproval: false,
+                uiSettings: {
+                    showIcon: false,
+                    showButton: true
+                }
             }))
         }
     }

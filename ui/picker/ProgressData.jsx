@@ -20,7 +20,7 @@ export default function ProgressNotificationBuilder({ NOTIFICATION_KEY, label, i
                 ...notificationConfig,
                 showProgress: true,
                 pauseOnHover: true,
-                duration: timeout,
+                duration: notificationConfig.duration || timeout,
             }
         }
         notificationConfig.message = <Flex justify={"center"} gap={20}>
@@ -56,7 +56,9 @@ export default function ProgressNotificationBuilder({ NOTIFICATION_KEY, label, i
             taskStatus
         );
 
-        notificationConfig = TEMP_CONFIG;
+        setTimeout(() => {
+            notificationConfig = TEMP_CONFIG;
+        }, (timeout + 1) * 1000);
     }
 
     return {

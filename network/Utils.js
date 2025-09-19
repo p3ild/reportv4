@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-export const setupEnvironment = ({ instanceTarget }) => {
+export const setupEnvironment = ({ instanceTarget, customAuth }) => {
     let rs = {}
     let ENV_BASEURL = import.meta.env.VITE_TARGET_HOST;
 
@@ -16,6 +15,7 @@ export const setupEnvironment = ({ instanceTarget }) => {
         // this.host = domain
     }
 
+    customAuth && (rs['auth'] = customAuth)//FOR TESTING
     return rs;
 }
 

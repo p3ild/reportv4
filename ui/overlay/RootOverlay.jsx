@@ -121,6 +121,5 @@ document.addEventListener('keyup', function (event) {
             ...getCoreMetaStateByPath('globalOverlay'),
             isOpen: false
         })
-        // document.getElementById('your-dialog-box').remove()
-    }
+     }
 })
