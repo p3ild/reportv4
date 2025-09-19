@@ -4,7 +4,7 @@ import { listColumnConfig } from "../actions/common";
 import { usePreFetchData } from "../../common/hooks/usePreFetchData";
 import { flatten, omit } from "lodash";
 import { RenderValue } from "../../common/ui";
-import { format, lastDayOfMonth, parse } from 'date-fns'
+import { compareAsc, compareDesc, format, lastDayOfMonth, parse } from 'date-fns'
 import { HeaderUILayout } from "../constant";
 import { getCustomReportStateByPath } from "@core/stateManage/customState";
 let count = 1;
@@ -113,20 +113,36 @@ export const useLoadData = (props) => {
             //pull first page for get page count
             let dataPage1 = await targetAction.getDataCommon({ ...props, page: 1 });
             count = 1;
-            dataPage1.dataByRow = dataPage1.dataByRow.map(e => {
+            dataPage1.dataByRow = dataPage1.dataByRow
+                .sort((a, b) => {
+                    let dayEventA, dayEventB;
+                    if (isQueryEventData) {
+                        dayEventA = new Date(a.find(e => e.de == 'eventdate')?.rawValue)
+                        dayEventB = new Date(b.find(e => e.de == 'eventdate')?.rawValue)
+                    } else {
+                        dayEventA = new Date(a.find(e => e.de == 'qgYbmBm4kx8.j3Yo9Dl5wN5')?.rawValue)
+                        dayEventB = new Date(b.find(e => e.de == 'qgYbmBm4kx8.j3Yo9Dl5wN5')?.rawValue)
+                    }
+                    if (!dayEventA || !dayEventB) return 0
+                    return compareDesc(
+                        dayEventA,
+                        dayEventB,
+                    )
+                })
+                .map(e => {
 
-                let value = count++;
-                e[0] = {
-                    view: <RenderValue {...{
+                    let value = count++;
+                    e[0] = {
+                        view: <RenderValue {...{
+                            value,
+                            ...omit(listColumnConfig[0], ["colStyle"]) //Ignore style of sticky
+                        }}
+                        />,
                         value,
-                        ...omit(listColumnConfig[0], ["colStyle"]) //Ignore style of sticky
-                    }}
-                    />,
-                    value,
-                    ...listColumnConfig[0]
-                };
-                return e
-            })
+                        ...listColumnConfig[0]
+                    };
+                    return e
+                })
             setData((pre) => [
                 dataPage1
             ]);
@@ -161,11 +177,14 @@ export const useLoadData = (props) => {
         data,
         orgReportName: orgSelected.displayName,
         dhis2Period: [
-            period?.labelStartDate,
-            period?.labelEndDate ? `${period?.labelEndDate}` : undefined
+            corePicker?.periodSelected?.labelStartDate,
+            corePicker?.periodSelected?.labelEndDate
+                ? `${corePicker?.periodSelected?.labelEndDate}`
+                : undefined,
         ]
-            .filter(e => e)
-            .join(' - '),
+            .filter((e) => e)
+            .join(" đến ")
+            .replaceAll("-", "/"),
         ButtonLoadMore
     }
 

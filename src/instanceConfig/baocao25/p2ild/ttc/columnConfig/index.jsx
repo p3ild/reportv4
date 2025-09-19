@@ -1,9 +1,8 @@
-import { Flex } from "antd";
 
-import { getValueDE } from "../../common/DataValueUtils";
-import { RenderValue } from "../../common/ui";
-import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
+import { APPROVAL_ROW_TYPE, APPROVAL_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
 import { numToLocaleString } from "@core/utils/stringutils";
+import { getValueDE } from "../../common/DataValueUtils";
+import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 
 
 export const getListColumnConfig = ({ }) => {
@@ -11,28 +10,43 @@ export const getListColumnConfig = ({ }) => {
         listColumnConfig: [
             {
                 key: "stt",
-                freezeColWidth: '5vw',
                 label: 'STT',
+                isApprovalColumn: true,
                 excelOpts: {
                     "data-a-wrap": "true",
                     "data-a-h": "center",
                     "data-a-v": "center"
-                    // "data-t":'n'
                 },
-                render: ({ orgIdx }) => {
-                    let value = orgIdx + 1;
+                render: (props) => {
+                    let value = props.orgIdx + 1;
+                    let { orgUnit, period, approvalConfig } = props;
+                    let { approvalKey, approvalVisible, approvalType, ds } = approvalConfig || {};
+
+
                     return {
-                        view: <RenderValue {...{
-                            value
-                        }}
-                        ></RenderValue>
+                        view: <div className="flex flex-row w-full items-center justify-center" >
+                            {(
+                                approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey
+                            )
+                                ? <ButtonApproval {
+                                    ...{
+                                        title: value,
+                                        dsID: ds[0],
+                                        orgID: orgUnit,
+                                        approvalKey,
+                                        period,
+                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
+                                    }
+                                } />
+                                : value
+                            }
+                        </div>
                     }
                 }
             },
             {
                 key: "orgName",
-                freezeColWidth: '13vw',
-                colClassName: 'w-[10]',
+                colClassName: 'w-[25vw]',
                 colDataClassName: '!text-left !text-nowrap',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -46,7 +60,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Tổng số",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -66,7 +80,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Nữ",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -86,7 +100,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Trẻ em &lt;5 tuổi",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -106,7 +120,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Trẻ em &lt;15 tuổi",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -126,7 +140,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "PN từ 15-49 tuổi",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -146,7 +160,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Xã đạt tiêu chí QG về YT",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -166,7 +180,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "TYT triển khai dự phòng, quản lý điều trị bệnh không lây nhiễm",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[25vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -186,7 +200,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Xã/ phường có TYT",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -206,7 +220,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Bác sỹ định biên",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -226,7 +240,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Bác sỹ làm việc",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -246,7 +260,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "YHCT",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -266,7 +280,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "HS/ YSSN",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -284,29 +298,10 @@ export const getListColumnConfig = ({ }) => {
                     }
                 }
             },
-            {
-                key: "Tổng số cộng tác viên dân số",
-                colClassName: 'w-[10]',
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ["ZlrWyjyJ4uM"]
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
+
             {
                 key: "Tổng số",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -326,7 +321,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Có nhân viên y tế hoạt động",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -346,7 +341,7 @@ export const getListColumnConfig = ({ }) => {
             },
             {
                 key: "Có cô đỡ được đào tạo",
-                colClassName: 'w-[10]',
+                colClassName: 'w-[15vw]',
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -365,25 +360,82 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
 
-        ].filter(e => e).map((e, colIdx) => {
-            if (!e.freezeColWidth) {
-                // if ([10, 12, 13, 14, 18, 21, 23, 25
-                // ]
-                // .includes(colIdx)) {
-                // }
-
-                if ([
-                    4, 5, 6, 7
-                ]
-                    .includes(colIdx)) {
-                    e.colClassName = e.colClassName || e.colClassName + ' w-[2vw]'
-                } else {
-                    e.colClassName = e.colClassName || e.colClassName + ' w-[5vw]';
-
+            {
+                key: "",
+                colClassName: 'w-[15vw]',
+                colDataClassName: '!text-right',
+                excelOpts: {
+                    "data-a-wrap": "true",
+                },
+                render: (props) => {
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ["HAcXJupQpZO"]
+                    }) + "";
+                    return {
+                        value,
+                        view: numToLocaleString(value)
+                    }
                 }
-            }
-
-            return e
-        })
+            },
+            {
+                key: "",
+                colClassName: 'w-[15vw]',
+                colDataClassName: '!text-right',
+                excelOpts: {
+                    "data-a-wrap": "true",
+                },
+                render: (props) => {
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ["CFnatCKrNQB"]
+                    }) + "";
+                    return {
+                        value,
+                        view: numToLocaleString(value)
+                    }
+                }
+            },
+            {
+                key: "",
+                colClassName: 'w-[15vw]',
+                colDataClassName: '!text-right',
+                excelOpts: {
+                    "data-a-wrap": "true",
+                },
+                render: (props) => {
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ["XQsBth4T7fx"]
+                    }) + "";
+                    return {
+                        value,
+                        view: numToLocaleString(value)
+                    }
+                }
+            },
+            {
+                key: "",
+                colClassName: 'w-[15vw]',
+                colDataClassName: '!text-right',
+                excelOpts: {
+                    "data-a-wrap": "true",
+                },
+                render: (props) => {
+                    let value = getValueDE({
+                        jsonDhis: props.apiData,
+                        org: props.orgUnit,
+                        de: ["AoI4Bcw6Bwp"]
+                    }) + "";
+                    return {
+                        value,
+                        view: numToLocaleString(value)
+                    }
+                }
+            },
+        ]
     });
 }

@@ -13,9 +13,9 @@ export const getDataCommon = async (props) => {
 
 
     let rsDataOrgGroupSet = [
-        { id: ORG_GROUP.TUYEN_TRUNG_UONG, name: 'Tuyến trung ương' },
-        { id: ORG_GROUP.TUYEN_TINH, name: 'Tuyến tỉnh' },
-        { id: ORG_GROUP.TUYEN_XA, name: 'Tuyến xã' },
+        { id: ORG_GROUP.TUYEN_TRUNG_UONG, name: 'Cấp trung ương' },
+        { id: ORG_GROUP.TUYEN_TINH, name: 'Cấp tỉnh' },
+        { id: ORG_GROUP.TUYEN_XA, name: 'Cấp xã' },
         { id: ORG_GROUP.TINH_YTTN, name: 'Tư nhân', }
     ];
 
@@ -68,15 +68,6 @@ export const getDataCommon = async (props) => {
     ]
 
     return {
-        SectionHeader: props.SectionHeader,
-        TableHeader: props.HeaderUI({
-            listColumnConfig: props.listColumnConfig,
-            title: props.title,
-            ...props
-        }),
-        dataByRow: [,
-
-            ...listRow
-        ]
+        dataByRow: listRow
     }
 }

@@ -1,10 +1,8 @@
-import { RenderValue } from ".";
-import { numberWithThousands } from "../DataValueUtils";
-import { fetchAnalyticsData } from "../request/request";
-import { cloneDeep, omit, sum, toNumber, zip } from 'lodash'
-import { Flex } from "antd";
-import { numToLocaleString } from "@core/utils/stringutils";
 import { APPROVAL_ROW_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
+import { numToLocaleString } from "@core/utils/stringutils";
+import { omit, sum, toNumber, zip } from 'lodash';
+import { RenderValue } from ".";
+import { fetchAnalyticsData } from "../request/request";
 /** return rows as array.
 *  Flow: query api -> 
 * 
@@ -37,11 +35,13 @@ export const listingRowByOuGroup = async (props) => {
 
         overrideResult,
         rowBold,
+        overrideDataAnalytics,
         periodQueryType,
         approvalConfig,
         sortOrgUnits
     } = props;
-    let apiData = await fetchAnalyticsData({
+    DEFAULT_COL_LENGTH = DEFAULT_COL_LENGTH || (listColumnConfig?.length - (includeTotalRow?.length || 0))
+    let propFetchAnalytics = {
         dx,
         orgUnit,
         period,
@@ -51,8 +51,9 @@ export const listingRowByOuGroup = async (props) => {
         orgUnitGroup,
         includeCo: false,
         customDimension,
-    }).catch(e => {
-        let totalRow = [...(includeTotalRow || []), ...Array(DEFAULT_COL_LENGTH).fill(0)].map((e, cellIdx) => {
+    }
+    let apiData = await fetchAnalyticsData(propFetchAnalytics).catch(e => {
+        let totalRow = [...(includeTotalRow || []), ...Array(1).fill(0)].map((e, cellIdx, arr) => {
             return {
                 view: <RenderValue {...{
                     options: {
@@ -67,15 +68,27 @@ export const listingRowByOuGroup = async (props) => {
             }
         });
         return {
-            listRow: [totalRow],
+            // errorCode: e,
+            listRow: [
+                totalRow
+            ],
             ...e,
             props
         }
     });
+
     if (apiData.errorCode) {
         return apiData
     }
 
+    // Use for override some specific param base on customData. like includeCo, ouQueryType, ouGroupSetQueryType, customDimension, etc.
+    if (overrideDataAnalytics) {
+        apiData = await overrideDataAnalytics({
+            ...propFetchAnalytics,
+            fetchAnalyticsData,
+            apiData
+        })
+    }
 
     let listOrgUID = apiData.metaData?.dimensions?.ou;
     let listOrgApproval = approvalConfig?.approvalRowType == APPROVAL_ROW_TYPE.PARENT ? [orgUnit] : listOrgUID
@@ -208,11 +221,18 @@ export let sumMultiRow = (props) => {
         }
     })
         .map((e, idx, arr) => {
-            let approvalVisibleConfig = listColumnConfig[idx].isApprovalColumn
+            let colTarget = listColumnConfig[idx];
+            if (!colTarget) {
+                return {
+                    view: <></>,
+                    value: 0
+                }
+            }
+            let approvalVisibleConfig = colTarget.isApprovalColumn
                 && approvalConfig
                 && ![APPROVAL_ROW_TYPE.CHILD].includes(approvalRowType);
             let classExtend = 'flex-col ';
-            if (listColumnConfig[idx].isApprovalColumn) {
+            if (colTarget.isApprovalColumn) {
                 classExtend = 'flex-row items-center justify-center'
             }
 
@@ -226,6 +246,7 @@ export let sumMultiRow = (props) => {
                         approvalVisibleConfig && <ButtonApproval {
                             ...{
                                 title: numToLocaleString(e),
+                                customLabel: !props.includeChild ? '' : undefined,
                                 ...approvalConfig,
                                 isApproveAll: [APPROVAL_ROW_TYPE.BOTH].includes(approvalRowType) && true,
                                 orgID: orgUnit,
@@ -308,23 +329,6 @@ export const ListColumnConfigBuilder = ({ listColumnConfig }) => {
 export const findColByKey = ({ listColumnConfig, key, index }) => {
     return;
     return listColumnConfig.find(e => e.key == key);
-}
-
-export const findColStyleByKey = (data) => {
-    return;
-    let col = findColByKey(data);
-    let style = {
-        ...(col?.colStyle || {}),
-        // border: '0.5px solid black'
-    }
-    let rs = {
-        className:
-            [...col?.colClassName?.split(' ')?.filter(e => !e.includes("bg")), data.colClassName].filter(e => e)
-                .join(' '),
-        style,
-        name: col?.name,
-    };
-    return rs
 }
 
 export const getDisableColDataObject = () => {

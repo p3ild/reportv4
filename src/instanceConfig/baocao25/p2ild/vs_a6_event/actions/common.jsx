@@ -1,5 +1,5 @@
-import { cloneDeep, omit } from "lodash";
-import { DATA_TYPE, defineHeader, defineValueWithTypeData, getValueDE, getValueWithOption } from "../../common/DataValueUtils";
+import { omit } from "lodash";
+import { DATA_TYPE, defineValueWithTypeData, getValueWithOption } from "../../common/DataValueUtils";
 import { RenderValue } from "../../common/ui";
 import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 
@@ -26,8 +26,9 @@ export const listColumnConfig = ListColumnConfigBuilder({
             de: "eventdate",
             render: (props) => {
                 let { rawDataRow, defineHeader, colConfig } = props;
+                let rawValue = rawDataRow[defineHeader[colConfig.de || ""]]
                 let value = defineValueWithTypeData(
-                    rawDataRow[defineHeader[colConfig.de || ""]],
+                    rawValue,
                     DATA_TYPE.DATE_TIME
                 );
                 return {
@@ -35,6 +36,7 @@ export const listColumnConfig = ListColumnConfigBuilder({
                         value
                     }}
                     />,
+                    rawValue,
                     value,
                     ...props
                 }
@@ -277,8 +279,9 @@ export const listColumnConfig = ListColumnConfigBuilder({
             de: "qgYbmBm4kx8.j3Yo9Dl5wN5",
             render: (props) => {
                 let { rawDataRow, defineHeader, colConfig } = props;
+                let rawValue = rawDataRow[defineHeader[colConfig.de || ""]]
                 let value = defineValueWithTypeData(
-                    rawDataRow[defineHeader[colConfig.de || ""]],
+                    rawValue,
                     DATA_TYPE.DATE_TIME
                 );
                 return {
@@ -286,6 +289,7 @@ export const listColumnConfig = ListColumnConfigBuilder({
                         value
                     }}
                     />,
+                    rawValue,
                     value,
                     ...props
                 }

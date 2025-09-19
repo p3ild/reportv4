@@ -1,12 +1,7 @@
-import { Flex } from "antd";
-import { cloneDeep } from "lodash";
-import { DATA_TYPE, getValueDE, numberWithThousands, roundNumber } from "../../common/DataValueUtils";
-import { fetchAnalyticsData } from "../../common/request/request";
-import { RenderValue } from "../../common/ui";
-import { ApproveButton } from "../../common/ui/ApproveButtonTT37";
-import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
-import { faker } from '@faker-js/faker';
 import { numToLocaleString } from "@core/utils/stringutils";
+import { getValueDE } from "../../common/DataValueUtils";
+import { RenderValue } from "../../common/ui";
+import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({

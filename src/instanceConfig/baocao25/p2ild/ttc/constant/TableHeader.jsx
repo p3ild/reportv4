@@ -1,4 +1,3 @@
-import { findColStyleByKey } from "../../common/ui/RowRender";
 
 export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, dhis2Period, customData }) {
     let period = dhis2Period.split(' ');
@@ -36,19 +35,22 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
         <tr>
             <th
                 {...excelConfig}
+                className="sticky-col-0"
                 rowSpan={2}
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
             >TT</th>
             <th {...excelConfig}
+                className="sticky-col-1"
                 rowSpan={2}
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName' })}
             >Tên Xã/Phường</th>
             <th {...excelConfig}
                 colSpan={5}>Dân số trung bình</th>
             <th {...excelConfig}
-                colSpan={8}>Trạm Y tế</th>
+                colSpan={7}>Trạm Y tế</th>
             <th {...excelConfig}
                 colSpan={3}>Số thôn bản</th>
+            <th {...excelConfig} rowSpan={2}>{`Tổng số cộng tác viên dân số/NVYT thôn bản/Cô đỡ thôn bản`}</th>
+            <th {...excelConfig}
+                colSpan={3}>Trong đó</th>
         </tr>
         <tr>
             <th {...excelConfig}>Tổng số</th>
@@ -64,41 +66,43 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
             <th {...excelConfig}>Bác sỹ làm việc</th>
             <th {...excelConfig}>YHCT</th>
             <th {...excelConfig}>HS/ YSSN</th>
-            <th {...excelConfig}>TYT có cộng tác viên dân số</th>
 
             <th {...excelConfig}>Tổng số</th>
             <th {...excelConfig}>Có nhân viên y tế hoạt động</th>
             <th {...excelConfig}>Có cô đỡ được đào tạo</th>
+
+            <th {...excelConfig}>{`Nhân viên y tế thôn bản`}</th>
+            <th {...excelConfig}>{`Cô đỡ thôn bản`}</th>
+            <th {...excelConfig}>{`Cộng tác viên dân số`}</th>
+
+
         </tr>
         <tr>
             <th {...excelConfig}
-                {...findColStyleByKey({ listColumnConfig, key: 'stt', colClassName: "!font-normal" })}
+                className="sticky-col-0 col-no"
             >1</th>
             <th {...excelConfig}
-                {...findColStyleByKey({ listColumnConfig, key: 'orgName', colClassName: "!font-normal" })}
+                className="sticky-col-1 col-no"
             >2</th>
-            <th {...excelConfig} className="!text-normal">3</th>
-            <th {...excelConfig} className="!text-normal">4</th>
-            <th {...excelConfig} className="!text-normal">5</th>
-            <th {...excelConfig} className="!text-normal">6</th>
-            <th {...excelConfig} className="!text-normal">7</th>
-            <th {...excelConfig} className="!text-normal">8</th>
-            <th {...excelConfig} className="!text-normal">9</th>
-            <th {...excelConfig} className="!text-normal">10</th>
-            <th {...excelConfig} className="!text-normal">11</th>
-            <th {...excelConfig} className="!text-normal">12</th>
-            <th {...excelConfig} className="!text-normal">13</th>
-            <th {...excelConfig} className="!text-normal">14</th>
-            <th {...excelConfig} className="!text-normal">15</th>
-            <th {...excelConfig} className="!text-normal">16</th>
-            <th {...excelConfig} className="!text-normal">17</th>
-            <th {...excelConfig} className="!text-normal">18</th>
+            <th {...excelConfig} className="col-no">3</th>
+            <th {...excelConfig} className="col-no">4</th>
+            <th {...excelConfig} className="col-no">5</th>
+            <th {...excelConfig} className="col-no">6</th>
+            <th {...excelConfig} className="col-no">7</th>
+            <th {...excelConfig} className="col-no">8</th>
+            <th {...excelConfig} className="col-no">9</th>
+            <th {...excelConfig} className="col-no">10</th>
+            <th {...excelConfig} className="col-no">11</th>
+            <th {...excelConfig} className="col-no">12</th>
+            <th {...excelConfig} className="col-no">13</th>
+            <th {...excelConfig} className="col-no">14</th>
+            <th {...excelConfig} className="col-no">15</th>
+            <th {...excelConfig} className="col-no">16</th>
+            <th {...excelConfig} className="col-no">17</th>
+            <th {...excelConfig} className="col-no">{`18=18.1+18.2+18.3`}</th>
+            <th {...excelConfig} className="col-no">{`18.1`}</th>
+            <th {...excelConfig} className="col-no">{`18.2`}</th>
+            <th {...excelConfig} className="col-no">{`18.3`}</th>
         </tr>
     </thead>
-}
-
-export function SectionHeaderTable1({
-    period,
-    notAvailable }) {
-    return <>  </>
 }

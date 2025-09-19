@@ -4,6 +4,8 @@ import { numberWithThousands } from "../../common/DataValueUtils";
 import { getCustomReportStateByPath } from "@core/stateManage/customState";
 import { format, lastDayOfMonth, parse } from "date-fns";
 import { getPickerStateByPath } from "@core/stateManage/corePickerState";
+import { PERIOD_TYPE } from "@core/ui/picker/periodpicker/constant";
+import { logger } from "@core/utils/logger";
 
 
 
@@ -76,7 +78,6 @@ export const getDataCommon = async (props) => {
     const _get = getCoreMetaStateByPath('_get')
 
 
-    console.log(props)
     let json = await _get('/api/optionSets/XbbUOlVRCHo.json?fields=id,name,options[id,name,code,displayName,attributeValues,translations,sortOrder]');
     var current_parent_chapter = "";
     let current_child_chapter = "";
@@ -155,7 +156,6 @@ export const getDataCommon = async (props) => {
 
 
         let periodSelected = getPickerStateByPath('corePicker.periodSelected');
-        console.log(periodSelected)
         const periodDhis2 = props.period?.split(';')
 
         const fromDate = parse(periodDhis2[0], 'yyyyMM', new Date())
@@ -170,7 +170,7 @@ export const getDataCommon = async (props) => {
         }
 
 
-        let ouTarget = props.orgUnit;
+        let ouTarget = props.orgUnit == "CUSTOM_MULTI_ORG" ? props.orgSelected.children.map(e => e.id).join(';') : props.orgUnit;
         let firstPage = await _get(`/api/analytics/events/query/uX3pS8aZHN2.json?dimension=pe:${customPeriod.periodDhis2}${customPeriod.dxType}&dimension=ou:${ouTarget}&dimension=qgYbmBm4kx8.O24nNmlRpxX&dimension=qgYbmBm4kx8.iEz9szT8t1L:!like:%27%27&dimension=qgYbmBm4kx8.v32efSNbncR&dimension=qgYbmBm4kx8.lzpaZruNgBK&dimension=qgYbmBm4kx8.lR8ENNJ8S4C&dimension=qgYbmBm4kx8.rQuQyPKAX9q&displayProperty=NAME&outputType=EVENT&pageSize=${pageSize}&page=1`);
         let pageCount = firstPage.metaData?.pager?.pageCount;
         let listFetchAll = Array(pageCount - 1).fill().map((e, idx) => idx + 2).map(page => {
@@ -191,7 +191,6 @@ export const getDataCommon = async (props) => {
                     ]
                 }
                 resolve({ ...allPage });
-                console.log(allPage)
             })
         })
     }
@@ -201,14 +200,15 @@ export const getDataCommon = async (props) => {
             pagesize: 60000
         }).then((json) => {
             let headerIndex = defineHeader(json.headers);
-            console.log(`before uniq: ${json.rows.length}`)
+            logger.dev(`before uniq: ${json.rows.length}`)
             json.rows = uniqBy(json.rows, 0);
-            console.log(`after uniq: ${json.rows.length}`)
+            logger.dev(`after uniq: ${json.rows.length}`)
             let groupedData = groupBy(json.rows, headerIndex.iNguyenNhanTuVong);
 
             Object.keys(groupedData).forEach(key => {
                 $("[name*=fillData]").each(function () {
-                    if ($(this).children()[2].children[0].innerHTML === key) {
+                    let htmlKey = $(this).children()[2];
+                    if ((htmlKey.children[0]?.innerHTML || htmlKey.innerText) === key) {
                         let less28d = filterAge(headerIndex, groupedData[key], 0, 28)//Ngay tuoi
                         let less1y = filterAge(headerIndex, groupedData[key], 28, 366)//Thang tuoi
 

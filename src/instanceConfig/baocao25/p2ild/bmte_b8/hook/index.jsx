@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import { usePrepareData } from "../../common/hooks/prepareData";
-import { HeaderUILayoutTable1, ORG_SELECTED_TYPE, SectionHeaderTable1, } from "../constant";
+import { DATASET, HeaderUILayoutTable1, ORG_SELECTED_TYPE } from "../constant";
 import { getListColumnConfig } from "../columnConfig";
 import { parallel, reflect } from "async";
-import { BaseError } from "../../common/BaseError";
+import * as UserMutilOrgAction from "../../common/UserMutilOrgAction";
+import * as CountryAction from "../actions/Country";
+import * as ProvinceAction from "../actions/Province";
+import * as CommuneAction from "../actions/Commune";
+import * as CurrentlyOrgSelectedAction from "../actions/CurrentlyOrgSelected";
 
 export const useLoadData = (props) => {
     const {
@@ -14,7 +18,6 @@ export const useLoadData = (props) => {
 
     const [errors, setError] = useState(undefined);
     const [data, setData] = useState([]);
-    const [customData, setCustomData] = useState([]);
     useEffect(
         () => {
             if (loaded && orgSelected && period?.outputDataDhis2) {
@@ -42,6 +45,7 @@ export const useLoadData = (props) => {
             defaultCol: 26 - 2,
             dx: [
                 "hvS0ROXGv9e",
+                "hvS0ROXGv9e.GvoEANq375m",
                 "sw4HsEooMSp",
                 "ezhAgYWPwre",
                 "d4iPeJgrz7K",
@@ -70,18 +74,26 @@ export const useLoadData = (props) => {
         try {
             let orgType = orgSelected?.orgType?.key;
             let targetAction;
-            switch (orgType) {
-                case ORG_SELECTED_TYPE.COUNTRY.key:
-                    targetAction = await import('../actions/Country')
+            switch (true) {
+                case orgSelected.id == 'CUSTOM_MULTI_ORG': {
+                    targetAction = UserMutilOrgAction
+                    props.customDataSet = {
+                        COMMUNE: DATASET.BMTE_B4_TYT,
+                        // PROVINCE: DATASET.BMTE_B8
+                    }
                     break;
-                case ORG_SELECTED_TYPE.PROVINCE.key:
-                    targetAction = await import('../actions/Province');
+                }
+                case orgType == ORG_SELECTED_TYPE.COUNTRY.key:
+                    targetAction = CountryAction
                     break;
-                case ORG_SELECTED_TYPE.COMMUNE.key:
-                    targetAction = await import('../actions/Commune');
+                case orgType == ORG_SELECTED_TYPE.PROVINCE.key:
+                    targetAction = ProvinceAction
+                    break;
+                case orgType == ORG_SELECTED_TYPE.COMMUNE.key:
+                    targetAction = CommuneAction
                     break;
                 default:
-                    targetAction = await import('../actions/CurrentlyOrgSelected')
+                    targetAction = CurrentlyOrgSelectedAction
                 // throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
             }
             {
@@ -91,9 +103,8 @@ export const useLoadData = (props) => {
                     targetAction.getDataCommon({
                         ...props,
                         separateTotalRow: true,
-                        HeaderUI: HeaderUILayoutTable1,
-                        SectionHeader: <SectionHeaderTable1 period={period} />
                     }).then(newData => {
+                        newData.TableHeader = <HeaderUILayoutTable1 />;
                         callback(undefined, newData)
 
                     }).catch(e => callback(e))
@@ -106,13 +117,7 @@ export const useLoadData = (props) => {
                     .filter(e => e)
                 );
 
-                setCustomData(loadedTable[0]);
-                setData((pre) => [
-                    ...pre,
-                    {
-                        ...loadedTable[0]
-                    }
-                ]);
+                setData(loadedTable);
 
             }
 
@@ -129,7 +134,6 @@ export const useLoadData = (props) => {
 
     return {
         errors,
-        customData,
         data,
         orgReportName: orgSelected.displayNameByPath,
         dhis2Period: [

@@ -7,8 +7,8 @@ import { optionPickerDate, orgPickerConfig } from "./constant";
 import { useCorePickerState } from "@core/stateManage/corePickerState";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { format } from "date-fns";
-export const reportCode = "Báo cáo 4 - Vụ BMTE (TYT)"
-export const reportName = "HOẠT ĐỘNG CHĂM SÓC BÀ MẸ"
+export const reportCode = "Báo cáo 4"
+export const reportName = "Báo cáo hoạt động chăm sóc sức khỏe bà mẹ và trẻ em (TYT)"
 export default () => {
     const [
         instanceTarget,
@@ -73,7 +73,7 @@ export default () => {
                                     <td
                                         colSpan={totalCol}
                                         style={{ width: "100vw", fontSize: "16px", border: 0, textAlign: "left" }}>
-                                        <p>Đơn vị báo cáo: {corePicker.orgSelected.displayName}</p>
+                                        <p>Đơn vị báo cáo: {corePicker.orgSelected?.displayName}</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -106,7 +106,7 @@ export default () => {
                         <table width='100%' border='1' class='mainTable my-4' >
                             <thead>
                                 <tr>
-                                    <td colSpan={10} className="font-bold text-xl">{`Chăm sóc sức khỏe bà mẹ`.toUpperCase()}</td>
+                                    <td colSpan={10} className="font-bold text-xl">{`I. Chăm sóc sức khỏe bà mẹ`.toUpperCase()}</td>
                                 </tr>
                                 <tr>
                                     <th rowSpan="2">
@@ -410,16 +410,15 @@ export default () => {
                                     <td {...attrTableCol1}> - Số được xét nghiệm Giang mai
                                         trong lần mang thai này</td>
                                     <td colSpan="2">
-                                        <div id="totalSGDhfZGXzL2" />
                                     </td>
                                     <td colSpan="2">
-                                        <div id="SGDhfZGXzL2-IEweiFaTu3a-val" />
+                                        
                                     </td>
                                     <td colSpan="2">
-                                        <div id="SGDhfZGXzL2-N13A1fU7DAu-val" />
+                                        
                                     </td>
                                     <td colSpan="2">
-                                        <div id="kvF5zxxmhrr-HllvX50cXC0-val" />
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -573,17 +572,6 @@ export default () => {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>5.9a</td>
-                                    <td {...attrTableCol1}> - Số đẻ ngoài
-                                        CSYT</td>
-                                    <td colSpan="2">
-                                        <div id="DWCz9b0uIkA-HllvX50cXC0-val" />
-                                    </td>
-                                    <td colSpan="2"></td>
-                                    <td colSpan="2"></td>
-                                    <td colSpan="2"></td>
-                                </tr>
-                                <tr>
                                     <td>5.9b</td>
                                     <td {...attrTableCol1}> - Số đẻ được cán bộ y tế
                                         đỡ</td>
@@ -636,7 +624,7 @@ export default () => {
                                     <td {...attrTableCol1}>Tổng số bà mẹ/TSS được chăm sóc sau sinh tại nhà trong
                                         vòng 6 tuần sau khi rời CSYT, trong đó:</td>
                                     <td colSpan="2">
-                                        <div id="MdnijP0QA7c-HllvX50cXC0-val" />
+                                        <div id="indicatorOofwmXf2vAi" />
                                     </td>
                                     <td {...attrDisable} colSpan="2"></td>
                                     <td {...attrDisable} colSpan="2"></td>
@@ -995,13 +983,12 @@ export default () => {
                                 </tr>
                                 <tr>
                                     <td>1.5</td>
-                                    <td {...attrTableCol1}> - Số được lấy
-                                        mẫu bệnh phẩm gửi tuyến trên XN HPV</td>
+                                    <td {...attrTableCol1}> - Số được lấy mẫu bệnh phẩm gửi tuyến trên XN HPV</td>
                                     <td>
-                                        <div class="indicatorrRa48XFjyFC" />
+                                        <div class="Kyc2UW89wVj-HllvX50cXC0-val" />
                                     </td>
                                     <td>
-                                        <div class="indicatorrRa48XFjyFC" />
+                                        <div class="Kyc2UW89wVj-HllvX50cXC0-val" />
                                     </td>
                                     <td colSpan="2"  {...attrDisable}> </td>
                                 </tr>
@@ -1020,10 +1007,10 @@ export default () => {
                                     <td>2.2</td>
                                     <td {...attrTableCol1}>Tổng số lượt tiêm vắc xin HPV</td>
                                     <td>
-                                        <div class="indicatorm2PgSXO8ve6" />
+                                        <div class="yaoNKUeOyvE-HllvX50cXC0-val" />
                                     </td>
                                     <td>
-                                        <div class="indicatorm2PgSXO8ve6" />
+                                        <div class="yaoNKUeOyvE-HllvX50cXC0-val" />
                                     </td>
                                     <td colSpan="2"  {...attrDisable}> </td>
                                 </tr>
@@ -1078,10 +1065,10 @@ export default () => {
                                     <td {...attrTableCol1}> - Số mới sử
                                         dụng thuốc viên tránh thai</td>
                                     <td>
-                                        <div class="indicatorEYDDQJdwWzE" />
+                                        <div class="ojeJgOjf9vm-HllvX50cXC0-val" />
                                     </td>
                                     <td>
-                                        <div class="indicatorEYDDQJdwWzE" />
+                                        <div class="ojeJgOjf9vm-HllvX50cXC0-val" />
                                     </td>
                                     <td colSpan="2"  {...attrDisable}> </td>
                                 </tr>
@@ -1114,10 +1101,10 @@ export default () => {
                                     <td {...attrTableCol1}> - Số mới sử
                                         dụng bao cao su</td>
                                     <td>
-                                        <div class="indicatorifocZOceGZX" />
+                                        <div class="ycVdXnxxwHs-HllvX50cXC0-val" />
                                     </td>
                                     <td>
-                                        <div class="indicatorifocZOceGZX" />
+                                        <div class="ycVdXnxxwHs-HllvX50cXC0-val" />
                                     </td>
                                     <td colSpan="2"  {...attrDisable}> </td>
                                 </tr>
@@ -1150,21 +1137,21 @@ export default () => {
                                     <td>5 </td>
                                     <td {...attrTableCol1}>Số phá thai</td>
                                     <td>
-                                        <div class="indicatorlf0BrDLpp5m" />
+                                        <div class="xR1SRHBmOSl-HllvX50cXC0-val" />
                                     </td>
                                     <td>
-                                        <div class="indicatorlf0BrDLpp5m" />
+                                        <div class="xR1SRHBmOSl-HllvX50cXC0-val" />
                                     </td>
                                     <td colSpan="2"  {...attrDisable}> </td>
                                 </tr>
                                 <tr>
                                     <td>5.1</td>
-                                    <td>{`Trđ: <=7 tuần`}</td>
+                                    <td {...attrTableCol1}>{`Trđ: <=7 tuần`}</td>
                                     <td>
-                                        <div dataelementid="hMHRO6boyNh" class="totalhMHRO6boyNh" />
+                                        <div class='hMHRO6boyNh-IEweiFaTu3a-val' />
                                     </td>
                                     <td>
-                                        <div class="totalhMHRO6boyNh" />
+                                        <div class='hMHRO6boyNh-IEweiFaTu3a-val' />
                                     </td>
                                     <td colSpan="2"  {...attrDisable}> </td>
                                 </tr>
@@ -1172,10 +1159,10 @@ export default () => {
                                     <td>5.2</td>
                                     <td {...attrTableCol1}> - Vị thành niên</td>
                                     <td>
-                                        <div dataelementid="eqChBVhTqkF" class="totaleqChBVhTqkF" />
+                                        <div class='eqChBVhTqkF-IEweiFaTu3a-val' />
                                     </td>
                                     <td>
-                                        <div class="totaleqChBVhTqkF" />
+                                        <div class='eqChBVhTqkF-IEweiFaTu3a-val' />
                                     </td>
                                     <td colSpan="2"  {...attrDisable}> </td>
                                 </tr>

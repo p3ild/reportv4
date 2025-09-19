@@ -5,10 +5,10 @@ export const groupSelectTinh = "W4U1KdFeIJH"
 
 // Organization level types configuration
 export const LEVEL_ORG_SELECT_TYPE = {
-    TW: { type: 'bctw', tableID: 'bch', err: 'Biểu này không áp dụng cho tuyến trung ương' },
+    TW: { type: 'bctw', tableID: 'bch', err: 'Biểu này không áp dụng cho cấp trung ương' },
     TINH: { type: 'bct', tableID: 'bch' },
     HUYEN: { type: 'bch', tableID: 'bch' },
-    XA: { type: 'bcx', tableID: 'bcx', err: 'Biểu này không áp dụng cho tuyến xã' },
+    XA: { type: 'bcx', tableID: 'bcx', err: 'Biểu này không áp dụng cho cấp xã' },
     INDIVIDUAL_TINH: { type: 'INDIVIDUAL_TINH', tableID: 'bch' },
     INDIVIDUAL_HUYEN: { type: 'INDIVIDUAL_HUYEN', tableID: 'bch' },
     HUYEN_TTTYT: { type: 'HUYEN_TTYT', tableID: 'bch' }

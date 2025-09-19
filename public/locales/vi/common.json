@@ -5,6 +5,9 @@
     "required": "Bắt buộc",
     "noReport": "Không tìm thấy báo cáo",
     "otherSettings": "Cài đặt khác",
+    "settings": "Cài đặt",
+    "autoLoadReport": "Khi bật, hệ thống sẽ tự động bỏ qua bước chọn đơn vị và thời điểm nếu các lựa chọn hiện tại phù hợp với báo cáo mới hoặc mỗi khi thay đổi đơn vị hoặc thời gian báo cáo sẽ tự động tải lại",
+    "selectOrgQuestion": "Đơn vị sẽ xuất số liệu. Gợi ý: gõ vào ô tìm kiếm để tìm kiếm đơn vị nhanh hơn. Ví dụ: 'ha noi' -> 'Thành phố Hà Nội'",
     "periodPicker": {
         "selectType": {
             "date": "Ngày",

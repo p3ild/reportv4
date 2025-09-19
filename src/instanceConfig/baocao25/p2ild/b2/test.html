@@ -242,10 +242,10 @@
     <script>
         // Constants and Configuration
         const LEVEL_ORG_SELECT_TYPE = {
-            TW: { type: 'bctw', tableID: 'bch', err: 'Biểu này không áp dụng cho tuyến trung ương' },
+            TW: { type: 'bctw', tableID: 'bch', err: 'Biểu này không áp dụng cho cấp trung ương' },
             TINH: { type: 'bct', tableID: 'bch' },
             HUYEN: { type: 'bch', tableID: 'bch' },
-            XA: { type: 'bcx', tableID: 'bcx', err: 'Biểu này không áp dụng cho tuyến xã' },
+            XA: { type: 'bcx', tableID: 'bcx', err: 'Biểu này không áp dụng cho cấp xã' },
             INDIVIDUAL_TINH: { type: 'INDIVIDUAL_TINH', tableID: 'bch' },
             INDIVIDUAL_HUYEN: { type: 'INDIVIDUAL_HUYEN', tableID: 'bch' },
             HUYEN_TTTYT: { type: 'HUYEN_TTYT', tableID: 'bch' }
@@ -578,7 +578,7 @@
                             });
                     }
                     if (load == 4) {
-                        sum(mockData.sumII, "II", "Tuyến huyện", true)
+                        sum(mockData.sumII, "II", "Cấp huyện", true)
                             .then(() => {
                                 loadReport();
                             })
@@ -587,7 +587,7 @@
                             });
                     }
                     if (load == 5) {
-                        sum(mockData.sumIII, "III", "Tuyến xã", true)
+                        sum(mockData.sumIII, "III", "Cấp xã", true)
                             .then(() => {
                                 lastLoad();
                             })
@@ -604,12 +604,12 @@
                             .catch((e) => { loadReport(); });
                     }
                     if (load == 2) {
-                        sum(mockData.sumI, "I", "Tuyến huyện", true)
+                        sum(mockData.sumI, "I", "Cấp huyện", true)
                             .then(() => { loadReport(); })
                             .catch((e) => { loadReport(); });
                     }
                     if (load == 3) {
-                        sum(mockData.sumII, "II", "Tuyến xã", true)
+                        sum(mockData.sumII, "II", "Cấp xã", true)
                             .then(() => { lastLoad(); })
                             .catch((e) => { lastLoad(); });
                     }

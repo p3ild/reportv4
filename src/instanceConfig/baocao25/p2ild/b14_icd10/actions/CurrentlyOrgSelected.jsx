@@ -26,14 +26,14 @@ var chapter = {
     "S00-T98": "Chương XIX: Vết thương, ngộ độc và kết quả của các nguyên nhân bên ngoài",
     "V01-Y98": "Chương XX: Nguyên nhân bên ngoài của bệnh tật và tử vong",
     "Z00-Z99": "Chương XXI: Các yếu tố ảnh hưởng đến sức khoẻ người khám nghiệm và điều tra",
-    " ": "Chương XXII: Mã dành cho những mục đích đặc biệt",
+    // " ": "Chương XXII: Mã dành cho những mục đích đặc biệt",
 };
 
 
 function reduceWidthRowString(str, delimeter, amountWord) {
     amountWord = amountWord || 4;
     delimeter = delimeter || " ";
-    return str.split(delimeter).map((e, idx) => { return (idx + 1) % amountWord == 0 ? `${e}<br>` : e }).join(delimeter)
+    return (str).split(delimeter).map((e, idx) => { return (idx + 1) % amountWord == 0 ? `${e}<br>` : e }).join(delimeter)
 }
 
 
@@ -74,11 +74,11 @@ export const getDataCommon = async (props) => {
 
 
     var check_chapter = "";
-    json.options.forEach(function (op) {
+    json.options.filter(e => e.id != "yAgzJhugg6m").forEach(function (op) {
         var html = "";
         if (op.attributeValues[0].value !== check_chapter) {
             check_chapter = op.attributeValues[0].value;
-            html = "<tr name=\"sumData " + check_chapter + "\">\n                            <td></td>\n                            <td><strong>" + reduceWidthRowString(chapter[check_chapter], " ") + "</strong></td>\n                            <td><strong>" + check_chapter + "</strong></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n <td align=\"center\"></td>\n <td align=\"center\"></td>\n <td align=\"center\"></td>\n <td align=\"center\"></td>\n <td align=\"center\"></td>\n                        </tr>";
+            html = "<tr name=\"sumData " + check_chapter + "\">\n                            <td></td>\n                            <td class='text-left font-bold'>" + reduceWidthRowString(chapter[check_chapter], " ") + "</td>\n                            <td><strong>" + check_chapter + "</strong></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n                            <td align=\"center\"></td>\n <td align=\"center\"></td>\n <td align=\"center\"></td>\n <td align=\"center\"></td>\n <td align=\"center\"></td>\n <td align=\"center\"></td>\n                        </tr>";
             $("#printing  #tableICD").append(html);
             html = "";
         }

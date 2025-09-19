@@ -327,7 +327,7 @@ const headers = [
     {
       label: "Số trường hợp tử vong được cấp giấy báo tử",
       rowSpan: 4,
-      className: "w-[8%]",
+      className: "w-[2%]",
     },
   ],
   [

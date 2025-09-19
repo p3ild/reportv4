@@ -1,7 +1,3 @@
-import { Divider } from "antd";
-import { format, parse } from "date-fns"
-import { BreakLine } from "../../common/ui/MultiTableUI";
-import { findColStyleByKey } from "../../common/ui/RowRender"
 
 export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, dhis2Period, customData }) {
     let period = dhis2Period.split(' ');
@@ -98,10 +94,4 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
             </tr>
         </thead>
     </>
-}
-
-export function SectionHeaderTable1({
-    period,
-    notAvailable }) {
-    return <>  </>
 }

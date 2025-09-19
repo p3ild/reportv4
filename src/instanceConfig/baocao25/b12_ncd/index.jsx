@@ -12,7 +12,7 @@ import { findHeaderIndex } from "../p2ild/common/utils";
 import { DATA_ELEMENTS_TABLE_1, DATA_ELEMENTS_TABLE_2 } from "./constants";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { useShallow } from "zustand/react/shallow";
-const B12 = () => {
+const B11 = () => {
   const [data, setData] = useState();
 
   const { _get, setGlobalOverlay, me, setExcelOptions } = useCoreMetaState(
@@ -37,12 +37,15 @@ const B12 = () => {
 
     getPickerStateByPath("actions.setOrgPickerConfig")({
       orgGroupVisible: [
-        ORG_GROUP.TUYEN_TRUNG_UONG,
+        ORG_GROUP.TW_CSYT_KCB,
         ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
-        ORG_GROUP.TUYEN_TINH,
         ORG_GROUP.XA_CSYT_KHAC,
         ORG_GROUP.XA,
+
+        ORG_GROUP.TINH_CSYT_CONG_KLN,
+        ORG_GROUP.TINH_YTTN_KLN,
+        ORG_GROUP.TUYEN_TINH,
       ],
       // levelsToHideIfEmpty: [3]
     });
@@ -62,7 +65,7 @@ const B12 = () => {
           ...DATA_ELEMENTS_TABLE_2,
         ].join(";")},ou:${corePicker.orgSelected.id
         };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${corePicker.periodSelected.outputDataDhis2
-        }`
+}`
       );
       const valueIndex = findHeaderIndex(result, "value");
       const dxIndex = findHeaderIndex(result, "dx");
@@ -95,4 +98,4 @@ const B12 = () => {
   );
 };
 
-export default B12;
+export default B11;

@@ -1,13 +1,7 @@
-import { Flex } from "antd";
-import { cloneDeep } from "lodash";
-import { DATA_TYPE, getValueDE, numberWithThousands, roundNumber } from "../../common/DataValueUtils";
-import { fetchAnalyticsData } from "../../common/request/request";
-import { RenderValue } from "../../common/ui";
-import { ApproveButton } from "../../common/ui/ApproveButtonTT37";
-import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
-import { faker } from '@faker-js/faker';
-import { numToLocaleString } from "@core/utils/stringutils";
 import { APPROVAL_ROW_TYPE, APPROVAL_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
+import { numToLocaleString } from "@core/utils/stringutils";
+import { getValueDE } from "../../common/DataValueUtils";
+import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
@@ -28,8 +22,10 @@ export const getListColumnConfig = ({ }) => {
                     let { approvalKey, approvalVisible, approvalType, ds } = approvalConfig || {};
                     return {
                         view: <div className="flex flex-row w-full items-center justify-center" >
-                            {approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
+                            {(
+                                approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey
+                            )
+                                ? <ButtonApproval {
                                     ...{
                                         title: value,
                                         dsID: ds[0],
@@ -39,6 +35,7 @@ export const getListColumnConfig = ({ }) => {
                                         approvalType: approvalType || APPROVAL_TYPE.APPROVE
                                     }
                                 } />
+                                : value
                             }
                         </div>
                     }
@@ -89,7 +86,7 @@ export const getListColumnConfig = ({ }) => {
                         getValueDE({
                             jsonDhis: props.apiData,
                             org: props.orgUnit,
-                            de: ['']
+                            de: ['R1nUXApza8n']
                         }) + "";
                     return {
                         value,

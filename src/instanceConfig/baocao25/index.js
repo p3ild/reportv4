@@ -1,15 +1,13 @@
-import { PERIOD_TYPE } from "@core/ui/picker/periodpicker/periodpicker";
 import Base from "@core/base/ReportBase";
-import { getPickerStateByPath } from "@core/stateManage/corePickerState";
-import { classifyingOrgSelected } from "./p2ild/common/request/utils";
-import locale from "./locale.json";
 import "./index.css";
-export { locale, classifyingOrgSelected };
+import locale from "./locale.json";
+import { classifyingOrgSelected } from "./p2ild/common/request/utils";
+export { classifyingOrgSelected, locale };
 
 class Config extends Base {
   // Server configuration
-  BASE_URL = "https://dev.tkyt.vn/bc25";
-  // BASE_URL = "https://baocao.tkyt.vn";
+  // BASE_URL = "https://dev.tkyt.vn/bc25";
+  BASE_URL = "https://baocao.tkyt.vn";
 
   init = async () => {
     // getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.month]);
@@ -65,13 +63,19 @@ class Config extends Base {
       folder: [this.listFolder.core],
       key: "R6v6PxC0JM8",
       displayName: "TÌNH HÌNH NHÂN LỰC Y TẾ",
-      getReportInstance: async () => await import("./b3"),
+      getReportInstance: async () => await import("./p2ild/b3_new"),
     },
     {
       folder: [this.listFolder.core],
       key: "mMx0kzgX6Uv",
       displayName: "Hoạt động chăm sóc bà mẹ",
       getReportInstance: async () => await import("./p2ild/bmte_b4"),
+    },
+    {
+      folder: [this.listFolder.core],
+      key: "IL0TrfanQdq",
+      displayName: "vu_bmte_x3",
+      getReportInstance: async () => await import("./p2ild/bmte_x3"),
     },
     {
       folder: [this.listFolder.core],
@@ -105,29 +109,23 @@ class Config extends Base {
       getReportInstance: async () => await import("./p2ild/b9"),
     },
     {
-      folder: [this.listFolder.core],
-      key: "IL0TrfanQdq",
-      displayName: "vu_bmte_x3",
-      getReportInstance: async () => await import("./p2ild/bmte_x3"),
-    },
-    {
       key: "mV9DjhMHvEp",
       folder: [this.listFolder.core],
       displayName:
         "HOẠT ĐỘNG PHÒNG CHỐNG SỐT RÉT, HIV/AIDS, TNTT, LAO, PHONG VÀ SỨC KHỎE TÂM THẦN",
-      getReportInstance: async () => await import("./b10_tntt_hiv_sktt"),
+      getReportInstance: async () => await import("./p2ild/b10_new"),
     },
     {
       key: "Iqmu0dxxYCl",
       folder: [this.listFolder.core],
       displayName: "TÌNH HÌNH MẮC VÀ TỬ VONG BỆNH TRUYỀN NHIỄM GÂY DỊCH",
-      getReportInstance: async () => await import("./b11_tngd"),
+      getReportInstance: async () => await import("./p2ild/b11_new"),
     },
     {
       key: "YjSRTN0MbGa",
       folder: [this.listFolder.core],
       displayName: "HOẠT ĐỘNG PHÁT HIỆN, QUẢN LÝ ĐIỀU TRỊ BỆNH KHÔNG LÂY NHIỄM",
-      getReportInstance: async () => await import("./b12_ncd"),
+      getReportInstance: async () => await import("./p2ild/b12_new"),
     },
     {
       key: "test",

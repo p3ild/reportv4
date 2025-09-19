@@ -14,10 +14,12 @@ import {
   DATA_ELEMENTS_TABLE_1,
   DATA_ELEMENTS_TABLE_2,
   DATA_ELEMENTS_TABLE_3,
+  LAST_VALUE_DATA_ELEMENTS,
 } from "./constants";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { useShallow } from "zustand/react/shallow";
-const B3 = () => {
+import { getLatestMonth } from "./utils";
+const B10 = () => {
   const [data, setData] = useState();
 
   const { _get, setGlobalOverlay, me, setExcelOptions } = useCoreMetaState(
@@ -34,22 +36,33 @@ const B3 = () => {
     }))
   );
   useEffect(() => {
-    getPickerStateByPath("actions.setAllowPeriodTypes")([PERIOD_TYPE.year]);
+    getPickerStateByPath("actions.setAllowPeriodTypes")([
+      PERIOD_TYPE.month,
+      PERIOD_TYPE.month2,
+      PERIOD_TYPE.year,
+      // PERIOD_TYPE.sixMonth,
+      // PERIOD_TYPE.biWeek,
+    ]);
 
     getPickerStateByPath("actions.setOrgPickerConfig")({
       orgGroupVisible: [
-        ORG_GROUP.TUYEN_TRUNG_UONG,
         ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
-        ORG_GROUP.TUYEN_TINH,
         ORG_GROUP.XA_CSYT_KHAC,
-        ORG_GROUP.XA,
+        ORG_GROUP.XA_TYT,
+        ORG_GROUP.TINH_CSYT_CONG_KCB,
+        
+        ORG_GROUP.TINH_CSYT_CONG_SR_PHONG_HIV_TT,
+        ORG_GROUP.TINH_YTTN_BENH_VIEN_SR_PHONG_HIV_TT,
+        ORG_GROUP.TINH_YTTN_PHONG_KHAM_SR_PHONG_HIV_TT,
+        
+        ORG_GROUP.TW_YT_NGANH,
       ],
       // levelsToHideIfEmpty: [3]
     });
     setExcelOptions({
       columnWidths: "10,30",
-      excelFileName: "Báo cáo 3",
+      excelFileName: "Báo cáo 10",
     });
   }, []);
 
@@ -57,22 +70,42 @@ const B3 = () => {
     try {
       setGlobalOverlay({ isOpen: true });
 
-      const result = await _get(
-        `/api/analytics?dimension=dx:${[
-          ...DATA_ELEMENTS_TABLE_1,
-          ...DATA_ELEMENTS_TABLE_2,
-          ...DATA_ELEMENTS_TABLE_3,
-        ].join(";")},ou:${
-          corePicker.orgSelected.id
-        };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${
-          corePicker.periodSelected.outputDataDhis2
-        }`
-      );
+      const isMultiplePe =
+        corePicker.periodSelected.outputDataDhis2.split(";").length > 1;
+
+      const lastPeriod = isMultiplePe
+        ? corePicker.periodSelected.endDate
+        : corePicker.periodSelected.type === "year"
+        ? getLatestMonth(Number(corePicker.periodSelected.outputDataDhis2))
+        : corePicker.periodSelected.outputDataDhis2;
+
+      const [result, result1] = await Promise.all([
+        _get(
+          `/api/analytics?dimension=dx:${[
+            ...DATA_ELEMENTS_TABLE_1,
+            ...DATA_ELEMENTS_TABLE_2,
+            ...DATA_ELEMENTS_TABLE_3,
+          ]
+            .filter((de) => !LAST_VALUE_DATA_ELEMENTS.includes(de))
+            .join(";")},ou:${
+            corePicker.orgSelected.id
+          };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${
+            corePicker.periodSelected.outputDataDhis2
+          }`
+        ),
+        _get(
+          `/api/analytics?dimension=dx:${LAST_VALUE_DATA_ELEMENTS.join(
+            ";"
+          )},ou:${
+            corePicker.orgSelected.id
+          };LEVEL-1;LEVEL-2;LEVEL-3;LEVEL-4&filter=pe:${lastPeriod}`
+        ),
+      ]);
       const valueIndex = findHeaderIndex(result, "value");
       const dxIndex = findHeaderIndex(result, "dx");
       const ouIndex = findHeaderIndex(result, "ou");
 
-      const dataResult = result.rows.map((row) => ({
+      const dataResult = [...result.rows, ...result1.rows].map((row) => ({
         value: row[valueIndex] * 1,
         ou: row[ouIndex],
         dx: row[dxIndex],
@@ -92,7 +125,7 @@ const B3 = () => {
   }, [corePicker.pickCompleted]);
 
   return (
-    <div className="font-serif h-full report-container  b3-report-container flex flex-col gap-6">
+    <div className="font-serif h-full report-container  b10_tntt_hiv_sktt-report-container flex flex-col gap-6">
       <Table_1 data={data} />
       <Table_2 data={data} />
       <Table_3 data={data} />
@@ -100,4 +133,4 @@ const B3 = () => {
   );
 };
 
-export default B3;
+export default B10;

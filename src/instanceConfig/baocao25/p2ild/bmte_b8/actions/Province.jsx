@@ -1,11 +1,9 @@
-import { parallel } from 'async';
-import { fetchAnalyticsData } from '../../common/request/request';
-import { getDisableColDataObject, listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
-import { DATASET, ORG_GROUP, ORG_GROUP_SET } from '../constant';
-import { flatten, zip } from 'lodash';
 import { getCoreMetaStateByPath } from '@core/stateManage/metadataState';
-import { APPROVAL_ROW_TYPE } from '@core/network/ApprovalUtils';
+import { parallel } from 'async';
+import { flatten } from 'lodash';
+import { getDisableColDataObject, listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
 import { getApprovalConfig } from '../../common/utils/approval';
+import { DATASET, ORG_GROUP } from '../constant';
 
 export const getDataCommon = async (props) => {
     props = {
@@ -21,21 +19,21 @@ export const getDataCommon = async (props) => {
             orgUnitGroup: [
                 ORG_GROUP.TW_CSYT_CSSK_TE,
             ],
-            includeTotalRow: ["I", <p>Tuyến TW, Y tế ngành</p>],
+            includeTotalRow: ["I", <p>Cấp TW, Y tế ngành</p>],
             ...getApprovalConfig({ ...props, ds: DATASET.BMTE_B8, approvalKey: 'TW' })
         },
         {
             orgUnitGroup: [
                 ORG_GROUP.TINH_CSYT_CONG_CSSK_TE
             ],
-            includeTotalRow: ["II", <p>TUYẾN TỈNH</p>],
+            includeTotalRow: ["II", <p>Cấp tỉnh</p>],
             ...getApprovalConfig({ ...props, ds: DATASET.BMTE_B8, approvalKey: 'TINH' })
         },
         {
             orgUnitGroup: [
                 ORG_GROUP.XA_DVHC
             ],
-            includeTotalRow: ["III", <p>TUYẾN XÃ</p>],
+            includeTotalRow: ["III", <p>Cấp xã</p>],
             ...getApprovalConfig({ ...props, ds: DATASET.BMTE_B4_TYT, approvalKey: 'XA' })
         }
     ];
@@ -124,15 +122,6 @@ export const getDataCommon = async (props) => {
     ]
 
     return {
-        SectionHeader: props.SectionHeader,
-        TableHeader: props.HeaderUI({
-            listColumnConfig: props.listColumnConfig,
-            title: props.title,
-            ...props
-        }),
-        dataByRow: [,
-
-            ...listRow
-        ]
+        dataByRow: listRow
     }
 }

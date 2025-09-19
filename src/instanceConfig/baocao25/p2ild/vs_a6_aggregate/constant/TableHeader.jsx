@@ -1,7 +1,6 @@
-import { format, parse } from "date-fns"
-import { findColStyleByKey } from "../../common/ui/RowRender"
-import { Fragment } from "react"
 import { Tooltip } from "antd"
+import { format, parse } from "date-fns"
+import { Fragment } from "react"
 import { FaRegQuestionCircle } from "react-icons/fa"
 
 function CustomTooltip({ title, children }) {
@@ -19,51 +18,46 @@ export function HeaderUILayoutTable1({ listColumnConfig, title }) {
     return <thead>
         <tr>
             <th
-                data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
+
                 rowSpan={2}
             >TT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'org' })}
+            <th
                 rowSpan={2}
             >Đơn vị</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin' rowSpan={2}><CustomTooltip title="Tổng số xã trên địa bàn">Số xã</CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin' rowSpan={2}><CustomTooltip title="Tổng số trường hợp tử vong được nhật vào Sổ A6 từ các cách khác nhau (tự y tế phát hiện để nhập, từ tư pháp chuyển sang...). Các trường hợp tử vong này phải có ngày nhập vào Số A6 trong thời gian báo cáo, ngày tử vong có thể không trong kỳ báo cáo.">Tổng số THTV trong kỳ báo cáo</CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin' colSpan={8}>Trong đó, số trường hợp tử vong:</th>
+            <th rowSpan={2}><CustomTooltip title="Tổng số xã trên địa bàn">Số xã</CustomTooltip></th>
+            <th rowSpan={2}><CustomTooltip title="Tổng số trường hợp tử vong được nhật vào Sổ A6 từ các cách khác nhau (tự y tế phát hiện để nhập, từ tư pháp chuyển sang...). Các trường hợp tử vong này phải có ngày nhập vào Số A6 trong thời gian báo cáo, ngày tử vong có thể không trong kỳ báo cáo.">Tổng số THTV trong kỳ báo cáo</CustomTooltip></th>
+            <th colSpan={8}>Trong đó, số trường hợp tử vong:</th>
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang cho Y tế trong kỳ báo cáo theo ngày nhập và ngày tử vong (bao gồm cả trường hợp trùng với Y tế)">Tư pháp chuyển sang</CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Y tế ghi nhận và nhập trước vào sổ A6 trong kỳ báo cáo (bao gồm cả trường hợp trùng với Tư pháp)">Y tế ghi nhận</CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Y tế ghi nhận trùng với Tư pháp">Được ghi nhận bởi cả 2 hệ thống tại thời điểm trao đổi dữ liệu</CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang mà Y tế chưa có.">Tư pháp chuyển sang mà Y tế chưa có</CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang mà Y tế chưa có, sau đó Y tế đã hoàn tất thông tin.">Tư pháp chuyển sang mà Y tế chưa có, đã hoàn tất</CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title={<p className="flex flex-col">
+            <th><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang cho Y tế trong kỳ báo cáo theo ngày nhập và ngày tử vong (bao gồm cả trường hợp trùng với Y tế)">Tư pháp chuyển sang</CustomTooltip></th>
+            <th><CustomTooltip title="Tổng số trường hợp tử vong Y tế ghi nhận và nhập trước vào sổ A6 trong kỳ báo cáo (bao gồm cả trường hợp trùng với Tư pháp)">Y tế ghi nhận</CustomTooltip></th>
+            <th><CustomTooltip title="Tổng số trường hợp tử vong Y tế ghi nhận trùng với Tư pháp">Được ghi nhận bởi cả 2 hệ thống tại thời điểm trao đổi dữ liệu</CustomTooltip></th>
+            <th><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang mà Y tế chưa có.">Tư pháp chuyển sang mà Y tế chưa có</CustomTooltip></th>
+            <th><CustomTooltip title="Tổng số trường hợp tử vong Tư pháp chuyển sang mà Y tế chưa có, sau đó Y tế đã hoàn tất thông tin.">Tư pháp chuyển sang mà Y tế chưa có, đã hoàn tất</CustomTooltip></th>
+            <th><CustomTooltip title={<p className="flex flex-col">
                 <span>Số ngày trung bình giữa thời điểm Y tế ghi nhận trên Sổ A6 và Ngày tử vong (chỉ tính các trường hợp tử vong mà y tế tự ghi nhận - cột 6)</span>
                 <span className="whitespace-break-spaces">      <strong>Tử số</strong>: Tổng số ngày chênh lệch giữa Ngày nhập vào Sổ A6 và Ngày tử vong của tất cả các trường hợp tử vong được nhập vào Sổ A6 (không tính các trường hợp tử vong đẩy mới từ Tư pháp)</span>
                 <span className="whitespace-break-spaces">      <strong>Mẫu số</strong>: Số trường hợp tử vong do y tế ghi nhận</span>
             </p>}>
                 Số ngày trung bình giữa thời điểm Y tế ghi nhận trên A6 điện tử và ngày tử vong
             </CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong không có Giấy tờ tùy thân hoặc số định danh cá nhân.">Không có giấy tờ tuỳ thân hoặc số định danh cá nhân</CustomTooltip></th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'><CustomTooltip title="Tổng số trường hợp tử vong có Ngày nhập vào Sổ A6 và Ngày tử vong trong khoảng từ ngày đầu tiên đến ngày cuối cùng của kỳ báo cáo (bao gồm cả trường hợp tử vong y tế ghi nhận và  trường hợp tử vong tư pháp chuyển sang).">Có ngày tử vong trong kỳ báo cáo</CustomTooltip></th>
+            <th><CustomTooltip title="Tổng số trường hợp tử vong không có Giấy tờ tùy thân hoặc số định danh cá nhân.">Không có giấy tờ tuỳ thân hoặc số định danh cá nhân</CustomTooltip></th>
+            <th><CustomTooltip title="Tổng số trường hợp tử vong có Ngày nhập vào Sổ A6 và Ngày tử vong trong khoảng từ ngày đầu tiên đến ngày cuối cùng của kỳ báo cáo (bao gồm cả trường hợp tử vong y tế ghi nhận và  trường hợp tử vong tư pháp chuyển sang).">Có ngày tử vong trong kỳ báo cáo</CustomTooltip></th>
 
         </tr>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
-            >1</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'org' })}>2</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>3</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>4</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>5</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>6</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>7</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>8</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>9</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>10</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>11</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'>12</th>
+            <th className="col-no">1</th>
+            <th className="col-no">2</th>
+            <th className="col-no">3</th>
+            <th className="col-no">4</th>
+            <th className="col-no">5</th>
+            <th className="col-no">6</th>
+            <th className="col-no">7</th>
+            <th className="col-no">8</th>
+            <th className="col-no">9</th>
+            <th className="col-no">10</th>
+            <th className="col-no">11</th>
+            <th className="col-no">12</th>
         </tr>
     </thead>
 }
@@ -110,26 +104,24 @@ export function SectionHeaderTable2({ period }) {
 export function HeaderUILayoutTable3({ listColumnConfig, periodAsArray = ['202401', '202402', 202403] }) {
     return <thead>
         <tr>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'stt' })}
+            <th
             >TT</th>
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
-                {...findColStyleByKey({ listColumnConfig, key: 'org' })}
+            <th
             >Đơn vị</th>
             {periodAsArray.map((e, idx) => {
-                return <th key={idx} data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+                return <th key={idx}
                 >Tháng {
                         format(parse(e, 'yyyyMM', new Date()), 'MM/yyyy')
                     }</th>
             })}
-            <th data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+            <th
             >Tổng số</th>
         </tr>
 
         <tr>
             {
                 listColumnConfig.map((e, idx) =>
-                    <th key={idx} data-a-h="center" data-a-v="middle" data-f-bold="true" data-a-wrap="true" data-b-a-s='thin'
+                    <th key={idx}
                         // className="min-w-[5vw]"
                         className={`${e.colClassName || ''}`}
                         style={e.colStyle}

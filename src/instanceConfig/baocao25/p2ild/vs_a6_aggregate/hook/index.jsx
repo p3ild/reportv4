@@ -54,6 +54,9 @@ export const useLoadData = (props) => {
                 case ORG_SELECTED_TYPE.PROVINCE.key:
                     props.orgUnitGroup = [ORG_GROUP.XA_DVHC];
                     break;
+                case ORG_SELECTED_TYPE.COMMUNE.key:
+                    props.orgUnitGroup = [ORG_GROUP.XA_CSYT_KHAC, ORG_GROUP.XA_TYT];
+                    break;
                 default:
                     break
             }

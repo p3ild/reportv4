@@ -11,6 +11,8 @@ export const orgPickerConfig = {
     orgGroupVisible: [
         ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
+        ORG_GROUP.XA_TYT,
+        ORG_GROUP.XA_CSYT_KHAC_TYT,
     ],
     // levelsToHideIfEmpty: [3]
 }

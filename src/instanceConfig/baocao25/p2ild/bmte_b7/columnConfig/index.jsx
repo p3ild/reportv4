@@ -1,15 +1,9 @@
-import { Flex } from "antd";
-import { cloneDeep, set } from "lodash";
-import { DATA_TYPE, getValueDE, numberWithThousands, roundNumber } from "../../common/DataValueUtils";
-import { fetchAnalyticsData } from "../../common/request/request";
-import { RenderValue } from "../../common/ui";
-import { ApproveButton } from "../../common/ui/ApproveButtonTT37";
-import { getDisableColDataObject, ListColumnConfigBuilder } from "../../common/ui/RowRender";
-import { faker } from '@faker-js/faker';
-import { numToLocaleString } from "@core/utils/stringutils";
-import { ORG_GROUP } from "../constant";
-import { getPickerStateByPath } from "@core/stateManage/corePickerState";
 import { APPROVAL_ROW_TYPE, APPROVAL_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
+import { getPickerStateByPath } from "@core/stateManage/corePickerState";
+import { numToLocaleString } from "@core/utils/stringutils";
+import { getValueDE } from "../../common/DataValueUtils";
+import { getDisableColDataObject, ListColumnConfigBuilder } from "../../common/ui/RowRender";
+import { ORG_GROUP } from "../constant";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
@@ -37,8 +31,10 @@ export const getListColumnConfig = ({ }) => {
 
                     return {
                         view: <div className="flex flex-row w-full items-center justify-center" >
-                            {approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
+                            {(
+                                approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey
+                            )
+                                ? <ButtonApproval {
                                     ...{
                                         title: value,
                                         dsID: ds[0],
@@ -48,6 +44,7 @@ export const getListColumnConfig = ({ }) => {
                                         approvalType: approvalType || APPROVAL_TYPE.APPROVE
                                     }
                                 } />
+                                : value
                             }
                         </div>
                     }
@@ -363,9 +360,9 @@ export const getListColumnConfig = ({ }) => {
     });
 }
 
-let isOrgCommune = (props) => {
+function isOrgCommune(props) {
     let { orgUnit, orgUnitGroup } = props;
     let orgDisplayData = getPickerStateByPath('orgFlatMap')[orgUnit];
     return [ORG_GROUP.XA_TYT, ORG_GROUP.XA_CSYT_KHAC].some(x => orgDisplayData.organisationUnitGroups.map(e => e.id).includes(x))
-        || orgUnitGroup.every(m => [ORG_GROUP.XA_DVHC].includes(m))
+        || (orgUnitGroup || []).every(m => [ORG_GROUP.XA_DVHC].includes(m))
 }

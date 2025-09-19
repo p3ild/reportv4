@@ -2,7 +2,7 @@ import { parallel } from "async";
 import { useEffect, useState } from "react";
 import { usePrepareData } from "../../common/hooks/prepareData";
 import { getListColumnConfig } from "../columnConfig";
-import { HeaderUILayoutTable1, SectionHeaderTable1 } from "../constant";
+import { HeaderUILayoutTable1 } from "../constant";
 
 export const useLoadData = (props) => {
     const {
@@ -57,7 +57,6 @@ export const useLoadData = (props) => {
                         ...props,
                         separateTotalRow: true,
                         HeaderUI: HeaderUILayoutTable1,
-                        SectionHeader: <SectionHeaderTable1 period={period} />
                     }).then(newData => {
                         callback(undefined, newData)
 

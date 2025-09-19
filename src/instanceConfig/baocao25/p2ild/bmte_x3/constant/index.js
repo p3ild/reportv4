@@ -12,7 +12,7 @@ export const optionPickerDate = [
 
 export const orgPickerConfig = {
     orgGroupVisible: [
-        '-root',
+        // '-root',
         '-' + ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
         ORG_GROUP.XA_TYT,

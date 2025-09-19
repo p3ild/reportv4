@@ -1,8 +1,7 @@
 import { parallel } from 'async';
-import { fetchAnalyticsData } from '../../common/request/request';
-import { getDisableColDataObject, listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
-import { ORG_GROUP, ORG_GROUP_SET } from '../constant';
 import { flatten, zip } from 'lodash';
+import { listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
+import { ORG_GROUP, ORG_GROUP_SET } from '../constant';
 
 export const getDataCommon = async (props) => {
     props = {
@@ -12,11 +11,10 @@ export const getDataCommon = async (props) => {
         listColumnConfig: props.listColumnConfig,
     };
 
-
     let rsDataOrgGroupSet = [
-        { id: ORG_GROUP.TUYEN_TRUNG_UONG, name: 'Tuyến trung ương' },
-        { id: ORG_GROUP.TUYEN_TINH, name: 'Tuyến tỉnh' },
-        { id: ORG_GROUP.TUYEN_XA, name: 'Tuyến xã' },
+        { id: ORG_GROUP.TUYEN_TRUNG_UONG, name: 'Cấp trung ương' },
+        { id: ORG_GROUP.TUYEN_TINH, name: 'Cấp tỉnh' },
+        { id: ORG_GROUP.TUYEN_XA, name: 'Cấp xã' },
         { id: ORG_GROUP.TINH_YTTN, name: 'Tư nhân', }
     ];
 
@@ -67,16 +65,5 @@ export const getDataCommon = async (props) => {
         ...listRow
     ]
 
-    return {
-        SectionHeader: props.SectionHeader,
-        TableHeader: props.HeaderUI({
-            listColumnConfig: props.listColumnConfig,
-            title: props.title,
-            ...props
-        }),
-        dataByRow: [,
-
-            ...listRow
-        ]
-    }
+    return { dataByRow: listRow }
 }

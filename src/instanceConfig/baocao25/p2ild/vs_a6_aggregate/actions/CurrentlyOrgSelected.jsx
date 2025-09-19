@@ -35,7 +35,6 @@ export const getDataCommon = async (props) => {
         DEFAULT_COL_LENGTH: props.periodAsArray?.length ? (props.periodAsArray?.length + 1) : 10,
     });
     return {
-        SectionHeader: props.SectionHeader,
         TableHeader: props.HeaderUI({
             listColumnConfig: props.listColumnConfig,
             title: props.title,

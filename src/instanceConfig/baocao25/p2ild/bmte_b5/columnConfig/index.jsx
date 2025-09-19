@@ -1,10 +1,8 @@
-import { faker } from '@faker-js/faker';
-import { Flex } from "antd";
-import { numToLocaleString } from "@core/utils/stringutils";
-import { getValueDE } from "../../common/DataValueUtils";
-import { RenderValue } from "../../common/ui";
-import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 import { APPROVAL_ROW_TYPE, APPROVAL_TYPE, ButtonApproval } from '@core/network/ApprovalUtils';
+import { numToLocaleString } from "@core/utils/stringutils";
+import { faker } from '@faker-js/faker';
+import { getValueDE } from "../../common/DataValueUtils";
+import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 const fakeNumber = () => {
     return undefined
     // return faker.number.int({ min: 1, max: 10,fractionDigits:1 })
@@ -31,8 +29,10 @@ export const getListColumnConfig = ({ }) => {
 
                     return {
                         view: <div className="flex flex-row w-full items-center justify-center" >
-                            {approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
+                            {(
+                                approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey
+                            )
+                                ? <ButtonApproval {
                                     ...{
                                         title: value,
                                         dsID: ds[0],
@@ -42,6 +42,7 @@ export const getListColumnConfig = ({ }) => {
                                         approvalType: approvalType || APPROVAL_TYPE.APPROVE
                                     }
                                 } />
+                                : value
                             }
                         </div>
                     }

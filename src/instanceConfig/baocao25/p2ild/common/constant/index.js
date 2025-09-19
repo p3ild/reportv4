@@ -15,15 +15,22 @@ export const ORG_GROUP = {
   TUYEN_TRUNG_UONG: "UlhXS5yPKpZ",
   TUYEN_XA: "fpnukMBDvUf",
 
+
   //CSSK_BM
   TW_CSYT_CSSK_BM: "WBaGiDFEZjL",
   TINH_CSYT_CONG_CSSK_BM: "ImtV96dR0JK",
   TINH_YTTN_CSSK_BM: "KKrseu3RYOe",
 
+
   //CSSK_TE
   TW_CSYT_CSSK_TE: "zcK3oaWU7aJ",
   TINH_CSYT_CONG_CSSK_TE: "eYgD642nSuM",
   TINH_YTTN_CSSK_TE: "hRu4T6QBtCM",
+
+  //KLN
+  TINH_CSYT_CONG_KLN: "kh9FwPDWgUi",
+  TINH_YTTN_KLN: "rz2nPhBJoVo",
+  TW_CSYT_KLN: 'HBkLjXEWSBZ',
 
   //KCB
   TINH_CSYT_CONG_KCB: "prigYTb70un",
@@ -39,6 +46,12 @@ export const ORG_GROUP = {
   TINH_KCB_COGIUONG_CSYT_KHAC: "CPpqxf5ApAf",
 
   TINH_CSYT_KHONGGIUONG: "LohXBTuLCRJ",
+
+  //PHONG_DA_LIEU
+  TW_CSYT_CONG_SR_PHONG_HIV_TT: "a8tDjfQpPbK",
+  TINH_CSYT_CONG_SR_PHONG_HIV_TT: "ubpcYbv2aKe",
+  TINH_YTTN_BENH_VIEN_SR_PHONG_HIV_TT: "b3Fa4WDUKDl",
+  TINH_YTTN_PHONG_KHAM_SR_PHONG_HIV_TT: "LDueUOVxA6b",
 
   // ------------------------------------- BAOCAO -------------------------------------
   // HUYEN_DVHC: "W4U1KdFeIJH",
@@ -71,12 +84,24 @@ export const ORG_GROUP = {
 };
 
 export const DATASET = {
+  TTC_TYT: 'xbnK3phORM1',
+  TTC_XA: 'kdxiku4uqkM',
+  B3: 'fMnhvVDp2iR',
   BMTE_B4_TYT: 'H4WdjchZhmF',
   BMTE_B4: 'qmHOBSh3e7c',
   BMTE_B5: 'doDhUa33IQr',
   BMTE_B6: 'slZ3BACPnzP',
   BMTE_B7: 'OzgHVXWePlJ',
   BMTE_B8: 'PWTIzTyc2xs',
+  B9: 'kGIKK18IMN1',
+  B10: 'Akfl0BIspMj',
+  B11: 'gp8FpVbQHvU',
+  B12_NCD: 'pAP1uaBYloe',
+  B12_NCD_TYT: 'OEI6O1pvDPa',
+}
+
+export const WF_DATASET = {
+
 }
 
 export const ORG_GROUP_SET = {

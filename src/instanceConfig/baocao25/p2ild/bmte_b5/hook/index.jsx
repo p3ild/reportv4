@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePrepareData } from "../../common/hooks/prepareData";
-import { HeaderUILayoutTable1, ORG_SELECTED_TYPE, SectionHeaderTable1, } from "../constant";
+import { DATASET, HeaderUILayoutTable1, ORG_SELECTED_TYPE } from "../constant";
 import { getListColumnConfig } from "../columnConfig";
 import { parallel, reflect } from "async";
 import { BaseError } from "../../common/BaseError";
@@ -63,19 +63,27 @@ export const useLoadData = (props) => {
         try {
             let orgType = orgSelected?.orgType?.key;
             let targetAction;
-            switch (orgType) {
-                case ORG_SELECTED_TYPE.COUNTRY.key:
+            switch (true) {
+                case orgSelected.id == 'CUSTOM_MULTI_ORG': {
+                    targetAction = await import('../../common/UserMutilOrgAction')
+                    props.customDataSet = {
+                        COMMUNE: DATASET.BMTE_B4_TYT,
+                        // PROVINCE: DATASET.BMTE_B5
+                    }
+                    break;
+                }
+                case orgType == ORG_SELECTED_TYPE.COUNTRY.key:
                     targetAction = await import('../actions/Country')
                     break;
-                case ORG_SELECTED_TYPE.PROVINCE.key:
+                case orgType == ORG_SELECTED_TYPE.PROVINCE.key:
                     targetAction = await import('../actions/Province');
                     break;
-                case ORG_SELECTED_TYPE.COMMUNE.key:
+                case orgType == ORG_SELECTED_TYPE.COMMUNE.key:
                     targetAction = await import('../actions/Commune');
                     break;
                 default:
                     targetAction = await import('../actions/CurrentlyOrgSelected')
-                    // throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
+                // throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
             }
             {
 
@@ -84,11 +92,10 @@ export const useLoadData = (props) => {
                     targetAction.getDataCommon({
                         ...props,
                         separateTotalRow: true,
-                        HeaderUI: HeaderUILayoutTable1,
-                        SectionHeader: <SectionHeaderTable1 period={period} />
-                    }).then(newData => {
-                        callback(undefined, newData)
 
+                    }).then(newData => {
+                        newData.TableHeader = <HeaderUILayoutTable1 />;
+                        callback(undefined, newData);
                     }).catch(e => {
                         throw e
                     })
@@ -101,13 +108,7 @@ export const useLoadData = (props) => {
                     .filter(e => e)
                 );
 
-                setCustomData(loadedTable[0]);
-                setData((pre) => [
-                    ...pre,
-                    {
-                        ...loadedTable[0]
-                    }
-                ]);
+                setData(loadedTable);
 
             }
 

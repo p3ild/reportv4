@@ -28,14 +28,7 @@ export const getDataCommon = async (props) => {
     });
 
     return {
-        SectionHeader: props.SectionHeader,
-        TableHeader: props.HeaderUI({
-            listColumnConfig: props.listColumnConfig,
-            title: props.title,
-            ...props
-        }),
-        dataByRow: [
-            ...listRow
-        ]
+
+        dataByRow: listRow
     }
 }

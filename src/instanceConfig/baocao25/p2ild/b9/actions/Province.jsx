@@ -1,9 +1,10 @@
+import { getPickerStateByPath } from '@core/stateManage/corePickerState';
+import { getCoreMetaStateByPath } from '@core/stateManage/metadataState';
 import { parallel } from 'async';
-import { fetchAnalyticsData } from '../../common/request/request';
-import { getDisableColDataObject, listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
-import { ORG_GROUP, ORG_GROUP_SET } from '../constant';
-import { flatten, zip } from 'lodash';
-import { getPickerStateByPath, useCorePickerState } from '@core/stateManage/corePickerState';
+import { flatten } from 'lodash';
+import { listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
+import { getApprovalConfig } from '../../common/utils/approval';
+import { DATASET, ORG_GROUP } from '../constant';
 
 export const getDataCommon = async (props) => {
     props = {
@@ -11,6 +12,7 @@ export const getDataCommon = async (props) => {
         // dx: props,
         DEFAULT_COL_LENGTH: props.defaultCol,
         listColumnConfig: props.listColumnConfig,
+        approvalUtils: getCoreMetaStateByPath('networkUtils.ApprovalUtils')
     };
 
     let orgFlatMap = getPickerStateByPath('orgFlatMap')
@@ -20,6 +22,7 @@ export const getDataCommon = async (props) => {
             ORG_GROUP.TW_CSYT_KCB,
             ORG_GROUP.TW_YT_NGANH,
         ],
+        ...getApprovalConfig({ ...props, ds: DATASET.B9, approvalKey: 'TW' }),
         includeTotalRow: ["I", <p>Tuyến TW, Y tế ngành</p>],
     };
 
@@ -34,6 +37,7 @@ export const getDataCommon = async (props) => {
                 ORG_GROUP.TINH_KCB_COGIUONG_BV_DKKV,
                 ORG_GROUP.TINH_KCB_COGIUONG_CSYT_KHAC,
             ],
+            ...getApprovalConfig({ ...props, ds: DATASET.B9, approvalKey: 'TINH_CO_GIUONG' }),
             includeTotalRow: ["II.1", <p>Cơ sở có giường</p>],
             sortOptions: (data, { orgUnitGroup }) => {
                 if (!data) return [];
@@ -49,6 +53,7 @@ export const getDataCommon = async (props) => {
             orgUnitGroup: [
                 ORG_GROUP.TINH_CSYT_KHONGGIUONG,
             ],
+            ...getApprovalConfig({ ...props, ds: DATASET.B9, approvalKey: 'TINH_KHONG_GIUONG' }),
             includeTotalRow: ["II.2", <p>Cơ sở không giường</p>]
         },
     ];
@@ -57,7 +62,8 @@ export const getDataCommon = async (props) => {
         orgUnitGroup: [
             ORG_GROUP.XA_DVHC
         ],
-        includeTotalRow: ["III", <p>Tuyến xã</p>]
+        ...getApprovalConfig({ ...props, ds: DATASET.B9, approvalKey: 'XA' }),
+        includeTotalRow: ["III", <p>Cấp xã</p>]
     }
 
     let reqPrivateHealthGroup =
@@ -65,6 +71,7 @@ export const getDataCommon = async (props) => {
         orgUnitGroup: [
             ORG_GROUP.TINH_YTTN
         ],
+        ...getApprovalConfig({ ...props, ds: DATASET.B9, approvalKey: 'TN' }),
         includeTotalRow: ["B", <p>Y tế tư nhân</p>]
     }
 
@@ -77,7 +84,7 @@ export const getDataCommon = async (props) => {
                 ...reqPublicHealth_I,
                 sortOrgUnits: reqPublicHealth_I.sortOptions
             }).then(res => {
-                res.listRow[0][0].className = 'sticky-row-2';
+                // res.listRow[0][0].className = 'sticky-row-2';
                 reqPublicHealth_I = {
                     ...reqPublicHealth_I,
                     ...res
@@ -90,7 +97,7 @@ export const getDataCommon = async (props) => {
                     ...reqProps,
                     sortOrgUnits: reqProps.sortOptions
                 }).then(res => {
-                    res.listRow[0][0].className = 'sticky-row-2';
+                    // res.listRow[0][0].className = 'sticky-row-2';
                     reqPublicHealth_II[idx] = {
                         ...reqPublicHealth_II[idx],
                         ...res
@@ -102,7 +109,7 @@ export const getDataCommon = async (props) => {
                 ...props,
                 ...reqPublicHealth_III,
             }).then(res => {
-                res.listRow[0][0].className = 'sticky-row-2';
+                // res.listRow[0][0].className = 'sticky-row-2';
                 reqPublicHealth_III = {
                     ...reqPublicHealth_III,
                     ...res
@@ -114,7 +121,7 @@ export const getDataCommon = async (props) => {
                 ...props,
                 ...reqPrivateHealthGroup
             }).then(res => {
-                res.listRow[0][0].className = 'sticky-row-1';
+                // res.listRow[0][0].className = 'sticky-row-1';
 
                 reqPrivateHealthGroup = {
                     ...reqPrivateHealthGroup,
@@ -133,7 +140,7 @@ export const getDataCommon = async (props) => {
     let rowTotal_PublicHealth_II = sumMultiRow({
         ...props,
         listRow: reqPublicHealth_II.map(e => e.listRow[0]),
-        includeTotalRow: ["II.2", <p>Tuyến tỉnh</p>]
+        includeTotalRow: ["II", <p>Tuyến tỉnh</p>]
     });
 
     // ==== A.PUBLIC HEALTH ====
@@ -146,7 +153,7 @@ export const getDataCommon = async (props) => {
         ],
         includeTotalRow: ["A", <p>Y tế công</p>]
     })
-    rowTotal_PublicHealth[0].className = 'sticky-row-1';
+    // rowTotal_PublicHealth[0].className = 'sticky-row-1';
 
     let rowList_publicHealth = [
         rowTotal_PublicHealth,
@@ -164,7 +171,7 @@ export const getDataCommon = async (props) => {
         ],
         includeTotalRow: ["", <p>Tổng số</p>]
     })
-    rowTotal_All[0].className = 'sticky-row-0';
+    // rowTotal_All[0].className = 'sticky-row-0';
 
     let listRow = [
         rowTotal_All,
@@ -173,15 +180,6 @@ export const getDataCommon = async (props) => {
     ]
 
     return {
-        SectionHeader: props.SectionHeader,
-        TableHeader: props.HeaderUI({
-            listColumnConfig: props.listColumnConfig,
-            title: props.title,
-            ...props
-        }),
-        dataByRow: [,
-
-            ...listRow
-        ]
+        dataByRow: listRow
     }
 }

@@ -60,7 +60,7 @@ export default () => {
                 dhis2Period,
                 data,
                 style: {
-                    // minWidth: '2000px',
+                    minWidth: '2000px',
                     // border: '1px solid black',
                     // width: '300% !important' 
                 }

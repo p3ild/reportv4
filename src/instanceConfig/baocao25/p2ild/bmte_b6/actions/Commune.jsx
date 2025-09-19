@@ -1,5 +1,5 @@
 import { APPROVAL_ROW_TYPE } from '@core/network/ApprovalUtils';
-import { listingRowByOuGroup } from '../../common/ui/RowRender';
+import { getDisableColDataObject, listingRowByOuGroup } from '../../common/ui/RowRender';
 import { DATASET, ORG_GROUP } from '../constant';
 import { getCoreMetaStateByPath } from '@core/stateManage/metadataState';
 
@@ -12,10 +12,16 @@ export const getDataCommon = async (props) => {
         approvalUtils: getCoreMetaStateByPath('networkUtils.ApprovalUtils')
 
     };
+
+    const colDisable = [
+        5, 6, 7, 8, 9, 13, 14, 15, 16
+    ]
+
     let { listRow } = await listingRowByOuGroup({
         ...props,
         orgUnitGroup: [ORG_GROUP.XA, ORG_GROUP.XA_CSYT_KHAC],
         includeTotalRow: ["", <p>Tổng số</p>],
+
         ... (props?.periodSelected?.type == 'month')
             ? {
                 approvalConfig: {
@@ -28,15 +34,11 @@ export const getDataCommon = async (props) => {
             : {}
     });
 
+    listRow.forEach(eachRow => {
+        colDisable.forEach(colDisable => eachRow[colDisable] = getDisableColDataObject())
+    })
+
     return {
-        SectionHeader: props.SectionHeader,
-        TableHeader: props.HeaderUI({
-            listColumnConfig: props.listColumnConfig,
-            title: props.title,
-            ...props
-        }),
-        dataByRow: [
-            ...listRow
-        ]
+        dataByRow: listRow
     }
 }

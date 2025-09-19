@@ -19,22 +19,23 @@ export const getDataCommon = async (props) => {
         {
             orgUnitGroup: [
                 ORG_GROUP.TW_CSYT_CSSK_BM,
-             ],
-            includeTotalRow: ["I", <p>Tuyến TW, Y tế ngành</p>],
+            ],
+            includeTotalRow: ["I", <p>Cấp TW, Y tế ngành</p>],
             ...getApprovalConfig({ ...props, ds: DATASET.BMTE_B6, approvalKey: 'TW' })
         },
         {
             orgUnitGroup: [
                 ORG_GROUP.TINH_CSYT_CONG_CSSK_BM
             ],
-            includeTotalRow: ["II", <p>TUYẾN TỈNH</p>],
+            includeTotalRow: ["II", <p>Cấp tỉnh</p>],
             ...getApprovalConfig({ ...props, ds: DATASET.BMTE_B6, approvalKey: 'TINH' })
         },
         {
+            isCommuneSection: true,
             orgUnitGroup: [
                 ORG_GROUP.XA_DVHC
             ],
-            includeTotalRow: ["III", <p>TUYẾN XÃ</p>],
+            includeTotalRow: ["III", <p>Cấp xã</p>],
             ...getApprovalConfig({ ...props, ds: DATASET.BMTE_B4_TYT, approvalKey: 'XA' })
         }
     ];
@@ -50,7 +51,11 @@ export const getDataCommon = async (props) => {
     ]
 
 
-    let dataOrgGroupSet = await parallel(
+    const colDisable = [
+        5, 6, 7, 8, 9, 13, 14, 15, 16
+    ]
+
+    await parallel(
         [
             ...reqPublicHealthGroup.map((reqProps, idx) => {
                 return cb => listingRowByOuGroup({
@@ -58,6 +63,12 @@ export const getDataCommon = async (props) => {
                     ...reqProps
                 }).then(res => {
                     // res.listRow[0][0].className = 'sticky-row-2';
+                    if (reqProps.isCommuneSection) {
+
+                        res.listRow.forEach(eachRow => {
+                            colDisable.forEach(colDisable => eachRow[colDisable] = getDisableColDataObject())
+                        })
+                    }
                     reqPublicHealthGroup[idx] = {
                         ...reqPublicHealthGroup[idx],
                         ...res
@@ -71,7 +82,7 @@ export const getDataCommon = async (props) => {
                     ...reqProps
                 }).then(res => {
                     // res.listRow[0][0].className = 'sticky-row-1';
-                    
+
                     reqPrivateHealthGroup[idx] = {
                         ...reqPrivateHealthGroup[idx],
                         ...res
@@ -111,15 +122,6 @@ export const getDataCommon = async (props) => {
     ]
 
     return {
-        SectionHeader: props.SectionHeader,
-        TableHeader: props.HeaderUI({
-            listColumnConfig: props.listColumnConfig,
-            title: props.title,
-            ...props
-        }),
-        dataByRow: [,
-
-            ...listRow
-        ]
+        dataByRow: listRow
     }
 }

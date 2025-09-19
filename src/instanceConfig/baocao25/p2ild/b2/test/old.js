@@ -14,10 +14,10 @@ var groupSelectTinh = "W4U1KdFeIJH";
 
 
 let LEVEL_ORG_SELECT_TYPE = {
-    TW: { type: 'bctw', tableID: 'bch', err: 'Biểu này không áp dụng cho tuyến trung ương' },
+    TW: { type: 'bctw', tableID: 'bch', err: 'Biểu này không áp dụng cho cấp trung ương' },
     TINH: { type: 'bct', tableID: 'bch' },
     HUYEN: { type: 'bch', tableID: 'bch' },
-    XA: { type: 'bcx', tableID: 'bcx', err: 'Biểu này không áp dụng cho tuyến xã' },
+    XA: { type: 'bcx', tableID: 'bcx', err: 'Biểu này không áp dụng cho cấp xã' },
     INDIVIDUAL_TINH: { type: 'INDIVIDUAL_TINH', tableID: 'bch' },
     INDIVIDUAL_HUYEN: { type: 'INDIVIDUAL_HUYEN', tableID: 'bch' },
     HUYEN_TTTYT: { type: 'HUYEN_TTYT', tableID: 'bch' }
@@ -171,7 +171,7 @@ function loadReport() {
                     })
             }
             if (load == 7) {
-                sum(sumIII, "III", "Tuyến xã", true)
+                sum(sumIII, "III", "Cấp xã", true)
                     .then(() => {
                         loadReport()
                     })
@@ -265,7 +265,7 @@ function loadReport() {
                     .catch((e) => { loadReport() })
             }
             if (load == 6) {
-                sumTb1(sumII, "II", "Tuyến xã", true)
+                sumTb1(sumII, "II", "Cấp xã", true)
                     .then(() => { loadReport() })
                     .catch((e) => { loadReport() })
             }

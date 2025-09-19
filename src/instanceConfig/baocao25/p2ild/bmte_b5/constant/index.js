@@ -17,6 +17,9 @@ export const orgPickerConfig = {
         ORG_GROUP.TW_CSYT_CSSK_BM,
         ORG_GROUP.TINH_CSYT_CONG_CSSK_BM,
         ORG_GROUP.TINH_YTTN_CSSK_BM,
+
+        ORG_GROUP.XA_TYT,
+        ORG_GROUP.XA_CSYT_KHAC_TYT,
     ],
     // levelsToHideIfEmpty: [2, 3]
 }

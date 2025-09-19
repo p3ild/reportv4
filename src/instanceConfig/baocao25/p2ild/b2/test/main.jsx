@@ -489,7 +489,7 @@ export const Main = () => {
                         })
                 }
                 if (load == 7) {
-                    sum(sumIII, "III", "Tuyến xã", true)
+                    sum(sumIII, "III", "Cấp xã", true)
                         .then(() => {
                             loadReport()
                         })
@@ -583,7 +583,7 @@ export const Main = () => {
                         .catch((e) => { loadReport() })
                 }
                 if (load == 6) {
-                    sumTb1(sumII, "II", "Tuyến xã", true)
+                    sumTb1(sumII, "II", "Cấp xã", true)
                         .then(() => { loadReport() })
                         .catch((e) => { loadReport() })
                 }

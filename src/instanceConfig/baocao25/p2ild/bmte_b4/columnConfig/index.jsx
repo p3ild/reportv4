@@ -24,8 +24,10 @@ export const getListColumnConfig = ({ }) => {
 
                     return {
                         view: <div className="flex flex-row w-full items-center justify-center" >
-                            {approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
+                            {(
+                                approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey
+                            )
+                                ? <ButtonApproval {
                                     ...{
                                         title: value,
                                         dsID: ds[0],
@@ -35,6 +37,7 @@ export const getListColumnConfig = ({ }) => {
                                         approvalType: approvalType || APPROVAL_TYPE.APPROVE
                                     }
                                 } />
+                                : value
                             }
                         </div>
                     }

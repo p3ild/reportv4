@@ -6,8 +6,8 @@ import { optionPickerDate, orgPickerConfig } from "./constant";
 import { useCorePickerState } from "@core/stateManage/corePickerState";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { format } from "date-fns";
-export const reportCode = "Báo cáo ICD10"
-export const reportName = "Báo cáo ICD10"
+export const reportCode = "TÌNH HÌNH BỆNH TẬT VÀ TỬ VONG TẠI BỆNH VIỆN THEO ICD10"
+export const reportName = "TÌNH HÌNH BỆNH TẬT VÀ TỬ VONG TẠI BỆNH VIỆN THEO ICD10"
 export { orgPickerConfig };
 export default () => {
     const [
@@ -103,14 +103,14 @@ export default () => {
                             <table id="bch" border="1px" class="mainTable" cellspacing="0" cellpadding="0" width="100%">
                                 <thead>
                                     <tr>
-                                        <th align="center" rowspan="4">STT</th>
-                                        <th align="center" rowspan="4">
+                                        <th align="center" rowspan="4" className="w-[1%]">STT</th>
+                                        <th align="center" rowspan="4" className="w-[20%]">
                                             <strong>Tên bệnh / nhóm bệnh</strong>
                                         </th>
                                         <th align="center" rowspan="4">Mã ICD 10 </th>
                                         <th align="center" rowspan="2" colspan="6">Tại khoa khám bệnh </th>
                                         <th align="center" colspan="10">Điều trị nội trú </th>
-                                        <th align="center" rowspan="4">Số trường hợp tử vong được cấp giấy báo tử </th>
+                                        <th align="center" rowspan="4" className="w-[5%]">Số trường hợp tử vong được cấp giấy báo tử </th>
                                     </tr>
                                     <tr>
                                         <th align="center" colspan="6">Tổng số </th>

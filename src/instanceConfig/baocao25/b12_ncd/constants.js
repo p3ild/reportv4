@@ -15,7 +15,7 @@ const ROW_GENERATE_FOR_NATION_LEVEL = [
     ],
   },
   {
-    label: "Tuyến tỉnh",
+    label: "Cấp tỉnh",
     ougs: ["kh9FwPDWgUi"],
     blocks: [
       "TjsrDy8W8h3",
@@ -28,7 +28,7 @@ const ROW_GENERATE_FOR_NATION_LEVEL = [
       "JXXc1zqIIwf",
     ],
   },
-  { label: "Tuyến xã", ougs: ["uyuiasZ82O4"] },
+  { label: "Cấp xã", ougs: ["uyuiasZ82O4"] },
   {
     label: "Tư nhân",
     ougs: ["rz2nPhBJoVo"],
@@ -81,7 +81,7 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
           "JXXc1zqIIwf",
         ],
       },
-      { label: "Tuyến xã", prefix: "III", ougs: ["uyuiasZ82O4"] },
+      { label: "Cấp xã", prefix: "III", ougs: ["uyuiasZ82O4"] },
     ],
   },
   {

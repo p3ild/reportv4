@@ -1,5 +1,7 @@
+import { APPROVAL_ROW_TYPE } from '@core/network/ApprovalUtils';
 import { getDisableColDataObject, listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
-import { ORG_GROUP } from '../constant';
+import { DATASET, ORG_GROUP } from '../constant';
+import { getCoreMetaStateByPath } from '@core/stateManage/metadataState';
 
 export const getDataCommon = async (props) => {
     props = {
@@ -7,47 +9,58 @@ export const getDataCommon = async (props) => {
         // dx: props,
         DEFAULT_COL_LENGTH: props.defaultCol,
         listColumnConfig: props.listColumnConfig,
+        approvalUtils: getCoreMetaStateByPath('networkUtils.ApprovalUtils')
+
     };
 
     let { listRow: rowAll } = await listingRowByOuGroup({
         ...props,
     });
-
+    let approvalConfig = (props?.periodSelected?.type == 'year')
+        ? {
+            approvalConfig: {
+                ds: [DATASET.TTC_TYT],
+                pe: props.period,
+                approvalKey: 'LEVEL4',
+                approvalRowType: APPROVAL_ROW_TYPE.BOTH,
+            }
+        }
+        : {}
     let { listRow: communeHFListRow } = await listingRowByOuGroup({
         ...props,
         orgUnitGroup: [ORG_GROUP.XA, ORG_GROUP.XA_CSYT_KHAC],
+        ...approvalConfig
     });
+    const colDisable = [
+        2, 3, 4, 5, 6,
+        14, 15, 16
+
+    ]
+    let includeTotalRow = [
+        "",
+        <p>Tổng số</p>,
+    ];
+
+    colDisable.forEach(col => {
+        includeTotalRow[col] = rowAll[0]?.[col]?.value || ''
+    })
 
     let rowTotal = sumMultiRow({
         ...props,
+        ...approvalConfig,
         listRow: [
             communeHFListRow[0],
+
         ],
-        includeTotalRow: [
-            "",
-            <p>Tổng số</p>,
-            rowAll[0]?.[2]?.value || '',
-            rowAll[0]?.[3]?.value || '',
-            rowAll[0]?.[4]?.value || '',
-            rowAll[0]?.[5]?.value || '',
-            rowAll[0]?.[6]?.value || ''
-        ]
+        includeTotalRow
     });
 
     communeHFListRow = communeHFListRow.map(eachRow => {
-
-        [2, 3, 4, 5, 6].forEach(colDisable => eachRow[colDisable] = getDisableColDataObject())
-
+        colDisable.forEach(colDisable => eachRow[colDisable] = getDisableColDataObject())
         return eachRow
     })
 
     return {
-        SectionHeader: props.SectionHeader,
-        TableHeader: props.HeaderUI({
-            listColumnConfig: props.listColumnConfig,
-            title: props.title,
-            ...props
-        }),
         dataByRow: [
             rowTotal,
             ...communeHFListRow,

@@ -1,9 +1,7 @@
-import { numToLocaleString } from "@core/utils/stringutils";
-import { Flex } from "antd";
-import { getValueDE } from "../../common/DataValueUtils";
-import { RenderValue } from "../../common/ui";
-import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 import { APPROVAL_ROW_TYPE, APPROVAL_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
+import { numToLocaleString } from "@core/utils/stringutils";
+import { getValueDE } from "../../common/DataValueUtils";
+import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
@@ -25,8 +23,10 @@ export const getListColumnConfig = ({ }) => {
 
                     return {
                         view: <div className="flex flex-row w-full items-center justify-center" >
-                            {approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey &&
-                                <ButtonApproval {
+                            {(
+                                approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey
+                            )
+                                ? <ButtonApproval {
                                     ...{
                                         title: value,
                                         dsID: ds[0],
@@ -36,6 +36,7 @@ export const getListColumnConfig = ({ }) => {
                                         approvalType: approvalType || APPROVAL_TYPE.APPROVE
                                     }
                                 } />
+                                : value
                             }
                         </div>
                     }
@@ -84,7 +85,10 @@ export const getListColumnConfig = ({ }) => {
                         getValueDE({
                             jsonDhis: props.apiData,
                             org: props.orgUnit,
-                            de: ["sw4HsEooMSp"]
+                            de: [
+                                "sw4HsEooMSp",
+                                "hvS0ROXGv9e.GvoEANq375m"
+                            ]
                         }) + "";
                     return {
                         value,

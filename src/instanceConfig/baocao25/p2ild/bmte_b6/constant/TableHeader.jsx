@@ -1,7 +1,3 @@
-import { Divider } from "antd";
-import { format, parse } from "date-fns"
-import { BreakLine } from "../../common/ui/MultiTableUI";
-import { findColStyleByKey } from "../../common/ui/RowRender"
 
 export function ReportHeader({ reportCode, reportName, totalCol, orgReportName, dhis2Period, customData }) {
     let period = dhis2Period.split(' ');
@@ -83,17 +79,16 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
             <th {...excelConfig}
                 rowSpan={2}>Số được khỏi chữa CTC</th>
             <th {...excelConfig}
-                rowSpan={2}>Số lượt được thực hiện</th>
-            <th {...excelConfig}
-                colSpan={2}>VIA/VILI</th>
+                colSpan={3}>VIA/VILI</th>
             <th {...excelConfig}
                 colSpan={2}>Xét nghiệm tế bào học</th>
             <th {...excelConfig}
                 colSpan={2}>Xét nghiệm HPV</th>
         </tr>
         <tr>
+            <th {...excelConfig}>Số lượt được thực hiện</th>
             <th {...excelConfig}>Số (+) VIA/VILI</th>
-            <th {...excelConfig}>Số nghỉ ngơi K</th>
+            <th {...excelConfig}>Số nghi ngờ K</th>
             <th {...excelConfig}>Số lượt được xét nghiệm</th>
             <th {...excelConfig}>Số lượt có KQ bất thường</th>
             <th {...excelConfig}>Số lượt được xét nghiệm</th>
@@ -123,10 +118,4 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
             <th {...excelConfig} className={"col-no"}>16</th>
         </tr>
     </thead>
-}
-
-export function SectionHeaderTable1({
-    period,
-    notAvailable }) {
-    return <>  </>
 }

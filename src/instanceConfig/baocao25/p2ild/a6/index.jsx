@@ -41,7 +41,6 @@ export default () => {
             setAllowPeriodTypes([
                 PERIOD_TYPE.month,
                 PERIOD_TYPE.month2,
-                PERIOD_TYPE.year,
             ]);
             setOrgPickerConfig({
                 orgGroupVisible: [

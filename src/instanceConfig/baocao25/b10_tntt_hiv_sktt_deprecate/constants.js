@@ -11,9 +11,9 @@ const LAST_VALUE_DATA_ELEMENTS = [
   "QRIgOI9CRNd",
 ];
 const ROW_GENERATE_FOR_NATION_LEVEL = [
-  { label: "Tuyến trung ương", ougs: ["a8tDjfQpPbK"] },
-  { label: "Tuyến tỉnh", ougs: ["ubpcYbv2aKe"] },
-  { label: "Tuyến xã", ougs: ["uyuiasZ82O4"] },
+  { label: "Cấp trung ương", ougs: ["a8tDjfQpPbK"] },
+  { label: "Cấp tỉnh", ougs: ["ubpcYbv2aKe"] },
+  { label: "Cấp xã", ougs: ["uyuiasZ82O4"] },
   { label: "Tư nhân", ougs: ["b3Fa4WDUKDl", "LDueUOVxA6b"] },
 ];
 
@@ -23,9 +23,9 @@ const ROW_GENERATE_FOR_PROVINCE_LEVEL = [
     label: "Y tế công",
     prefix: "A",
     children: [
-      { label: "Tuyến trung ương", prefix: "I", ougs: ["a8tDjfQpPbK"] },
-      { label: "Tuyến tỉnh", prefix: "II", ougs: ["ubpcYbv2aKe"] },
-      { label: "Tuyến xã", prefix: "III", ougs: ["uyuiasZ82O4"] },
+      { label: "Cấp trung ương", prefix: "I", ougs: ["a8tDjfQpPbK"] },
+      { label: "Cấp tỉnh", prefix: "II", ougs: ["ubpcYbv2aKe"] },
+      { label: "Cấp xã", prefix: "III", ougs: ["uyuiasZ82O4"] },
     ],
   },
   {

@@ -1,5 +1,4 @@
 import { numToLocaleString } from "@core/utils/stringutils";
-import { Flex } from "antd";
 import { getValueDE } from "../../common/DataValueUtils";
 import { RenderValue } from "../../common/ui";
 import { ListColumnConfigBuilder } from "../../common/ui/RowRender";

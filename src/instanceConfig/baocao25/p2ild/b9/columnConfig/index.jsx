@@ -1,10 +1,9 @@
+import { APPROVAL_ROW_TYPE, APPROVAL_TYPE, ButtonApproval } from "@core/network/ApprovalUtils";
+import { getPickerStateByPath } from "@core/stateManage/corePickerState";
 import { numToLocaleString } from "@core/utils/stringutils";
-import { Flex } from "antd";
 import { getValueDE } from "../../common/DataValueUtils";
-import { RenderValue } from "../../common/ui";
 import { ListColumnConfigBuilder } from "../../common/ui/RowRender";
 import { ORG_GROUP } from "../constant";
-import { getPickerStateByPath } from "@core/stateManage/corePickerState";
 
 export const getListColumnConfig = ({ }) => {
     return ListColumnConfigBuilder({
@@ -13,21 +12,34 @@ export const getListColumnConfig = ({ }) => {
                 key: "stt",
                 freezeColWidth: '2vw',
                 label: 'STT',
+                isApprovalColumn: true,
                 excelOpts: {
                     "data-a-wrap": "true",
                     "data-a-h": "center",
                     "data-a-v": "center",
                     // "data-t":'n'
                 },
-                render: ({ orgIdx }) => {
-                    let value = orgIdx + 1;
+                render: (props) => {
+                    let value = props.orgIdx + 1;
+                    let { orgUnit, period, approvalConfig } = props;
+                    let { approvalKey, approvalVisible, approvalType, ds } = approvalConfig || {};
+
+
                     return {
-                        excelOpts: {
-                        },
-                        view: <RenderValue {...{
-                            value
-                        }}
-                        ></RenderValue>
+                        view: <div className="flex flex-row w-full items-center justify-center" >
+                            {approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey &&
+                                <ButtonApproval {
+                                    ...{
+                                        title: value,
+                                        dsID: ds[0],
+                                        orgID: orgUnit,
+                                        approvalKey,
+                                        period,
+                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
+                                    }
+                                } />
+                            }
+                        </div>
                     }
                 }
             },
