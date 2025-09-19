@@ -16,6 +16,8 @@ export const orgPickerConfig = {
         ORG_GROUP.XA_DVHC,
 
         ORG_GROUP.TW_CSYT_KLN,
+        ORG_GROUP.TW_YT_NGANH,
+
         ORG_GROUP.TINH_CSYT_CONG_KLN,
         ORG_GROUP.TINH_YTTN_KLN,
 

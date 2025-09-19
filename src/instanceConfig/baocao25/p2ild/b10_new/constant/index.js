@@ -14,6 +14,8 @@ export const orgPickerConfig = {
     orgGroupVisible: [
         ORG_GROUP.TINH_DVHC,
         ORG_GROUP.XA_DVHC,
+        ORG_GROUP.TW_YT_NGANH,
+
 
         ORG_GROUP.TW_CSYT_CONG_SR_PHONG_HIV_TT,
         ORG_GROUP.TINH_CSYT_CONG_SR_PHONG_HIV_TT,

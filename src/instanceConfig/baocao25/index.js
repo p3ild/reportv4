@@ -128,12 +128,6 @@ class Config extends Base {
       getReportInstance: async () => await import("./p2ild/b12_new"),
     },
     {
-      key: "test",
-      folder: [this.listFolder.core],
-      displayName: "TÌNH HÌNH BỆNH TẬT VÀ TỬ VONG TẠI BỆNH VIỆN THEO ICD 10",
-      getReportInstance: async () => await import("./b14_icd10"),
-    },
-    {
       key: "qCzOvTJTt5q",
       folder: [this.listFolder.core],
       displayName: "qCzOvTJTt5q",
