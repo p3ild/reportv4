@@ -11,15 +11,12 @@ export const optionPickerDate = [
 
 export const orgPickerConfig = {
     orgGroupVisible: [
-        ORG_GROUP.TINH_DVHC,
-        ORG_GROUP.XA_DVHC,
-
         ORG_GROUP.TINH_CSYT_CONG_KCB,
         ORG_GROUP.TINH_YTTN,
+        ORG_GROUP.TW_CSYT_KCB,
         ORG_GROUP.TW_YT_NGANH,
-        
-        ORG_GROUP.XA_TYT,
-        ORG_GROUP.XA_CSYT_KHAC_TYT,
+
+        ORG_GROUP.TINH_DVHC,
     ],
     levelsToHideIfEmpty: [2, 3, 4]
 }

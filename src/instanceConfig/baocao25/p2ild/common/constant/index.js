@@ -6,6 +6,7 @@ export const ORG_GROUP = {
   XA_DVHC: "uyuiasZ82O4",
   XA_TYT: "OHWM3DxkeMR",
   XA_CSYT_KHAC_TYT: "eHs95ggJw7J",
+  TINH_CSYT_CONG: "jgV9URjpxg6",
 
   XA: "OHWM3DxkeMR",
   XA_CSYT_KHAC: "eHs95ggJw7J",
@@ -15,6 +16,7 @@ export const ORG_GROUP = {
   TUYEN_TRUNG_UONG: "UlhXS5yPKpZ",
   TUYEN_XA: "fpnukMBDvUf",
 
+  TW_CSYT_TW: "c2Jz6A7kyE0",
 
   //CSSK_BM
   TW_CSYT_CSSK_BM: "WBaGiDFEZjL",
