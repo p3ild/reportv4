@@ -17,8 +17,8 @@ class DeployApp {
             {
                 baseUrl: this.getEnvByKey('VITE_TARGET_HOST'),
                 auth: {
-                    username: this.getEnvByKey('VITE_DHIS_USER_NAME'),
-                    password: this.getEnvByKey('VITE_DHIS_PASSWORD')
+                    username: this.getEnvByKey('VITE_DHIS_ADMIN_USER_NAME'),
+                    password: this.getEnvByKey('VITE_DHIS_ADMIN_PASSWORD')
                 }
             }
         ];

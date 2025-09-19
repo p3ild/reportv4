@@ -18,7 +18,7 @@ export const useCoreMetaState = create((set, get) => (
         networkUtils: undefined,
         version: undefined,
         language: undefined,
-
+        error: undefined,
         listReport: [],
         listFolder: [],
         activeFolder: '',
@@ -33,7 +33,7 @@ export const useCoreMetaState = create((set, get) => (
         },
         globalOverlay: {
             isOpen: true,
-            closeable: false
+            closeable: false,
         },
 
         customReportData: {},
@@ -63,6 +63,7 @@ export const useCoreMetaState = create((set, get) => (
                     }
                 });
             },
+            setError: async (error) => set(state => ({ error })),
             setInitAppTask: async (initAppTask) => set(state => ({ initAppTask })),
             setFirstLoadApp: async (bool) => set(state => ({ firstLoadApp: bool })),
             setActiveFolder: async (activeFolder) => set(state => ({ activeFolder })),
@@ -73,7 +74,12 @@ export const useCoreMetaState = create((set, get) => (
             setLanguage: async (language) => set(state => ({ language })),
 
             setSystemSettings: async (systemSettings) => set(state => ({ systemSettings })),
-            setMe: async (me) => set(state => ({ me })),
+            setMe: async (me) => set(state => {
+                return {
+                    me,
+                    meData: me
+                }
+            }),
             setListReport: async (listReport) => set(state => ({ listReport })),
             setListFolder: async (listFolder) => set(state => ({ listFolder })),
             setNetworkUtils: async (networkUtils) => set(state => ({ networkUtils })),

@@ -336,7 +336,7 @@ class NetworkUtils {
 
         let listRequest = [];
         listRequest.push(
-            this._get.bind(this, { api: `/api/users/${userID?.id}.json?fields=:all,*,userRoles[:owner],organisationUnits[id,name,programs,attributeValues[:owner]],attributeValues[:owner]` })
+            this._get.bind(this, { api: `/api/users/${userID?.id}.json?fields=:all,*,userRoles[:owner],userGroups[id,name],organisationUnits[id,name,programs,attributeValues[:owner]],attributeValues[:owner]` })
         )
         if (includeSettings) listRequest.push(this.getUserSettings.bind(this, { host, auth }));
 
@@ -361,8 +361,15 @@ class NetworkUtils {
         }
 
         meData['approvalAuthorization'] = {
-            canAccept: (meData.userRoles || []).some(e => ['brIf10e0Vk2'].includes(e.id)),
-            canApprove: (meData.userRoles || []).some(e => ['kzz8Dl43AEX'].includes(e.id))
+            canAccept:
+                meData?.isSuperuser ||
+                (meData.userRoles || []).some(e => ['brIf10e0Vk2'].includes(e.id)),
+            canApprove:
+                meData?.isSuperuser ||
+                (meData.userRoles || []).some(e => [
+                    'kzz8Dl43AEX'//bc37
+                    , 'kw0oD0F7fAb'//bc25
+                ].includes(e.id))
         }
 
 
@@ -385,11 +392,7 @@ class NetworkUtils {
         return new Promise(async (resolve, reject) => {
             let pingRs
             try {
-                pingRs = await _axios({
-                    url: url.join(''),
-                    auth: this.INIT_AUTH || auth,
-                    method: 'GET'
-                });
+                pingRs = await this._get({ api: '/api/me.json?fields=id' })
                 let rs = {
                     isAuthorize: true
                 }
@@ -411,11 +414,28 @@ class NetworkUtils {
                 resolve(rs);
             } catch (e) {
                 pingRs = e;
-                if (e.message == 'Network Error') {
-                    rs['unknowError'] = e.message;
-                    rs['isAuthorize'] = false
-                } else {
-                    rs['isAuthorize'] = true;
+                rs['isAuthorize'] = true;
+                let httpCode = e?.response?.data?.httpStatusCode;
+                switch (httpCode) {
+                    case 503: {
+                        rs['unknowError'] = 'Hệ thống đang quá tải vui lòng quay lại sau';
+                        rs['isAuthorize'] = false
+                        break;
+                    }
+                    case 404: {
+                        rs['unknowError'] = 'Hệ thống đang quá tải vui lòng quay lại sau';
+                        rs['isAuthorize'] = false
+                        break;
+                    }
+                    case 401: {
+                        rs['unknowError'] = "Sai username hoặc password";
+                        rs['isAuthorize'] = false
+                        break;
+                    }
+                    default:
+                        rs['unknowError'] = e.message;
+                        rs['isAuthorize'] = false
+                        break;
                 }
                 resolve(rs);
                 return;
@@ -834,7 +854,7 @@ class NetworkUtils {
         let host = this.INIT_HOST;
         let auth = this.INIT_AUTH
         let headers = { Authorization: `ApiToken ${this.TOKEN}` };
-        utilsModule = utilsModule.init({ host, auth,headers, _metaDataUtilsInput: this });
+        utilsModule = utilsModule.init({ host, auth, headers, _metaDataUtilsInput: this });
         utilsModule._post = this._post
         utilsModule._get = this._get
         utilsModule.NetworkUtils = this;

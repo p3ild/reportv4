@@ -1,27 +1,19 @@
-import { LeftCircleOutlined, PrinterOutlined, SettingOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import { exportToExcel } from '@core/excelUtils';
 import { useCoreMetaState } from "@core/stateManage/metadataState";
-import { trans } from "@core/translation/i18n";
-import { PrintElem } from "@core/utils/print";
 import { compareString } from '@core/utils/stringutils';
-import { Affix, Button, Cascader, Checkbox, Empty, FloatButton, Input, List, Popover, Result, Typography } from "antd";
+import { Button, Cascader, Empty, FloatButton, Input, List, Popover, Result, Tooltip, Typography } from "antd";
 import { cloneDeep } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaSearch } from "react-icons/fa";
 import { HiOutlineDocumentText } from "react-icons/hi2";
-import { RiFileExcel2Fill } from "react-icons/ri";
 import { useNavigate } from "react-router";
 import { useShallow } from "zustand/react/shallow";
-import { getPickerStateByPath, useCorePickerState } from '../../core/stateManage/corePickerState';
+import { useCorePickerState } from '../../core/stateManage/corePickerState';
 import './report.css';
 import { useListParam, useReportTarget } from "./report.hook";
 
-import { getApprovalStateByPath, useApprovalState } from '@core/stateManage/approvalState';
-
-import { BsGlobeAsiaAustralia } from "react-icons/bs";
-import { FaCalendarAlt } from "react-icons/fa";
-import { ButtonReponsive } from '@core/ui/custom/ButtonReponsive';
+import { NavBar } from './NavBar';
+import { UnorderedListOutlined } from '@ant-design/icons';
 
 
 
@@ -39,9 +31,6 @@ export const Report = (metadata) => {
         state.actions.setGlobalOverlay,
     ]))
 
-    let supportApproval = useApprovalState(useShallow(state => state.supportApproval))
-
-
     let { loaded } = useReportTarget({
         listParam,
         ...metadata
@@ -56,98 +45,6 @@ export const Report = (metadata) => {
 
 
     let { default: ReportView, errors } = reportTarget || {}
-
-    const additionalSetting = useMemo(
-        () => [
-            supportApproval ? <Checkbox defaultChecked={
-                getApprovalStateByPath('showButton')
-            }
-                onChange={(e) => {
-                    getApprovalStateByPath('actions.setShowButton')?.(e.target.checked)
-                }}
-            >Hiện thị tính năng phê duyệt</Checkbox>
-                : undefined,
-            supportApproval ? <Checkbox
-                defaultChecked={
-                    getApprovalStateByPath('showIcon')
-                }
-                onChange={(e) => {
-                    getApprovalStateByPath('actions.setShowIcon')?.(e.target.checked)
-                }}
-            >Hiển thị biểu tượng</Checkbox> : undefined
-        ].filter(e => e)
-        , [supportApproval]
-    )
-
-    const NavBar = () => {
-
-
-        return <Affix offsetTop={50}>
-            <div className='flex flex-row items-center flex-wrap mb-1 rounded-lg bg-gray-200'>
-                <ButtonReponsive
-                    {...{
-                        Icon: <LeftCircleOutlined />,
-                        buttonText: trans("common:button.back"),
-                        iconOnly: true,
-                        onClick: () => {
-                            navigate(`/`);
-                            setGlobalOverlay({
-                                isOpen: false
-                            })
-                        }
-                    }}
-                />
-                <ButtonReponsive
-                    {...{
-                        Icon: <div className='flex flex-row items-center justify-center gap-1'><BsGlobeAsiaAustralia /><FaCalendarAlt /></div>,
-                        buttonText: trans("common:button.changeFilter"),
-                        onClick: () => {
-                            getPickerStateByPath('actions.openCorePicker')?.();
-                        }
-                    }}
-                />
-                <ReportList type="cascader" />
-
-                <ButtonReponsive
-                    {...{
-                        Icon: <PrinterOutlined />,
-                        buttonText: trans("common:button.printReport"),
-                        onClick: () => {
-                            PrintElem('report-content')
-                        }
-                    }}
-                />
-
-                <ButtonReponsive
-                    {...{
-                        Icon: <RiFileExcel2Fill />,
-                        buttonText: trans("common:button.excel"),
-                        onClick: () => {
-                            exportToExcel();
-                        }
-                    }}
-                />
-                {
-                    additionalSetting.length > 0 && <Popover
-                        trigger={'hover'}
-                        content={
-                            <div className='flex flex-col gap-2'>
-                                {
-                                    additionalSetting.map((e, idx) => {
-                                        return <div key={idx}>{e}</div>
-                                    })
-                                }
-                            </div>
-                        }>
-                        <Button className="btn-primary flex-none gap-2">
-                            <SettingOutlined /><span className='whitespace-nowrap desktopLow:hidden'>{trans("Cài đặt khác")}</span>
-                        </Button>
-                    </Popover>
-                }
-            </div>
-        </Affix>
-    }
-
 
     return <div className="p-2 flex flex-col h-full overflow-auto">
         {
@@ -164,7 +61,6 @@ export const Report = (metadata) => {
                         <Typography.Title level={4} className="w-full">
                             {item}
                         </Typography.Title>
-                        {/* <h1 style={{ width: "-webkit-fill-available" }}>{item}</h1> */}
                     </List.Item>
                 )}
             />}
@@ -175,10 +71,22 @@ export const Report = (metadata) => {
             }
 
         />}
+        <div>
+            <FloatButton.BackTop {
+                ...{
+                    target: () => {
+                        return document.getElementsByClassName('report-content')[0]
+                    },
+                    visibilityHeight: 200,
+                    style: {
+                        width: '50px',
+                        height: '50px'
+                    }
+                }
+            }
+            />
+        </div>
 
-        <FloatButton.BackTop target={() => {
-            return document.getElementsByClassName('report-content')[0]
-        }} visibilityHeight={0} />
         {loaded && ReportView &&
             <div className="report-content" data-cols-width={excelOptions?.columnWidths}>
                 <ReportView
@@ -195,7 +103,7 @@ export const Report = (metadata) => {
 
 
 
-export const ReportList = ({ type }) => {
+export function ReportList({ type }) {
     const navigate = useNavigate();
 
     const [
@@ -214,7 +122,8 @@ export const ReportList = ({ type }) => {
 
     ])));
 
-    const [setCorePicker, setOrgPickerConfig, setCustomPicker, setOrgTreeData, openCorePicker] = useCorePickerState(useShallow(state => [
+    const [corePicker, setCorePicker, setOrgPickerConfig, setCustomPicker, setOrgTreeData, openCorePicker] = useCorePickerState(useShallow(state => [
+        state.corePicker,
         state.actions.setCorePicker,
         state.actions.setOrgPickerConfig,
         state.actions.setCustomPicker,
@@ -224,6 +133,37 @@ export const ReportList = ({ type }) => {
     ));
 
     const [searchValue, setSearchValue] = useState('');
+    const { t, i18n } = useTranslation();
+
+    let targetFolder = listFolder.find(e => e.key == activeFolder) || listFolder[0];
+    let listChild = useMemo(() => {
+        if (!targetFolder?.child) return [];
+        return (targetFolder.child || [])
+            .map(item => {
+                return {
+                    key: item.id,
+                    value: item.id,
+                    label: item.displayName.toUpperCase(),
+                    link: item.link,
+                    path: item.path
+                }
+            })
+            .filter(
+                e => !searchValue ? true :
+                    (
+                        compareString.cleanStr(e.label).includes(compareString.cleanStr(searchValue))
+                    )
+            ).map(e => {
+                return {
+                    ...e,
+                    label: <p className="w-full text-xl !text-black group-hover:font-bold">{e.label}</p>
+                }
+            })
+    }, [targetFolder?.child, searchValue]);
+
+    useEffect(() => {
+        setSearchValue('');
+    }, [activeFolder])
     const onReportClick = (item) => {
         // Reset report config
         setReportTarget(undefined);
@@ -250,7 +190,6 @@ export const ReportList = ({ type }) => {
             window.location.replace(reportSelected.link)
         }
     }
-    const { t, i18n } = useTranslation();
 
     const filter = (inputValue, path) => {
         const cleanInput = compareString.cleanStr(inputValue)
@@ -259,10 +198,6 @@ export const ReportList = ({ type }) => {
             return cleanName.includes(cleanInput)
         })
     }
-
-    useEffect(() => {
-        setSearchValue('');
-    }, [activeFolder])
 
     if (type == "cascader" && reportTarget?.reportID) {
         let tempListFolder = cloneDeep(listFolder);
@@ -309,7 +244,19 @@ export const ReportList = ({ type }) => {
                 let lastLabel = label[label.length - 1];
                 return <div className="flex flex-row text-sm">
                     <p className='font-bold flex flex-row desktopLow:hidden whitespace-nowrap'>{fullLabel}</p>
-                    <p className='font-bold hidden desktopLow:block whitespace-nowrap'>{lastLabel}</p>
+                    <div className='font-bold hidden desktopLow:block whitespace-nowrap'>
+                        <Popover
+                            content={
+                                <p className="flex flex-row text-sm p-2">
+                                    <span className='font-bold flex flex-row '>{fullLabel}</span>
+                                </p>
+                            }
+                        >
+                            <p>{lastLabel}</p>
+                        </Popover>
+
+                    </div>
+
                 </div >
             }}
             onChange={(selectedKeys, info, extra) => {
@@ -321,63 +268,34 @@ export const ReportList = ({ type }) => {
         />
     }
 
-    let targetFolder = listFolder.find(e => e.key == activeFolder) || listFolder[0]
     if (!targetFolder) return null;
     let forderName = t(`folderName.${targetFolder.key}`, {
         defaultValue: targetFolder.labelText || targetFolder.label
     }).toUpperCase();
-    let listChild = useMemo(() => (targetFolder?.child || [])
-        .map(item => {
-
-            return {
-                key: item.id,
-                value: item.id,
-                label: item.displayName.toUpperCase(),
-                link: item.link,
-                path: item.path
-            }
-        })
-        .filter(
-            e => !searchValue ? true :
-                (
-                    compareString.cleanStr(e.label).includes(compareString.cleanStr(searchValue))//By name
-                    // || compareString.cleanStr(e.path).includes(compareString.cleanStr(searchValue))//By path
-                    // || compareString.cleanStr(e.link).includes(compareString.cleanStr(searchValue))//By link
-                    // || compareString.cleanStr(e.key).includes(compareString.cleanStr(searchValue))//By key
-                )
-        ).map(e => {
-            return {
-                ...e,
-                label: <p className="w-full text-xl !text-black group-hover:font-bold">{e.label}</p>
-            }
-        })
-        , [targetFolder?.child, searchValue]);
 
     return targetFolder &&
         <div className="h-full w-full flex flex-col gap-2 justify-center gap-y-4">
             <div className='flex flex-col gap-2 justify-between'>
-                <div className='flex flex-row gap-2 items-center'>
-                    <div>
-                        <p className="font-bold tracking-tight text-black/80 sm:text-3xl">{t('common:reportList').toUpperCase()}</p>
-                        <Input
-                            value={searchValue}
-                            allowClear
-                            size='large'
-                            className='group items-center rounded-xl justify-center w-[550px]'
-                            prefix={<div className='flex flex-row items-center justify-center'>
-                                <p className='text-lg leading-8 flex flex-row items-center '>{forderName.toUpperCase()} </p>
-                                <FaSearch className='ml-3 h-5 w-5 group-hover:text-primary' />
-                            </div>}
-                            placeholder={'Tìm kiếm báo cáo'}
-                            onChange={(target) => {
-                                let value = target.currentTarget.value;
-                                setSearchValue(value)
-                            }}
-                            onClear={() => {
-                                setSearchValue(undefined)
-                            }}
-                        />
-                    </div>
+                <div className='flex flex-col gap-2'>
+                    <p className="font-bold tracking-tight text-black/80 sm:text-3xl">{t('common:reportList').toUpperCase()}</p>
+                    <Input
+                        value={searchValue}
+                        allowClear
+                        size='large'
+                        className='group items-center rounded-xl justify-center w-[550px]'
+                        prefix={<div className='flex flex-row items-center justify-center text-sm'>
+                            <p className='text-lg leading-8 flex flex-row items-center '>{forderName.toUpperCase()} </p>
+                            <FaSearch className='ml-3 h-5 w-5 group-hover:text-primary' />
+                        </div>}
+                        placeholder={'Tìm kiếm báo cáo'}
+                        onChange={(target) => {
+                            let value = target.currentTarget.value;
+                            setSearchValue(value)
+                        }}
+                        onClear={() => {
+                            setSearchValue(undefined)
+                        }}
+                    />
                 </div>
             </div>
 
@@ -403,3 +321,4 @@ export const ReportList = ({ type }) => {
             }
         </div>
 }
+

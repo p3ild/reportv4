@@ -52,12 +52,15 @@ export const useNetwork = () => {
     const [
         instanceTarget,
         networkUtils,
-        setNetworkUtils
+        setNetworkUtils,
+        setGlobalOverlay
     ] = useCoreMetaState(useShallow(state => ([
         state.instanceTarget,
         state.networkUtils,
-        state.actions.setNetworkUtils
+        state.actions.setNetworkUtils,
+        state.actions.setGlobalOverlay,
     ])));
+
 
     useEffect(() => {
         (async () => {
@@ -65,7 +68,15 @@ export const useNetwork = () => {
                 let { host, auth } = setupEnvironment({ instanceTarget });
                 const { networkUtils: mUtils } = await import("../network")
                 mUtils.init({ host, auth, instanceTarget });
-                setNetworkUtils(mUtils);
+                mUtils.ping({}).then(e => {
+                    if (e.isAuthorize) {
+                        setNetworkUtils(mUtils);
+                    } else {
+                        setGlobalOverlay({ isOpen: false })
+                        getCoreMetaStateByPath('actions.setError')(e)
+                    }
+                })
+
             }
         })()
     }, [instanceTarget]);
@@ -159,8 +170,7 @@ export const useMetadataAddition = () => {
                                 getCoreMetaStateByPath('actions.setInitAppTask')(taskStatus);
                                 progressNotification.open(taskStatus);
 
-                            });
-
+                            })
                         } else callback(undefined)
 
 
@@ -222,7 +232,7 @@ const usePrefetchForReport = ({ loaded }) => {
 
                     progressNotification.open(taskStatus);
 
-                    progressNotification.destroy(taskStatus, 1.5);
+                    progressNotification.destroy(taskStatus, 0.3);
 
                     setMe({
                         ...me,

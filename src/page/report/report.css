@@ -39,6 +39,10 @@
     z-index: 5;
 }
 
+.ant-popover-inner {
+    padding: 0 !important;
+}
+
 @media print {
     body {
         visibility: hidden;

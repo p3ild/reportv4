@@ -18,6 +18,7 @@ const useMouseShake = ({
     timeWindow = 300,
     minShakes = 5
 } = {}) => {
+    return;
     const mousePositions = useRef([])
     const lastPosition = useRef({ x: 0, y: 0 })
     const shakeDetected = useRef(false)

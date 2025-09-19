@@ -1,4 +1,7 @@
 import { getApprovalStateByPath } from "@core/stateManage/approvalState";
+import { getCoreMetaStateByPath } from "@core/stateManage/metadataState";
+import { logger } from "@core/utils/logger";
+import { serializeError } from "serialize-error";
 export const APPROVAL_TYPE = {
     ACCEPT: 'Chấp nhận',
     APPROVE: 'Phê duyệt',
@@ -25,11 +28,18 @@ class ApprovalUtils {
 
     getDsInfo = ({ ds }) => {
         let api = `/api/dataSets.json?filter=id:in:[${ds.join(',')}]&fields=id,name,workflow,periodType&paging=false`;
-        return this._get({ api }).then(e =>
-            e.dataSets.map(e => {
+        return this._get({ api }).then(e => {
+            logger.info({
+                message: 'DataSet info',
+                dataSetsName: e.dataSets.map(e => e.name).join(' | '),
+                dataSets: e.dataSets
+            })
+            return e.dataSets.map(e => {
                 e.workflow = e?.workflow?.id
                 return e;
-            }).filter(e => e.workflow))
+            }).filter(e => e.workflow)
+        })
+
     }
 
     fetchApprove = ({ dsID, wf, period, orgID, isBulk = true }) => {
@@ -42,7 +52,7 @@ class ApprovalUtils {
     }
 
     approve({ dsID, period, orgID, approvalType, payload, isBulk = true }) {
-       
+
         let api = `/api/${approvalType == APPROVAL_TYPE.ACCEPT ? "dataAcceptances" : "dataApprovals"}?ds=${dsID}&pe=${period}&ou=${orgID}`;
         return this._post({ api })
     }
@@ -82,10 +92,23 @@ class ApprovalUtils {
     //======================================== Helper function ========================================
     addGroupApproval = (props) => {
         ; (async () => {
+            let approvalAuthorization = getCoreMetaStateByPath('me.approvalAuthorization')
+            if (!approvalAuthorization.canAccept && !approvalAuthorization.canApprove) {
+                return;
+            }
             let { ds, wf, pe, org, key } = props;
-            let dsInfo = await this.getDsInfo({ ds })
-            wf = dsInfo.map(e => e.workflow);
+            let dsInfo = await this.getDsInfo({ ds });
 
+            wf = dsInfo.map(e => e.workflow);
+            if (dsInfo.length == 0) {
+                let me = getCoreMetaStateByPath('me');
+                logger.warn({
+                    message: 'Kiểm tra phân quyền xem dataSet ' + ds.join(',') + ' cho tài khoản ' + me.username,
+                    userGroup: me.userGroups,
+                    ds, wf, pe, org, key
+                });
+                getApprovalStateByPath('actions.setUISettings')?.({ showButton: false })
+            }
             if (!Array.isArray(pe)) {
                 pe = pe.split(';')
             }
@@ -158,12 +181,14 @@ class ApprovalUtils {
             ou: e.ou,
             wf: e.wf
         }));
-        let dataApproval = await this.unApprovalBulk({
-            ...this,
-            approvalType,
-            ou: listApproval.map(e => e.ou),
-            wf: listApproval.map(e => e.wf)
-        })
+        if (listApproval.length > 0) {
+            let dataApproval = await this.unApprovalBulk({
+                ...this,
+                approvalType,
+                ou: listApproval.map(e => e.ou),
+                wf: listApproval.map(e => e.wf)
+            })
+        }
         await fetchNewState()
     }
 
@@ -192,12 +217,14 @@ class ApprovalUtils {
             ou: e.ou,
             wf: e.wf
         }));
-        let dataApproval = await this.approvalBulk({
-            ...this,
-            approvalType,
-            ou: listApproval.map(e => e.ou),
-            wf: listApproval.map(e => e.wf)
-        })
+        if (listApproval.length > 0) {
+            let dataApproval = await this.approvalBulk({
+                ...this,
+                approvalType,
+                ou: listApproval.map(e => e.ou),
+                wf: listApproval.map(e => e.wf)
+            })
+        }
         await fetchNewState()
     }
 

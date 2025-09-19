@@ -82,12 +82,14 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
     useEffect(
         () => {
             setLoaded(false)
-            if (reportTarget) {
+            if (!reportTarget?.errors) {
                 openCorePicker();
                 //Default initExcelOptions
                 setExcelOptions({
                     excelFileName: (reportTarget?.reportName || reportTarget?.reportCode || 'Báo cáo').toLocaleLowerCase().replace(/ /g, '_')
                 });
+            } else {
+                openCorePicker(false);
             }
         },
         [reportTarget?.reportID]
@@ -186,7 +188,8 @@ export function useReportTarget({ listParam, setOrgSelected, metadata_utils }) {
                     let resourceTrans = await getTrans();
                     await i18n?.addResourceBundle('en', 'REPORT_TRANS', resourceTrans?.en);
                     await i18n?.addResourceBundle('vi', 'REPORT_TRANS', resourceTrans?.vi);
-                    setDefaultNameSpace('REPORT_TRANS')
+                    await i18n.loadNamespaces('INSTANCE_TRANS')
+
                 }
             }
 

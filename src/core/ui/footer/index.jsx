@@ -55,7 +55,7 @@ export default () => {
                             // second: 'numeric'
                         })
                     }</p>
-                <p className={"flex flex-row gap-1 text-black flex-wrap " + textStyle}>
+                <div className={"flex flex-row gap-1 text-black flex-wrap " + textStyle}>
                     <div className="flex flex-row items-center pl-1"><HiRectangleStack className="h-5 w-5" /> <p>v{systemSettings?.versionApp} - DHIS{systemSettings?.versionDhis}</p></div>
                     <Select
                         prefix={<div className="flex flex-row items-center gap-2"><FaLanguage size={20} />
@@ -73,7 +73,7 @@ export default () => {
                             { value: 'en', disabled: !isSuperuser, label: <div className={"flex flex-row items-center gap-2 w-fit " + textStyle}><Flag country="US" size={20} />{false && `English`}</div> },
                         ]}
                     />
-                </p>
+                </div>
             </div>
         }
     </>

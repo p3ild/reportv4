@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { get } from 'lodash';
 import { getCoreMetaStateByPath } from './metadataState';
 import { trans } from '@core/translation/i18n';
-
+import { SECTIONS } from '@core/ui/picker/corePicker';
 export const useCorePickerState = create((set, get) => (
     {
         corePicker: {
@@ -10,8 +10,9 @@ export const useCorePickerState = create((set, get) => (
             orgSelected: undefined,
             dataPeriodByType: {},
             autoLoadReport: false,
+            sectionsActive: undefined,
         },
-        orgFlatten: {},
+        orgFlatMap: {},
         orgTreeData: undefined,
         orgPickerConfig: {},
         customPicker: undefined,
@@ -31,7 +32,12 @@ export const useCorePickerState = create((set, get) => (
                     }
                 }));
             },
-            openCorePicker(bool = true) {
+            setSectionsActive: (sectionsActive) => {
+                let targetSections = sectionsActive ? [...sectionsActive, SECTIONS.CONFIRMATION] : Object.values(SECTIONS);
+                set(state => ({ corePicker: { ...state.corePicker, sectionsActive: targetSections } }))
+            },
+            openCorePicker(bool = true, sectionsActive) {
+                get().actions.setSectionsActive(sectionsActive)
                 getCoreMetaStateByPath("actions.setGlobalOverlay")({
                     isOpen: bool,
                     closeable: true,
