@@ -57,21 +57,34 @@ const deboundUpdateTree = debounce((me) => {
 
     // ======== FOR CUSTOM MULTIPLE ORG ========
     if (resultOrgTree.length > 1) {
-        let orgDisplayName = 'Đơn vị được quản lý';
-        let id = `CUSTOM_MULTI_ORG`
-        resultOrgTree = [
-            {
-                level: resultOrgTree[0].level - 1,
-                displayName: orgDisplayName,
-                id,
-                title: orgDisplayName,
-                label: orgDisplayName,
-                value: id + '_' + orgDisplayName,
-                children: resultOrgTree,
-                support: true,
-                organisationUnitGroups: []
-            }
-        ]
+        // SAME LEVEL
+        if (resultOrgTree.every(e => e.level == resultOrgTree[0].level)) {
+            let orgDisplayName = 'Đơn vị được quản lý';
+            let id = `CUSTOM_MULTI_ORG`
+            resultOrgTree = [
+                {
+                    level: resultOrgTree[0].level - 1,
+                    displayName: orgDisplayName,
+                    id,
+                    title: orgDisplayName,
+                    label: orgDisplayName,
+                    value: id + '_' + orgDisplayName,
+                    children: resultOrgTree,
+                    support: true,
+                    organisationUnitGroups: []
+                }
+            ]
+        }
+        // DIFFERENT LEVEL
+        else {
+
+            resultOrgTree = resultOrgTree.map(e => {
+                return {
+                    ...e
+                }
+            })
+        }
+
     }
 
     if (resultOrgTree.length == 0) {
