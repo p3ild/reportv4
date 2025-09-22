@@ -39,7 +39,7 @@ export const useDefiningInstance = () => {
                 }
             ].find(e => e.key == processEnvTargetInstance);
             if (instanceConfig) {
-                tmp = await import(instanceConfig.path)/* @vite-ignore */
+                tmp = await import(/* @vite-ignore */instanceConfig.path)
             } else {
                 tmp = Promise.resolve(undefined);
             }

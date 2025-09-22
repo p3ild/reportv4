@@ -1,15 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { DatePicker, Divider, Select } from 'antd';
+import { DatePicker } from 'antd';
+import { eachDayOfInterval, eachMonthOfInterval, eachWeekOfInterval, eachYearOfInterval, format } from 'date-fns';
 import dayjs from 'dayjs';
-import { FaCheckCircle } from "react-icons/fa";
 import { isArray, upperFirst } from 'lodash';
-import { eachDayOfInterval, eachMonthOfInterval, eachYearOfInterval, format, parse } from 'date-fns';
-import { SixMonthlyPicker } from './custom/SixMonth';
 import { useTranslation } from 'react-i18next';
-import en from 'antd/es/date-picker/locale/en_US';
-import enUS from 'antd/es/locale/en_US';
-import { SpecifiedPeriodPicker } from './custom';
 import { PERIOD_TYPE } from './constant';
+import { SpecifiedPeriodPicker } from './custom';
+import { SixMonthlyPicker } from './custom/SixMonth';
 export { PERIOD_TYPE };
 const { RangePicker } = DatePicker;
 
@@ -60,11 +56,26 @@ const PeriodPicker = (props) => {
       }
       break;
     case periodType === 'week':
-      defaultPrefix = t('common:periodPicker.selectType.date')
+      defaultPrefix = t('common:periodPicker.selectType.week')
       inputFormat = "ww-YYYY";
       outputFormat = 'YYYYww';
-      labelFormat = `[${t('common:periodPicker.selectType.date')}] ` + inputFormat
-      break;
+      labelFormat = `[${t('common:periodPicker.selectType.week')}] ` + inputFormat
+      genOutput = ({ start, end }) => {
+        let outputFormat = end
+          ? eachWeekOfInterval({
+            start: start.dayjs?.toDate(),
+            end: end.dayjs?.toDate(),
+          }).map((e) => {
+            return format(e, 'yyyyww')
+          })
+          : [
+            start.outputFormat
+          ];
+
+        return {
+          outputFormat: outputFormat.join(';'),
+        };
+      }
       break;
     case periodType === 'month':
       defaultPrefix = t('common:periodPicker.month')
@@ -122,7 +133,7 @@ const PeriodPicker = (props) => {
   const handleChange = (value) => {
     let [startValue, endValue] = isArray(value) ? value : [value];
     if (!startValue && !endValue) {
-      onChange(null);return;
+      onChange(null); return;
     }
     if (onChange) {
       const [
