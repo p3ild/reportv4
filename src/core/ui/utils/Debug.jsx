@@ -1,7 +1,7 @@
 import { Button, Space } from "antd"
 import { useState } from "react"
 import ReactJson from "react-json-view"
-import { useListParam } from "../../../page/report/report.hook";
+import { useListParam } from "@core/page/report/report.hook";
 import { CustomCard } from "./customCard";
 import React from 'react'
 import { RiErrorWarningFill } from "react-icons/ri";

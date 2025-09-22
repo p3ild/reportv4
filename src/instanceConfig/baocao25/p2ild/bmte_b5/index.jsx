@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { useCoreMetaState } from "../../../../core/stateManage/metadataState";
+import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { TableData } from "../common/ui/MultiTableUI";
 import { useLoadData } from "./hook";
 import '../common/circular37-mui.css'
 import { optionPickerDate, orgPickerConfig } from "./constant";
-import { useCorePickerState } from "../../../../core/stateManage/corePickerState";
+import { useCorePickerState } from "@core/stateManage/corePickerState";
 export const reportCode = "Báo cáo 5"
 export const reportName = "TÌNH HÌNH MẮC VÀ TỬ VONG DO TAI BIẾN SẢN KHOA"
 export default () => {

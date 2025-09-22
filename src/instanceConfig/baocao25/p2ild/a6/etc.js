@@ -1,4 +1,4 @@
-import { TYPE } from "../../../core/ui/customui/mdatepicker";
+import { TYPE } from "@/core/ui/customui/mdatepicker";
 
 export let optionPickerDate = [
     // {

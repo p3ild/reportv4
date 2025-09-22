@@ -8,7 +8,7 @@ import { FaSearch } from "react-icons/fa";
 import { HiOutlineDocumentText } from "react-icons/hi2";
 import { useNavigate } from "react-router";
 import { useShallow } from "zustand/react/shallow";
-import { useCorePickerState } from '../../core/stateManage/corePickerState';
+import { useCorePickerState } from '@core/stateManage/corePickerState';
 import './report.css';
 import { useListParam, useReportTarget } from "./report.hook";
 
