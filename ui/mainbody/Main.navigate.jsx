@@ -4,8 +4,8 @@ import { Navigate, Route, Routes, useNavigate } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 
 import { Link } from "react-router-dom";
-import { Home } from "../../../page/home";
-import { Report } from "../../../page/report";
+import { Home } from "@core/page/home";
+import { Report } from "@core/page/report";
 import { useCoreMetaState } from "../../stateManage/metadataState";
 import { useShallow } from "zustand/react/shallow";
 
