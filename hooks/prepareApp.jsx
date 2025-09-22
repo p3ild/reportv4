@@ -28,14 +28,20 @@ export const useDefiningInstance = () => {
         (async () => {
             let processEnvTargetInstance = import.meta.env.VITE_TARGET_BUILD_INSTANCE;
             let tmp;
-            switch (processEnvTargetInstance) {
-                case 'BAOCAO25':
-                    tmp = await import('../../instanceConfig/baocao25');
-                    break;
-                default:
-                    tmp = Promise.resolve(undefined);
-                    // setUnknowError(`Instance env not found: ${process.env.REACT_APP_TARGET_BUILD_INSTANCE}`);
-                    break;
+            let instanceConfig = [
+                {
+                    key: 'INFLUENZA_NEW_ORG_STRUCTURE',
+                    path: '../../instanceConfig/influenza/index.js'
+                },
+                {
+                    key: 'BAOCAO25',
+                    path: '../../instanceConfig/baocao25/index.js'
+                }
+            ].find(e => e.key == processEnvTargetInstance);
+            if (instanceConfig) {
+                tmp = await import(instanceConfig.path)/* @vite-ignore */
+            } else {
+                tmp = Promise.resolve(undefined);
             }
             let instance = tmp.default;
 
