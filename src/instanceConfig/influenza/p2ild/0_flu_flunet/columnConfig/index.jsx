@@ -18,28 +18,9 @@ export const getListColumnConfig = ({ }) => {
                 },
                 render: (props) => {
                     let value = props.orgIdx + 1;
-                    let { orgUnit, period, approvalConfig } = props;
-                    let { approvalKey, approvalVisible, approvalType, ds } = approvalConfig || {};
-
-
                     return {
-                        view: <div className="flex flex-row w-full items-center justify-center" >
-                            {(
-                                approvalConfig && ![APPROVAL_ROW_TYPE.PARENT].includes(approvalVisible) && approvalKey
-                            )
-                                ? <ButtonApproval {
-                                    ...{
-                                        title: value,
-                                        dsID: ds[0],
-                                        orgID: orgUnit,
-                                        approvalKey,
-                                        period,
-                                        approvalType: approvalType || APPROVAL_TYPE.APPROVE
-                                    }
-                                } />
-                                : value
-                            }
-                        </div>
+                        view: "Việt Nam",
+                        value: 0
                     }
                 }
             },
@@ -51,12 +32,37 @@ export const getListColumnConfig = ({ }) => {
                 },
                 render: (props) => {
                     return {
-                        view: props.orgName
+                        view: <p></p>,
+                        value: 0
                     }
                 }
             },
             {
-                key: "3a",
+                key: "YEAR", width: '200px',
+                freezeColWidth: '10vw',
+                render: (props) => {
+                    let { period } = props
+                    let value = period.substring(0, 4)
+                    return {
+                        view: value,
+                        value: 0
+                    }
+                }
+            },
+            {
+                key: "WEEK", width: '200px',
+                freezeColWidth: '10vw',
+                render: (props) => {
+                    let { period, options } = props
+                    let value = parseInt(period.substring(5));
+                    return {
+                        view: value,
+                        value: 0
+                    }
+                }
+            },
+            {
+                key: "N5KvPlsayPK",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -66,7 +72,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['WpK3CA1GiFB']
+                        de: ['N5KvPlsayPK']
                     }) + "";
                     return {
                         value,
@@ -75,7 +81,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "3b",
+                key: "QjPSe2i97Eg",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -85,7 +91,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['q9TgXtGb497']
+                        de: ['QjPSe2i97Eg']
                     }) + "";
                     return {
                         value,
@@ -94,7 +100,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "4a",
+                key: "P54qeZeasJY",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -104,7 +110,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['cnzF1Wsyll7']
+                        de: ['P54qeZeasJY']
                     }) + "";
                     return {
                         value,
@@ -113,7 +119,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "4b",
+                key: "HiIlgyITGNn",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -123,7 +129,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['EfO3KDWNMde']
+                        de: ['HiIlgyITGNn']
                     }) + "";
                     return {
                         value,
@@ -132,7 +138,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "5",
+                key: "uRS7FO8cuqq",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -142,7 +148,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['JTBxLXQRhKp']
+                        de: ['uRS7FO8cuqq']
                     }) + "";
                     return {
                         value,
@@ -151,7 +157,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "6",
+                key: "saF8jnZLVPi",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -161,7 +167,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['YgF4A2VhFm9']
+                        de: ['saF8jnZLVPi']
                     }) + "";
                     return {
                         value,
@@ -170,7 +176,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "7",
+                key: " e",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -180,7 +186,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['fzWfb5NkUXR']
+                        de: [' e']
                     }) + "";
                     return {
                         value,
@@ -189,7 +195,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "8a",
+                key: "A7qbOz7f0xb",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -199,7 +205,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['LSlYBmMhM5E']
+                        de: ['A7qbOz7f0xb']
                     }) + "";
                     return {
                         value,
@@ -208,7 +214,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "8b",
+                key: " e",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -218,7 +224,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['mYN2cR5UuWb']
+                        de: [' e']
                     }) + "";
                     return {
                         value,
@@ -227,7 +233,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "8c",
+                key: "zWCVa4gW48m",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -237,7 +243,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['Nix9Ht2BTot']
+                        de: ['zWCVa4gW48m']
                     }) + "";
                     return {
                         value,
@@ -246,7 +252,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "8d",
+                key: "Bz5TVS1vICZ",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -256,7 +262,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['eW3TnNPwPBA']
+                        de: ['Bz5TVS1vICZ']
                     }) + "";
                     return {
                         value,
@@ -265,7 +271,34 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "9a",
+                key: "BVICTORIA_2DEL",
+                render: (props) => {
+                    return {
+                        view: <p>0</p>,
+                        value: 0
+                    }
+                }
+            },
+            {
+                key: "BVICTORIA_3DEL",
+                render: (props) => {
+                    return {
+                        view: <p>0</p>,
+                        value: 0
+                    }
+                }
+            },
+            {
+                key: "",
+                render: (props) => {
+                    return {
+                        view: <p>0</p>,
+                        value: 0
+                    }
+                }
+            },
+            {
+                key: "dRyFz6seuQL",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -275,7 +308,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['Rb7YZo0877Z']
+                        de: ['dRyFz6seuQL']
                     }) + "";
                     return {
                         value,
@@ -284,7 +317,7 @@ export const getListColumnConfig = ({ }) => {
                 }
             },
             {
-                key: "9b",
+                key: "Myh67Gksnjo",
                 colDataClassName: '!text-right',
                 excelOpts: {
                     "data-a-wrap": "true",
@@ -294,465 +327,7 @@ export const getListColumnConfig = ({ }) => {
                     let value = getValueDE({
                         jsonDhis: props.apiData,
                         org: props.orgUnit,
-                        de: ['Vov1ZBQDPGA']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "10a",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['MZEU8meruHx']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "10b",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['QqPcpJ7yLhR']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "10c",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['PZkzL05NpNg']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "11a",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['niRcB5DsPI9']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "11b",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['CaUTXHA9zK5']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "11c",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['SZpvMstnLjc']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "12a",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['DZ4gp6GzBkJ']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "12b",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['ckrGFqdrq1O']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "13a",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['Jpn3u1SCEI3']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "13b",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['cdnqvBRbLNA']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "14",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['SPFzGeY7ENH']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "15a",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['XGxKRz2pyqF']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "15b",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['NveBdKInM5m']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "16",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['BrEASMFixuK']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "17",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['wsyfR9oCbBg']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "18a",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['fzWfb5NkUXR.N13A1fU7DAu']
-                    }) + "";
-
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "18b",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['tQG9ii5Zh1g']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "18c",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['j6cPf2NjluG']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "19",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['aTKuaZLHkMG']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "20",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['OofwmXf2vAi']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "21a",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['g8Rnn7j2ccS']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "21b",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['ewHRN8vKSLo']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "22a",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['fMyhbxbf6mU']
-                    }) + "";
-                    return {
-                        value,
-                        view: numToLocaleString(value)
-                    }
-                }
-            },
-            {
-                key: "22b",
-                colDataClassName: '!text-right',
-                excelOpts: {
-                    "data-a-wrap": "true",
-                    // "data-t":'n'
-                },
-                render: (props) => {
-                    let value = getValueDE({
-                        jsonDhis: props.apiData,
-                        org: props.orgUnit,
-                        de: ['FowjUrhGgEr']
+                        de: ['Myh67Gksnjo']
                     }) + "";
                     return {
                         value,

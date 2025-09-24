@@ -6,8 +6,8 @@ import '../common/circular37-mui.css';
 import { TableData } from "../common/ui/MultiTableUI";
 import { optionPickerDate, orgPickerConfig } from "./constant";
 import { useLoadData } from "./hook";
-export const reportCode = "Báo cáo 4"
-export const reportName = "HOẠT ĐỘNG CHĂM SÓC BÀ MẸ"
+export const reportCode = "Báo cáo Flunet"
+export const reportName = "Báo cáo Flunet"
 export { orgPickerConfig };
 export default () => {
     const [
@@ -67,7 +67,7 @@ export default () => {
                 dhis2Period,
                 data,
                 style: {
-                    minWidth: '4000px',
+                    // minWidth: '4000px',
                     // border: '1px solid black',
                     // width: '300% !important' 
                 }

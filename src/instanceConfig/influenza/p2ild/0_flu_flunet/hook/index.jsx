@@ -2,13 +2,7 @@ import { useEffect, useState } from "react";
 import { usePrepareData } from "../../common/hooks/prepareData";
 import { DATASET, HeaderUILayoutTable1, ORG_GROUP, ORG_SELECTED_TYPE } from "../constant";
 import { getListColumnConfig } from "../columnConfig";
-import { parallel, reflect } from "async";
-import { BaseError } from "../../common/BaseError";
-import { APPROVAL_ROW_TYPE } from "@core/network/ApprovalUtils";
-import * as UserMutilOrgAction from "../../common/UserMutilOrgAction";
-import * as CountryAction from "../actions/Country";
-import * as ProvinceAction from "../actions/Province";
-import * as CommuneAction from "../actions/Commune";
+import { parallel } from "async"; 
 import * as CurrentlyOrgSelectedAction from "../actions/CurrentlyOrgSelected";
 export const useLoadData = (props) => {
     const {
@@ -43,76 +37,16 @@ export const useLoadData = (props) => {
             periodSelected: period,
             orgSelected,
             listColumnConfig: getListColumnConfig(props),
-            defaultCol: 39 - 2,
+            // defaultCol: 39 - 2,
             dx: [
-                'fzWfb5NkUXR.N13A1fU7DAu',
-                'OofwmXf2vAi',
-                'MZEU8meruHx',
-                'niRcB5DsPI9',
-                'WpK3CA1GiFB',
-                'q9TgXtGb497',
-                'cnzF1Wsyll7',
-                'EfO3KDWNMde',
-                'JTBxLXQRhKp',
-                'YgF4A2VhFm9',
-                'fzWfb5NkUXR',
-                'LSlYBmMhM5E',
-                'mYN2cR5UuWb',
-                'Nix9Ht2BTot',
-                'eW3TnNPwPBA',
-                'Rb7YZo0877Z',
-                'Vov1ZBQDPGA',
-                'Wf8ywubJAEC',
-                'QqPcpJ7yLhR',
-                'PZkzL05NpNg',
-                'SGDhfZGXzL2',
-                'CaUTXHA9zK5',
-                'SZpvMstnLjc',
-                'DZ4gp6GzBkJ',
-                'ckrGFqdrq1O',
-                'Jpn3u1SCEI3',
-                'cdnqvBRbLNA',
-                'SPFzGeY7ENH',
-                'XGxKRz2pyqF',
-                'NveBdKInM5m',
-                'BrEASMFixuK',
-                'wsyfR9oCbBg',
-                'DWCz9b0uIkA',
-                'tQG9ii5Zh1g',
-                'j6cPf2NjluG',
-                'aTKuaZLHkMG',
-                'MdnijP0QA7c',
-                'g8Rnn7j2ccS',
-                'ewHRN8vKSLo',
-                'fMyhbxbf6mU',
-                'FowjUrhGgEr'
+                "N5KvPlsayPK", "QjPSe2i97Eg", "P54qeZeasJY", "HiIlgyITGNn", "uRS7FO8cuqq", "saF8jnZLVPi", "A7qbOz7f0xb", "zWCVa4gW48m", "Bz5TVS1vICZ", "dRyFz6seuQL", "Myh67Gksnjo"
             ]
         }
         try {
             let orgType = orgSelected?.orgType?.key;
             let targetAction;
-            switch (true) {
-                case orgSelected.id == 'CUSTOM_MULTI_ORG': {
-                    targetAction = UserMutilOrgAction
-                    props.customDataSet = {
-                        COMMUNE: DATASET.BMTE_B4_TYT,
-                        // PROVINCE: DATASET.BMTE_B4
-                    }
-                    break;
-                }
-                case orgType == ORG_SELECTED_TYPE.COUNTRY.key:
-                    targetAction = CountryAction
-                    break;
-                case orgType == ORG_SELECTED_TYPE.PROVINCE.key:
-                    targetAction = ProvinceAction
-                    break;
-                case orgType == ORG_SELECTED_TYPE.COMMUNE.key:
-                    targetAction = CommuneAction
-                    break;
-                default:
-                    targetAction = CurrentlyOrgSelectedAction
-                // throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
-            }
+            targetAction = CurrentlyOrgSelectedAction
+            // throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
             {
 
 

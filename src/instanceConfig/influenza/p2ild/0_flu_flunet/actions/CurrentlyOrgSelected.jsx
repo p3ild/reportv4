@@ -6,13 +6,11 @@ export const getDataCommon = async (props) => {
         // dx: props,
         DEFAULT_COL_LENGTH: props.defaultCol,
         listColumnConfig: props.listColumnConfig,
-        includeTotalRow: ["", "", "", <p>Tổng số</p>],
     };
 
 
     let { listRow, apiData } = await listingRowByOuGroup({
         ...props,
-        includeTotalRow: ["", <p>Tổng số</p>]
     });
 
     return {

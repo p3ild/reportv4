@@ -72,12 +72,12 @@ export const fetchAnalyticsEvent = async (data) => {
     } = data;
     let ou = orgUnitGroup ? (orgUnitGroup.map(e => "OU_GROUP-" + e + ";")).join("") + orgUnit : orgUnit;
     let url = [`/api/29/analytics/events/query/${program}.json?outputType=EVENT`,
-    `dimension=pe:${period}`,
+    period ? `dimension=pe:${period}` : undefined,
     // `dimension=pe:THIS_MONTH;LAST_6_MONTHS`,//test
     dx.map(e => `dimension=${e}`).join("&"),
     ...customDimension,
     `${ouQueryType}=ou:${ou}`,
-    `&stage=${stage}`,
+    `stage=${stage}`,
     `pageSize=${defaultPageSize}&page=${page || 1}`
     ].filter(e => ![undefined, false].includes(e));
 

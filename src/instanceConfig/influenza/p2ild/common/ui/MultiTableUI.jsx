@@ -55,6 +55,7 @@ const TableWithResize = ({ tableData, tableIndex, tableClassName, tableStyle }) 
                                     let style = {
                                         ...(cell?.colStyle || {})
                                     }
+                                    if (cell.view === '') cell.view = ' '
                                     return <td
                                         data-b-a-s='thin'
                                         {...cell?.excelOpts}
@@ -62,7 +63,7 @@ const TableWithResize = ({ tableData, tableIndex, tableClassName, tableStyle }) 
                                         className={(cell?.colDataClassName || "") + ' ' + (cell?.colClassName || "")}
                                         name={cell?.name}
                                         style={style}>
-                                        {cell?.view || 'render_error'}
+                                        {cell.view || 'render_error'}
                                     </td>
                                 })}
                             </tr>

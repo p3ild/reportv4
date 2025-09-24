@@ -31,6 +31,32 @@ export function HeaderUILayoutTable1({ listColumnConfig }) {
         "data-a-wrap": "true",
         "data-b-a-s": 'thin',
     }
+
+    return <thead>
+        <tr>
+            <th {...excelConfig} className="sticky-col-0">COUNTRY</th>
+            <th {...excelConfig} className="sticky-col-1" >REPORTSITE</th>
+            <th {...excelConfig} className="sticky-col-2">YEAR</th>
+            <th {...excelConfig} className="sticky-col-3">WEEK</th>
+            <th {...excelConfig}>SPECIMENPROCESSED_INFLUENZA</th>
+            <th {...excelConfig}>SPECIMENRECEIVED_INFLUENZA</th>
+            <th {...excelConfig}>AH1N12009</th>
+            <th {...excelConfig}>AH3</th>
+            <th {...excelConfig}>AH5</th>
+            <th {...excelConfig}>AH7N9</th>
+            <th {...excelConfig}>AOTHERSUBTYPE</th>
+            <th {...excelConfig}>ANOTSUBTYPED</th>
+            <th {...excelConfig}>ANONSUBTYPABLE</th>
+            <th {...excelConfig}>BYAMAGATA</th>
+            <th {...excelConfig}>BVICTORIA</th>
+            <th {...excelConfig}>BVICTORIA_2DEL</th>
+            <th {...excelConfig}>BVICTORIA_3DEL</th>
+            <th {...excelConfig}>BVICTORIA_UN_DEL</th>
+            <th {...excelConfig}>BNOTDETERMINED</th>
+            <th {...excelConfig}>INFLUENZANEGATIVE</th>
+
+        </tr>
+    </thead>
     return <>
         <thead>
             <tr>
