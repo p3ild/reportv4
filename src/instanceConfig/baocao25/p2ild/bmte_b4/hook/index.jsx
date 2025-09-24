@@ -10,6 +10,8 @@ import * as CountryAction from "../actions/Country";
 import * as ProvinceAction from "../actions/Province";
 import * as CommuneAction from "../actions/Commune";
 import * as CurrentlyOrgSelectedAction from "../actions/CurrentlyOrgSelected";
+import { getNonCummulativePeriod } from "../../common/utils";
+import { cloneDeep } from "lodash";
 export const useLoadData = (props) => {
     const {
         loaded,
@@ -34,6 +36,10 @@ export const useLoadData = (props) => {
     const main = async () => {
         setError(undefined)
         setData([]);
+        const DE_NO_CUMULATIVE = [
+            "cnzF1Wsyll7",
+            "EfO3KDWNMde"
+        ]
 
         props = {
             ...props,
@@ -45,14 +51,13 @@ export const useLoadData = (props) => {
             listColumnConfig: getListColumnConfig(props),
             defaultCol: 39 - 2,
             dx: [
+                ...(period.type == 'month' ? DE_NO_CUMULATIVE : []),
                 'fzWfb5NkUXR.N13A1fU7DAu',
                 'OofwmXf2vAi',
                 'MZEU8meruHx',
                 'niRcB5DsPI9',
                 'WpK3CA1GiFB',
                 'q9TgXtGb497',
-                'cnzF1Wsyll7',
-                'EfO3KDWNMde',
                 'JTBxLXQRhKp',
                 'YgF4A2VhFm9',
                 'fzWfb5NkUXR',
@@ -113,6 +118,34 @@ export const useLoadData = (props) => {
                     targetAction = CurrentlyOrgSelectedAction
                 // throw new BaseError({ msg: 'Báo cáo không hỗ trợ đơn vị này' })
             }
+
+            props.overrideDataAnalytics = async (data) => {
+                let oldData = data.apiData;
+                data.period = getNonCummulativePeriod(cloneDeep(period))
+                if (data.period == period.outputDataDhis2) {
+                    return oldData;
+                }
+
+                let queryDataNonCumulative = await data.fetchAnalyticsData({
+                    ...data,
+                    dx: DE_NO_CUMULATIVE,
+                }).catch(e => {
+                    // console.log(e)
+                });
+
+                let newData = { ...oldData }
+
+                if (newData.rows) {
+                    newData.rows = [
+                        ...newData.rows,
+                        ...(queryDataNonCumulative.rows || [])
+                    ]
+
+                }
+
+                return newData;
+            }
+
             {
 
 

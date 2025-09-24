@@ -41,7 +41,7 @@ export const getDataCommon = async (props) => {
     let reqPrivateHealthGroup = [
         {
             orgUnitGroup: [
-                ORG_GROUP.TINH_YTTN_CSSK_BM
+                ORG_GROUP.TINH_YTTN
             ],
             includeTotalRow: ["B", <p>Y tế tư nhân</p>],
             ...getApprovalConfig({ ...props, ds: DATASET.B3, approvalKey: 'TN', typeAllowCondition })

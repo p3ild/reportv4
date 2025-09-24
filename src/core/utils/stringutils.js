@@ -68,7 +68,7 @@ export function getRangeDayInMonth({ isoDhis2 }) {
 
 }
 
-class CompareString {
+export class CompareString {
     ORG_PREFIX = {
         commune_phuong: [
             { from: '^phuong\\s', to: '' },
@@ -291,10 +291,10 @@ class CompareString {
                     let regex = new RegExp(pattern.from, 'g');
                     let isMatch = input.match(regex);
                     if (isMatch) {
-                        val = input.replace(regex, ' ');
+                        val = input.replace(regex, pattern.to);
                     }
                 })
-                return val
+            return val
             })
                 .thru(this.ReplaceCase.removeMultiWhiteScape)
                 .thru(trim)

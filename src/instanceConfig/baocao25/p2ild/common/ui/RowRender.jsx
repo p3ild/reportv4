@@ -38,7 +38,8 @@ export const listingRowByOuGroup = async (props) => {
         overrideDataAnalytics,
         periodQueryType,
         approvalConfig,
-        sortOrgUnits
+        sortOrgUnits,
+        transformApiData
     } = props;
     DEFAULT_COL_LENGTH = DEFAULT_COL_LENGTH || (listColumnConfig?.length - (includeTotalRow?.length || 0))
     let propFetchAnalytics = {
@@ -51,6 +52,7 @@ export const listingRowByOuGroup = async (props) => {
         orgUnitGroup,
         includeCo: false,
         customDimension,
+        transformApiData
     }
     let apiData = await fetchAnalyticsData(propFetchAnalytics).catch(e => {
         let totalRow = [...(includeTotalRow || []), ...Array(1).fill(0)].map((e, cellIdx, arr) => {

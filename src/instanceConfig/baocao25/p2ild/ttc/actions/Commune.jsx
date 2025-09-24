@@ -2,8 +2,21 @@ import { APPROVAL_ROW_TYPE } from '@core/network/ApprovalUtils';
 import { getDisableColDataObject, listingRowByOuGroup, sumMultiRow } from '../../common/ui/RowRender';
 import { DATASET, ORG_GROUP } from '../constant';
 import { getCoreMetaStateByPath } from '@core/stateManage/metadataState';
+import { getPickerStateByPath } from '@core/stateManage/corePickerState';
+import { CompareString } from '@core/utils/stringutils';
 
 export const getDataCommon = async (props) => {
+    let orgFlatMap = getPickerStateByPath('orgFlatMap')
+
+
+    const ORG_PREFIX_REMOVE = "removeorg"
+    let compareString = new CompareString()
+    compareString.SPEC_CHAR = [
+        ...compareString.SPEC_CHAR,
+        { from: '^pk', to: ORG_PREFIX_REMOVE },
+        { from: '^phong kham', to: ORG_PREFIX_REMOVE },
+    ]
+
     props = {
         ...props,
         // dx: props,
@@ -29,6 +42,12 @@ export const getDataCommon = async (props) => {
     let { listRow: communeHFListRow } = await listingRowByOuGroup({
         ...props,
         orgUnitGroup: [ORG_GROUP.XA, ORG_GROUP.XA_CSYT_KHAC],
+        sortOrgUnits(ou, props) {
+            let ouFilter = ou.filter(ouTarget => {
+                return !compareString.cleanStr(orgFlatMap[ouTarget].name).includes(ORG_PREFIX_REMOVE)
+            })
+            return ouFilter
+        },
         ...approvalConfig
     });
     const colDisable = [

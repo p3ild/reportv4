@@ -7,6 +7,9 @@ import { getListColumnConfig_table1, getListColumnConfig_table2, getListColumnCo
 import { DATASET, HeaderUILayoutTable1, HeaderUILayoutTable2, HeaderUILayoutTable3, ORG_GROUP, ORG_SELECTED_TYPE } from "../constant";
 import { getApprovalConfig } from "../../common/utils/approval";
 import { getCoreMetaStateByPath } from "@core/stateManage/metadataState";
+import { getPickerStateByPath } from "@core/stateManage/corePickerState";
+import { CompareString } from '@core/utils/stringutils';
+
 export const useLoadData = (props) => {
     const {
         loaded,
@@ -31,6 +34,7 @@ export const useLoadData = (props) => {
     const main = async () => {
         setError(undefined)
         setData([]);
+        let orgFlatMap = getPickerStateByPath('orgFlatMap')
 
         props = {
             ...props,
@@ -139,12 +143,27 @@ export const useLoadData = (props) => {
                     targetAction = CurrentlyOrgSelectedAction
                     break;
                 case orgType == ORG_SELECTED_TYPE.COMMUNE.key:
+                    const ORG_PREFIX_REMOVE = "removeorg"
+                    let compareString = new CompareString()
+                    compareString.SPEC_CHAR = [
+                        ...compareString.SPEC_CHAR,
+                        { from: '^pk', to: ORG_PREFIX_REMOVE },
+                        { from: '^phong kham', to: ORG_PREFIX_REMOVE },
+                    ]
+
                     props = {
                         ...props,
                         approvalUtils: getCoreMetaStateByPath('networkUtils.ApprovalUtils'),
                         orgUnitGroup: [
                             ORG_GROUP.XA_TYT,
+                            ORG_GROUP.XA_CSYT_KHAC_TYT
                         ],
+                        sortOrgUnits(ou, props) {
+                            let ouFilter = ou.filter(ouTarget => {
+                                return !compareString.cleanStr(orgFlatMap[ouTarget].name).includes(ORG_PREFIX_REMOVE)
+                            })
+                            return ouFilter
+                        },
                         ...getApprovalConfig({ ...props, ds: DATASET.B11, approvalKey: 'RANDOM' })
                     }
                     targetAction = CurrentlyOrgSelectedAction

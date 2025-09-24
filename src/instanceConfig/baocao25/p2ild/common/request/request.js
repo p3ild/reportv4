@@ -11,8 +11,10 @@ export const fetchAnalyticsData = async (data) => {
         ouQueryType = 'dimension',
         customDimension = [],
         periodQueryType,
-        ouGroupSetQueryType = 'filter'
-        , includeCo = true } = data;
+        ouGroupSetQueryType = 'filter',
+        transformApiData,
+        includeCo = true,
+    } = data;
     let ou = orgUnitGroup ? (orgUnitGroup.map(e => "OU_GROUP-" + e + ";")).join("") + orgUnit : orgUnit;
     let url = [`/api/32/analytics.json?`,
         `dimension=dx:${Object.values(dx)?.join(';')}`,
@@ -52,6 +54,9 @@ export const fetchAnalyticsData = async (data) => {
     //     apiData.rows = apiData.rows.filter(e => orgIsOpening.includes(e[ouIndex]));
     //     apiData.metaData.dimensions.ou = orgIsOpening;
     // }
+    if (transformApiData) {
+        apiData = transformApiData({ apiData });
+    }
     apiData.rowAsObject = apiData.rows.map(e => {
         return zipObject(apiData.headers.map(e => e.name), e)
     })
