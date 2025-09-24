@@ -44,7 +44,7 @@ const PeriodPicker = (props) => {
             start: start.dayjs?.toDate(),
             end: end.dayjs?.toDate(),
           }).map((e) => {
-            return format(e, 'yyyyMMDD')
+            return format(e, 'yyyyMMdd')
           })
           : [
             start.outputFormat
@@ -52,13 +52,14 @@ const PeriodPicker = (props) => {
 
         return {
           outputFormat: outputFormat.join(';'),
+          startDate: start.outputFormat, endDate: end?.outputFormat
         };
       }
       break;
     case periodType === 'week':
       defaultPrefix = t('common:periodPicker.selectType.week')
       inputFormat = "ww-YYYY";
-      outputFormat = 'YYYYww';
+      outputFormat = "YYYY[W]ww";
       labelFormat = `[${t('common:periodPicker.selectType.week')}] ` + inputFormat
       genOutput = ({ start, end }) => {
         let outputFormat = end
@@ -66,7 +67,7 @@ const PeriodPicker = (props) => {
             start: start.dayjs?.toDate(),
             end: end.dayjs?.toDate(),
           }).map((e) => {
-            return format(e, 'yyyyww')
+            return format(e, `yyyy'W'ww`)
           })
           : [
             start.outputFormat
