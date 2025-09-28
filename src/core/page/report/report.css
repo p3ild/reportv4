@@ -1,0 +1,61 @@
+.report {
+    padding: 10px;
+}
+
+.report-container {
+    padding: 4px;
+    font-family: Times, Times New Roman, Georgia, serif !important;
+}
+
+.report-container table {
+    border: 1px;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.report-container td,
+.report-container th {
+    text-align: center;
+    padding: 5px;
+    font-size: 14px;
+    border-spacing: 0px;
+    border: 1px solid black;
+    /* border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-top: 0 !important;
+    border-left: 0 !important; */
+}
+
+.report-container .line-break-anywhere {
+    line-break: anywhere;
+}
+
+.report-container thead {
+    top: -10px;
+    position: sticky;
+    background-color: #fff;
+    z-index: 5;
+}
+
+.ant-popover-inner {
+    padding: 0 !important;
+}
+
+@media print {
+    body {
+        visibility: hidden;
+    }
+
+    .no-print {
+        display: none;
+    }
+
+    .report-container {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
