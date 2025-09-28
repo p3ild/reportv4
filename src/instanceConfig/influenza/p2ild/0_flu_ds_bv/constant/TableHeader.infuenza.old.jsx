@@ -22,6 +22,7 @@ export function HeaderUILayout({ listColumnConfig, title }) {
             <th className={[defaultWidth].join(' ')} >{"Tháng tuổi"}</th>
             <th className={[defaultWidth].join(' ')} >{"Giới tính"}</th>
             <th className={[defaultWidth].join(' ')} >{"Địa chỉ (Tỉnh)"}</th>
+            <th className={[defaultWidth].join(' ')} >{"Địa chỉ (Huyện)"}</th>
             <th className={[defaultWidth].join(' ')} >{"Địa chỉ  (Xã)"}</th>
             <th className={[defaultWidth].join(' ')} >{"Khoa Phòng"}</th>
             <th className={[defaultWidth].join(' ')} >{"Ngày khởi phát"}</th>

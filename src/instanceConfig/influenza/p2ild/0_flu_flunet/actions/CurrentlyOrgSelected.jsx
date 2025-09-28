@@ -1,4 +1,6 @@
+import { parallelLimit } from 'async';
 import { listingRowByOuGroup } from '../../common/ui/RowRender';
+import { flatten } from 'lodash';
 
 export const getDataCommon = async (props) => {
     props = {
@@ -8,12 +10,23 @@ export const getDataCommon = async (props) => {
         listColumnConfig: props.listColumnConfig,
     };
 
+    let periodList = props.period.split(';');
+    let requestList = periodList.map(period =>
+        cb => {
+            ; (async () => {
+                let rs = await listingRowByOuGroup({
+                    ...props,
+                    period,
+                });
+                cb(null, rs);
+            })()
+        }
+    )
 
-    let { listRow, apiData } = await listingRowByOuGroup({
-        ...props,
-    });
+
+    let result = await parallelLimit(requestList, 3)
 
     return {
-        dataByRow: listRow
+        dataByRow: [...flatten(result.map(e => e.listRow))]
     }
 }

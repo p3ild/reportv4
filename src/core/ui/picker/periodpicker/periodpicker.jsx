@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { PERIOD_TYPE } from './constant';
 import { SpecifiedPeriodPicker } from './custom';
 import { SixMonthlyPicker } from './custom/SixMonth';
+import { WeekClassicPicker } from './custom/WeekClassic';
+import { QuarterPicker } from './custom/Quarter';
 export { PERIOD_TYPE };
 const { RangePicker } = DatePicker;
 
@@ -191,6 +193,19 @@ const PeriodPicker = (props) => {
       return <SixMonthlyPicker {...{
         ...props, ...opts, onChange
       }} />;
+    case PERIOD_TYPE.weekClassic:
+    case PERIOD_TYPE.weekClassic2:
+
+      return <WeekClassicPicker {...{
+        ...props, ...opts, onChange, isRange: fromTo
+      }} />;
+    case PERIOD_TYPE.quarterClassic:
+    case PERIOD_TYPE.quarterClassic2:
+
+      return <QuarterPicker {...{
+        ...props, ...opts, onChange, isRange: fromTo
+      }} />;
+
     case PERIOD_TYPE.biWeek:
       return <SpecifiedPeriodPicker {...{
         periodType: PERIOD_TYPE.biWeek,
@@ -198,26 +213,26 @@ const PeriodPicker = (props) => {
       }} />;
 
     default:
-      return <>
+      return <div className=''>
         {
           !fromTo
             ? <DatePicker
               {
               ...{
-                className: '!w-fit ' + className,
+                className: '!w-full ' + className,
                 ...antdOpts,
                 ...opts
               }} />
             : <RangePicker
               {
               ...{
-                className: '!w-fit ' + className,
+                className: '!w-full ' + className,
                 ...antdOpts,
                 ...opts
               }
               } />
         }
-      </>
+      </div>
   }
 };
 

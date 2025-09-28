@@ -39,8 +39,8 @@ export default () => {
     useEffect(
         () => {
             setAllowPeriodTypes([
-                PERIOD_TYPE.week,
-                PERIOD_TYPE.week2,
+                PERIOD_TYPE.weekClassic,
+                PERIOD_TYPE.weekClassic2,
             ]);
             setOrgPickerConfig({
                 // orgGroupVisible: [

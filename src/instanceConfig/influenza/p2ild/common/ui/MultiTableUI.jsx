@@ -139,7 +139,7 @@ export const TableData = function (props) {
                             <td
                                 colSpan={totalCol}
                                 data-a-h="center" data-a-v="center" data-f-bold="true" style={{ width: "100vw", fontSize: "16px", border: 0, fontWeight: 800, textAlign: "center" }}>
-                                <p className="italic">Ngày kết xuất báo cáo: {format(new Date(), 'dd/MM/yyyy')} - Nguồn dữ liệu: Phần mềm Thống kê y tế</p>
+                                <p className="italic">Ngày kết xuất báo cáo: {format(new Date(), 'dd/MM/yyyy')}</p>
                             </td>
                         </tr>
                     </tbody>

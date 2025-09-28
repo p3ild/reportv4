@@ -16,6 +16,10 @@
             "month2": "Tháng tới tháng",
             "week": "Tuần",
             "week2": "Tuần tới Tuần",
+            "weekClassic": "Tuần",
+            "weekClassic2": "Tuần tới Tuần",
+            "quarterClassic": "Quý",
+            "quarterClassic2": "Quý tới Quý",
             "year": "Năm",
             "year2": "Năm tới năm",
             "sixMonth": "6 tháng 1 lần",
@@ -69,7 +73,7 @@
     "corePicker": {
         "title": "Đơn vị & Thời điểm"
     },
-    "reportList-baocao": "Danh sách báo cáo phần mềm thống kê y tế",
+    "reportList-baocao": "Danh sách báo cáo",
     "reportList": "Danh sách báo cáo",
     "reportListBreadcumb": "Báo cáo",
     "selectLanguage": "Chọn ngôn ngữ",

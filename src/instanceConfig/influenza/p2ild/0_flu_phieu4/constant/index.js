@@ -7,9 +7,14 @@ export * from '../../common/constant'
 export const optionPickerDate = [
     PERIOD_TYPE.weekClassic,
     PERIOD_TYPE.weekClassic2,
+    PERIOD_TYPE.month,
+    PERIOD_TYPE.month2,
+    PERIOD_TYPE.year,
 ]
 
 export const orgPickerConfig = {
-    // orgGroupVisible: [],
-    // levelsToHideIfEmpty: [2, 3]
+    // orgGroupVisible: [
+
+    // ],
+    // levelsToHideIfEmpty: [2]
 }
