@@ -5,7 +5,9 @@ import { isArray, upperFirst } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { PERIOD_TYPE } from './constant';
 import { SpecifiedPeriodPicker } from './custom';
+import { QuarterPicker } from './custom/Quarter';
 import { SixMonthlyPicker } from './custom/SixMonth';
+import { WeekClassicPicker } from './custom/WeekClassic';
 export { PERIOD_TYPE };
 const { RangePicker } = DatePicker;
 
@@ -44,7 +46,7 @@ const PeriodPicker = (props) => {
             start: start.dayjs?.toDate(),
             end: end.dayjs?.toDate(),
           }).map((e) => {
-            return format(e, 'yyyyMMDD')
+            return format(e, 'yyyyMMdd')
           })
           : [
             start.outputFormat
@@ -52,13 +54,14 @@ const PeriodPicker = (props) => {
 
         return {
           outputFormat: outputFormat.join(';'),
+          startDate: start.outputFormat, endDate: end?.outputFormat
         };
       }
       break;
     case periodType === 'week':
       defaultPrefix = t('common:periodPicker.selectType.week')
       inputFormat = "ww-YYYY";
-      outputFormat = 'YYYYww';
+      outputFormat = "YYYY[W]ww";
       labelFormat = `[${t('common:periodPicker.selectType.week')}] ` + inputFormat
       genOutput = ({ start, end }) => {
         let outputFormat = end
@@ -66,7 +69,7 @@ const PeriodPicker = (props) => {
             start: start.dayjs?.toDate(),
             end: end.dayjs?.toDate(),
           }).map((e) => {
-            return format(e, 'yyyyww')
+            return format(e, `yyyy'W'ww`)
           })
           : [
             start.outputFormat
@@ -134,6 +137,7 @@ const PeriodPicker = (props) => {
     let [startValue, endValue] = isArray(value) ? value : [value];
     if (!startValue && !endValue) {
       onChange(null); return;
+      onChange(null); return;
     }
     if (onChange) {
       const [
@@ -190,6 +194,19 @@ const PeriodPicker = (props) => {
       return <SixMonthlyPicker {...{
         ...props, ...opts, onChange
       }} />;
+    case PERIOD_TYPE.weekClassic:
+    case PERIOD_TYPE.weekClassic2:
+
+      return <WeekClassicPicker {...{
+        ...props, ...opts, onChange, isRange: fromTo
+      }} />;
+    case PERIOD_TYPE.quarterClassic:
+    case PERIOD_TYPE.quarterClassic2:
+
+      return <QuarterPicker {...{
+        ...props, ...opts, onChange, isRange: fromTo
+      }} />;
+
     case PERIOD_TYPE.biWeek:
       return <SpecifiedPeriodPicker {...{
         periodType: PERIOD_TYPE.biWeek,
@@ -197,26 +214,26 @@ const PeriodPicker = (props) => {
       }} />;
 
     default:
-      return <>
+      return <div className=''>
         {
           !fromTo
             ? <DatePicker
               {
               ...{
-                className: '!w-fit ' + className,
+                className: '!w-full ' + className,
                 ...antdOpts,
                 ...opts
               }} />
             : <RangePicker
               {
               ...{
-                className: '!w-fit ' + className,
+                className: '!w-full ' + className,
                 ...antdOpts,
                 ...opts
               }
               } />
         }
-      </>
+      </div>
   }
 };
 
