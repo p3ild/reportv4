@@ -1,16 +1,13 @@
 import { DatePicker } from 'antd';
 import { eachDayOfInterval, eachMonthOfInterval, eachWeekOfInterval, eachYearOfInterval, format } from 'date-fns';
-import { DatePicker } from 'antd';
-import { eachDayOfInterval, eachMonthOfInterval, eachWeekOfInterval, eachYearOfInterval, format } from 'date-fns';
 import dayjs from 'dayjs';
 import { isArray, upperFirst } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { PERIOD_TYPE } from './constant';
-import { PERIOD_TYPE } from './constant';
 import { SpecifiedPeriodPicker } from './custom';
+import { QuarterPicker } from './custom/Quarter';
 import { SixMonthlyPicker } from './custom/SixMonth';
 import { WeekClassicPicker } from './custom/WeekClassic';
-import { QuarterPicker } from './custom/Quarter';
 export { PERIOD_TYPE };
 const { RangePicker } = DatePicker;
 
