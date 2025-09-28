@@ -1,8 +1,11 @@
 import { DatePicker } from 'antd';
 import { eachDayOfInterval, eachMonthOfInterval, eachWeekOfInterval, eachYearOfInterval, format } from 'date-fns';
+import { DatePicker } from 'antd';
+import { eachDayOfInterval, eachMonthOfInterval, eachWeekOfInterval, eachYearOfInterval, format } from 'date-fns';
 import dayjs from 'dayjs';
 import { isArray, upperFirst } from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { PERIOD_TYPE } from './constant';
 import { PERIOD_TYPE } from './constant';
 import { SpecifiedPeriodPicker } from './custom';
 import { SixMonthlyPicker } from './custom/SixMonth';
@@ -136,6 +139,7 @@ const PeriodPicker = (props) => {
   const handleChange = (value) => {
     let [startValue, endValue] = isArray(value) ? value : [value];
     if (!startValue && !endValue) {
+      onChange(null); return;
       onChange(null); return;
     }
     if (onChange) {
