@@ -1,0 +1,1 @@
+export const RequireMark = () => (<span className="text-red-500">{" *"}</span>)
