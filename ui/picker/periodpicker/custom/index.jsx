@@ -11,7 +11,7 @@ export const SPECIFIED_PERIOD_TYPE = {
         generateFunction: PeriodManager.generateBiWeeklyPeriods.bind(PeriodManager)
     },
     [PERIOD_TYPE.biMonth]: {
-        key: 'sixMonth',
+        key: 'biMonth',
         label: '6 tháng 1 lần',
         placeholder: 'Chọn kỳ'
     }
@@ -27,7 +27,7 @@ export const SpecifiedPeriodPicker = (props) => {
         })
         return <div></div>
     }
-    
+
     const [customPeriodYearValue, setCustomPeriodYearValue] = useState();
     const [sixMonthTypeValue, setSixMonthTypeValue] = useState();
 

@@ -7,6 +7,7 @@ import i18n from '../translation/i18n';
 import { parallel } from 'async';
 import { flatten, omit } from 'lodash';
 import ProgressNotificationBuilder from '../ui/picker/ProgressData';
+import * as instanceConfig from '@instanceConfig';
 
 let progressNotification = ProgressNotificationBuilder({
     NOTIFICATION_KEY: Math.random(),
@@ -26,29 +27,12 @@ export const useDefiningInstance = () => {
 
     useEffect(() => {
         (async () => {
-            let processEnvTargetInstance = import.meta.env.VITE_TARGET_BUILD_INSTANCE;
-            let tmp;
-            let instanceConfig = [
-                {
-                    key: 'INFLUENZA_NEW_ORG_STRUCTURE',
-                    path: '../../instanceConfig/influenza/index.js'
-                },
-                {
-                    key: 'BAOCAO25',
-                    path: '../../instanceConfig/baocao25/index.js'
-                }
-            ].find(e => e.key == processEnvTargetInstance);
-            if (instanceConfig) {
-                tmp = await import(/* @vite-ignore */instanceConfig.path)
-            } else {
-                tmp = Promise.resolve(undefined);
-            }
-            let instance = tmp.default;
+            let instance = instanceConfig.default;
 
             await instance.init({});
             setInstanceTarget({
                 ...instance,
-                ...omit(tmp, ['default'])// Get all export from instance.jsx file without default export
+                ...omit(instanceConfig, ['default'])// Get all export from instance.jsx file without default export
             })
         })()
     }, [])
