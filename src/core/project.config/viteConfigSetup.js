@@ -12,12 +12,12 @@ export default ({ env, dirname }) => {
     let aliasPath = path.resolve(dirname, `src/instanceConfig/${target}/index.js`);
 
     if (!existsSync(aliasPath)) {
-        throw new Error(`\n\n---------- Instance ${target} not exists. Check your variable VITE_TARGET_BUILD_INSTANCE in env.local again ----------`);
+        throw new Error(`\n\n ❗❗❗ Instance ${target} not exists. Check your variable VITE_TARGET_BUILD_INSTANCE in env.local again ----------`);
     } else {
-        console.log('\n\n---------- Use instance: ', target, '. Path: ', aliasPath, '----------')
+        console.log('\n✨Use instance: ', target)
+        console.log('✨Path config: ', aliasPath)
     }
 
-    // Base configuration that can be customized based on env variables
     const baseConfig = {
         base: env.VITE_BASE_PATH || "./",
         plugins: [
