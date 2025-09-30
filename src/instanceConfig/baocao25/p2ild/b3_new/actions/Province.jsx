@@ -24,7 +24,7 @@ export const getDataCommon = async (props) => {
         },
         {
             orgUnitGroup: [
-                ORG_GROUP.TINH_CSYT_CONG_CSSK_BM
+                ORG_GROUP.TUYEN_TINH
             ],
             includeTotalRow: ["II", <p>Cấp tỉnh</p>],
             ...getApprovalConfig({ ...props, ds: DATASET.B3, approvalKey: 'TINH', typeAllowCondition })

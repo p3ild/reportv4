@@ -49,7 +49,8 @@ export const getDataCommon = async (props) => {
                             bundleDE.join(';') +
                             "&dimension=ou:" +
                             orgUnitSelectedID +
-                            ";&filter=pe:" + periods;
+                            ";&filter=pe:" + periods?.outputDataDhis2
+                            ;
                         total.push(_get(api))
                         return total
                     }, []),

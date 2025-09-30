@@ -34,7 +34,7 @@ export const useLoadData = (props) => {
             ...props,
             // approvalHook,
             orgUnit: orgSelected.id,
-            period: period?.outputDataDhis2,
+            period,
             orgSelected
         }
         try {
