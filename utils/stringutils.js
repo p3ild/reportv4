@@ -68,7 +68,7 @@ export function getRangeDayInMonth({ isoDhis2 }) {
 
 }
 
-export class CompareString {
+class CompareString {
     ORG_PREFIX = {
         commune_phuong: [
             { from: '^phuong\\s', to: '' },
