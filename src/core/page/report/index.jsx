@@ -143,7 +143,7 @@ export function ReportList({ type }) {
                 return {
                     key: item.id,
                     value: item.id,
-                    label: item.displayName.toUpperCase(),
+                    label: item.displayName?.toUpperCase() || item.id,
                     link: item.link,
                     path: item.path
                 }
