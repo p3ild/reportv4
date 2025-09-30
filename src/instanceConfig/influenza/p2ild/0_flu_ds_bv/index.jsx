@@ -1,31 +1,26 @@
+import { useCorePickerState } from "@core/stateManage/corePickerState";
+import { useCoreMetaState } from "@core/stateManage/metadataState";
+import { PERIOD_TYPE } from "@core/ui/picker/periodpicker/constant";
 import { useEffect, useMemo } from "react";
 import { useShallow } from "zustand/react/shallow";
 import '../common/circular37-mui.css';
 import { TableData } from "../common/ui/MultiTableUI";
 import { useLoadData } from "./hook";
-import { PERIOD_TYPE } from "@core/ui/picker/periodpicker/constant";
-import { useCoreMetaState } from "@core/stateManage/metadataState";
-import { useCorePickerState } from "@core/stateManage/corePickerState";
-import { ORG_GROUP } from "./constant";
-import { Tabs } from "antd";
-import { getCustomReportStateByPath } from "@core/stateManage/customState";
-
+export const reportName = "Danh sách Bệnh viện"
 export default () => {
 
     const [
-        me
+        setExcelOptions
     ] = useCoreMetaState(useShallow(state => ([
-        state.me
+        state.actions.setExcelOptions
     ])));
 
     const [
         setAllowPeriodTypes,
         setOrgPickerConfig,
-        setCorePicker
     ] = useCorePickerState(useShallow(state => [
         state.actions.setAllowPeriodTypes,
         state.actions.setOrgPickerConfig,
-        state.actions.setCorePicker,
     ]));
 
     const {
@@ -47,6 +42,10 @@ export default () => {
                 // ],
                 // levelsToHideIfEmpty: [2, 3]
             })
+            setExcelOptions({
+                columnWidths: '10,30',
+                skipConvertNumericCells: true
+            });
         },
         []
     )
@@ -60,7 +59,7 @@ export default () => {
                     tableLayout: 'fixed',
                     width: '3200px'
                 },
-                reportName: "Danh sách Bệnh viện",
+                reportName,
                 orgReportName,
                 dhis2Period,
                 data

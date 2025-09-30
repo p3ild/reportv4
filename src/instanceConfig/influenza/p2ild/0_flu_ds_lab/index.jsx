@@ -13,19 +13,17 @@ import { getCustomReportStateByPath } from "@core/stateManage/customState";
 export default () => {
 
     const [
-        me
+        setExcelOptions
     ] = useCoreMetaState(useShallow(state => ([
-        state.me
+        state.actions.setExcelOptions,
     ])));
 
     const [
         setAllowPeriodTypes,
         setOrgPickerConfig,
-        setCorePicker
     ] = useCorePickerState(useShallow(state => [
         state.actions.setAllowPeriodTypes,
         state.actions.setOrgPickerConfig,
-        state.actions.setCorePicker,
     ]));
 
     const {
@@ -47,6 +45,11 @@ export default () => {
                 // ],
                 // levelsToHideIfEmpty: [2, 3]
             })
+
+            setExcelOptions({
+                columnWidths: '10,30',
+                skipConvertNumericCells: true
+            });
         },
         []
     )

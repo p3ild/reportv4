@@ -45,7 +45,6 @@ export default () => {
         () => {
             setExcelOptions({
                 columnWidths: [10, 30, undefined, 30].map(e => !e ? 10 : e).join(','),
-                excelFileName: reportCode.toLocaleLowerCase().replace(/ /g, '_')
             });
             setOrgPickerConfig(orgPickerConfig)
             setAllowPeriodTypes(optionPickerDate);

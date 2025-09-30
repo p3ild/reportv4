@@ -120,10 +120,7 @@ export const getDataCommon = async (props) => {
             col: 9, id: "dgVezB0RUIZ", title: "Địa chỉ (Tỉnh)", isOptionGSO: true
         },
         {
-            col: 10, id: "I1ooj8wb4MY", title: "Địa chỉ (Huyện)", isOptionGSO: true
-        },
-        {
-            col: 11, id: "BIFHWWJR2XX", title: "Địa chỉ  (Xã)", isOptionGSO: true
+            col: 10, id: "BIFHWWJR2XX", title: "Địa chỉ  (Xã)", isOptionGSO: true
         },
     ];
 
@@ -132,11 +129,11 @@ export const getDataCommon = async (props) => {
     const eventCOPDMetadata = [
         {
             id: "TydLYSi5F0r.rz0F067VnjC", title: "Khoa Phòng"
-            , col: 12
+            , col: 11
         },
         {
             id: "TydLYSi5F0r.GkWVHuIIbeC", title: "Ngày khởi phát"
-            , col: 13, convertOutputValue: (data) => {
+            , col: 12, convertOutputValue: (data) => {
                 let { event, jsonHeaders, rawValue } = data;
 
                 return ![``].includes(rawValue) ? format(rawValue, 'dd-MM-yyyy') : ''
@@ -144,56 +141,56 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "TydLYSi5F0r.hvy77loFYSz", title: "Ho"
-            , col: 14, isOption: default_optionSetYesNo
+            , col: 13, isOption: default_optionSetYesNo
         },
         {
             id: "TydLYSi5F0r.HbxONzrAxoZ", title: "Sốt"
-            , col: 15, isOption: default_optionSetYesNo
+            , col: 14, isOption: default_optionSetYesNo
         },
         {
             id: "TydLYSi5F0r.t4I16OkmGHB", title: "Triệu chứng trong vòng 10 ngày"
-            , col: 16, isOption: default_optionSetYesNo
+            , col: 15, isOption: default_optionSetYesNo
         },
         {
             id: "TydLYSi5F0r.dCwEyKloVTJ", title: "Tiếp xúc gia cầm"
-            , col: 17, isOption: true
+            , col: 16, isOption: true
         },
         {
             id: "TydLYSi5F0r.oOhB6l53Kr2", title: "Dùng Oseltamivir  7 ngày trước"
-            , col: 18, isOption: true
+            , col: 17, isOption: true
         },
         {
             id: "TydLYSi5F0r.s7BiWQ81ndf", title: "Tiêm vắc xin cúm 12 tháng trờ lại"
-            , col: 19, isOption: true
+            , col: 18, isOption: true
         },
         {
             id: "TydLYSi5F0r.sx8MkJvWZba", title: "ICD10 - Bệnh chính"
-            , col: 20, isOption: true, outputAsCode: true
+            , col: 19, isOption: true, outputAsCode: true
         },
         {
             id: "TydLYSi5F0r.TyE0pZUzfej", title: "ICD10 - Bệnh kèm theo 1"
-            , col: 21, isOption: true, outputAsCode: true
+            , col: 20, isOption: true, outputAsCode: true
         },
         {
             id: "TydLYSi5F0r.ZVOYUrIO1sA", title: "ICD10 - Bệnh kèm theo 2"
-            , col: 22, isOption: true, outputAsCode: true
+            , col: 21, isOption: true, outputAsCode: true
         },
         {
             id: "TydLYSi5F0r.CV3piEtkxQJ", title: "ICD10 - Bệnh kèm theo 3"
-            , col: 23, isOption: true, outputAsCode: true
+            , col: 22, isOption: true, outputAsCode: true
         },
         {
             id: "TydLYSi5F0r.gH0kkMOKKZ4", title: "ICD10 - Bệnh kèm theo 4"
-            , col: 24, isOption: true, outputAsCode: true
+            , col: 23, isOption: true, outputAsCode: true
         },
         {
             id: "TydLYSi5F0r.NrIxKa2sc4M", title: "ICD10 - Bệnh kèm theo 5"
-            , col: 25, isOption: true, outputAsCode: true
+            , col: 24, isOption: true, outputAsCode: true
         },
 
         {
             id: "ngay_lay_mau", title: "Ngày lấy mẫu", isDimension: false
-            , col: 26, convertOutputValue: (data) => {
+            , col: 25, convertOutputValue: (data) => {
                 let { event, jsonHeaders, extraInfoTei } = data;
                 let foundEventTesting = extraInfoTei?.events?.find(a => a.ps == 'TydLYSi5F0r');
                 if (foundEventTesting) {
@@ -217,7 +214,7 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "loai_benh_pham", isDimension: false, title: "Loại bệnh phẩm"
-            , col: 27, convertOutputValue: (data) => {
+            , col: 26, convertOutputValue: (data) => {
                 // HoyZ7upMcJN == '1' ~> Dịch tỵ hầu
                 // MRAMvFbKHNt == '1' ~> Dịch ngoáy họng
                 // NxGPeofbdwz == '1' ~> Dịch nội khí quản
@@ -238,11 +235,11 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "TydLYSi5F0r.Fzpv9fipOw2", title: `KQ XN nhanh`
-            , col: 28, isOption: true
+            , col: 27, isOption: true
         },
         {
             id: "don_vi_xet_nghiem", isDimension: false, title: `Đơn vị XN`
-            , col: 29
+            , col: 28
             , convertOutputValue: (data) => {
                 let { extraInfoTei } = data;
                 let ps = extraInfoTei?.events?.find(a => a.ps == 'On65MQh79YB');
@@ -268,7 +265,7 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "On65MQh79YB.esZfsAdFId1", title: "Ngày nhận bệnh phẩm"
-            , col: 30, convertOutputValue: (data) => {
+            , col: 39, convertOutputValue: (data) => {
                 let { event, jsonHeaders, rawValue } = data;
 
                 return ![``].includes(rawValue) ? format(rawValue, 'dd-MM-yyyy') : ''
@@ -276,15 +273,15 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "On65MQh79YB.Npl5aVLRzpQ", title: "Tình trạng bệnh phẩm"
-            , col: 31, isOption: true
+            , col: 30, isOption: true
         },
         {
             id: "On65MQh79YB.kLvth8YFcab", title: "Lý do từ chối XN"
-            , col: 32
+            , col: 31
         },
         {
             id: "ngayXetNghiem", isDimension: false, title: "Ngày XN"
-            , col: 33
+            , col: 32
             , convertOutputValue: (data) => {
                 let { extraInfoTei } = data;
                 let ps = extraInfoTei?.events?.find(a => a.ps == 'On65MQh79YB');
@@ -294,105 +291,105 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "On65MQh79YB.CnqhmAfDijA", title: "A/H1N1pdm09"
-            , col: 34, isOption: default_optionSetYesNo
+            , col: 33, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.P9cr6CXwS21", title: "CT-value - A/H1N1pdm09", col: 35
+            id: "On65MQh79YB.P9cr6CXwS21", title: "CT-value - A/H1N1pdm09", col: 34
         },
         {
             id: "On65MQh79YB.ORLGGRvVvF2", title: "A/H3N2"
-            , col: 36, isOption: default_optionSetYesNo
+            , col: 35, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.BkPxBF9BQpd", title: "CT-value - A/H3N2", col: 37
+            id: "On65MQh79YB.BkPxBF9BQpd", title: "CT-value - A/H3N2", col: 36
         },
         {
             id: "On65MQh79YB.VRra2bvpr3r", title: "A/H5"
-            , col: 38, isOption: default_optionSetYesNo
+            , col: 37, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.UXRgFntUOpW", title: "CT-value - A/H5", col: 39
+            id: "On65MQh79YB.UXRgFntUOpW", title: "CT-value - A/H5", col: 38
         },
         {
             id: "On65MQh79YB.VpPRdt7wIzQ", title: "A/H7"
-            , col: 40, isOption: default_optionSetYesNo
+            , col: 39, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.bzZ0B0i6urO", title: "CT-value - A/H7", col: 41
+            id: "On65MQh79YB.bzZ0B0i6urO", title: "CT-value - A/H7", col: 40
         },
         {
             id: "On65MQh79YB.not6JUfkX3L", title: "Cúm A (chưa xác định)"
-            , col: 42, isOption: default_optionSetYesNo
+            , col: 41, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.UvXUKa6R8Cq", title: "CT-value - Cúm A (chưa xác định)", col: 43
+            id: "On65MQh79YB.UvXUKa6R8Cq", title: "CT-value - Cúm A (chưa xác định)", col: 42
         },
         {
             id: "On65MQh79YB.UGKFXsUwY1g", title: "B Yamagata"
-            , col: 44, isOption: default_optionSetYesNo
+            , col: 43, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.Yy4GtO8xm9h", title: "CT-value - Dương tính (B Yamagata)", col: 45
+            id: "On65MQh79YB.Yy4GtO8xm9h", title: "CT-value - Dương tính (B Yamagata)", col: 44
         },
         {
             id: "On65MQh79YB.ALkPkfpeEHc", title: "B Victoria"
-            , col: 46, isOption: default_optionSetYesNo
+            , col: 45, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.cHZIB4e9V8w", title: "CT-value -B Victoria", col: 47
+            id: "On65MQh79YB.cHZIB4e9V8w", title: "CT-value -B Victoria", col: 46
         },
         {
             id: "On65MQh79YB.i3FiWwZd6et", title: "Cúm B (chưa xác định)"
-            , col: 48, isOption: default_optionSetYesNo
+            , col: 47, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.ZHDy44BCFHQ", title: "CT-value - Cúm B (chưa xác định)", col: 49
+            id: "On65MQh79YB.ZHDy44BCFHQ", title: "CT-value - Cúm B (chưa xác định)", col: 48
         },
         {
-            id: "On65MQh79YB.gt2Ng8ALtlX", title: "CT-value type A (ban đầu)", col: 50
+            id: "On65MQh79YB.gt2Ng8ALtlX", title: "CT-value type A (ban đầu)", col: 49
         },
         {
-            id: "On65MQh79YB.dd6EcosQ1tM", title: "CT-value type B (ban đầu)", col: 51
+            id: "On65MQh79YB.dd6EcosQ1tM", title: "CT-value type B (ban đầu)", col: 50
         },
         {
             id: "On65MQh79YB.n0BWbydFz5u", title: "Âm tính cúm"
-            , col: 52, isOption: default_optionSetYesNo
+            , col: 51, isOption: default_optionSetYesNo
         },
         {
             id: "On65MQh79YB.d7ZcDxFA70f", title: "SARS-CoV-2"
-            , col: 53, isOption: default_optionSetPositive
+            , col: 52, isOption: default_optionSetPositive
         },
         {
-            id: "On65MQh79YB.jZmZcF5dDDO", title: "CT-value - SARS-CoV-2 (S gene)", col: 54
+            id: "On65MQh79YB.jZmZcF5dDDO", title: "CT-value - SARS-CoV-2 (S gene)", col: 53
         },
 
 
         {
-            id: "On65MQh79YB.umyqYm01fEM", title: "CT-value - SARS-CoV-2 (RdRp gene)", col: 55
+            id: "On65MQh79YB.umyqYm01fEM", title: "CT-value - SARS-CoV-2 (RdRp gene)", col: 54
         },
         {
-            id: "On65MQh79YB.KuGwdUMsNKL", title: "CT-value - SARS-CoV-2 (N gene)", col: 56
+            id: "On65MQh79YB.KuGwdUMsNKL", title: "CT-value - SARS-CoV-2 (N gene)", col: 55
         },
 
 
 
         {
             id: "On65MQh79YB.OrXlyabaGoC", title: "RSV"
-            , col: 57, isOption: default_optionSetPositive
+            , col: 56, isOption: default_optionSetPositive
         },
         {
-            id: "On65MQh79YB.wf1SCFhxl8h", title: "CT-value - RSV", col: 58
+            id: "On65MQh79YB.wf1SCFhxl8h", title: "CT-value - RSV", col: 57
         },
         {
             id: "On65MQh79YB.RAWQ3odgVNw", title: "Các vi rút cúm khác"
-            , col: 59, isOption: default_optionSetYesNo
+            , col: 58, isOption: default_optionSetYesNo
         },
         {
-            id: "On65MQh79YB.r8eQHYpeIGp", title: "CT-value - Các vi rút cúm khác", col: 60
+            id: "On65MQh79YB.r8eQHYpeIGp", title: "CT-value - Các vi rút cúm khác", col: 59
         },
         {
             id: "created_date_of_event_TydLYSi5F0r", isDimension: false, title: "Ngày nhập thông tin ca bệnh"
-            , col: 61, convertOutputValue: (data) => {
+            , col: 60, convertOutputValue: (data) => {
                 let { event, jsonHeaders, rawValue, extraInfoTei } = data;
                 let createdDateEvent = extraInfoTei.events.find(e => e.ps == 'TydLYSi5F0r')?.created;
                 return format(createdDateEvent, 'dd-MM-yyyy') || ""
@@ -400,7 +397,7 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "daysBetween(enrollmentDate_created_date_of_event_TydLYSi5F0r)", isDimension: false, title: "Số ngày từ khi lấy mẫu đến khi nhập vào hệ thống"
-            , col: 62, convertOutputValue: (data) => {
+            , col: 61, convertOutputValue: (data) => {
                 let { event, jsonHeaders, rawValue, extraInfoTei } = data;
                 let createdDateEvent = extraInfoTei.events.find(e => e.ps == 'TydLYSi5F0r')?.created;
                 let diffDay = differenceInDays(new Date(createdDateEvent), new Date(extraInfoTei.enrollmentDate));
@@ -409,7 +406,7 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "created_date_of_event_On65MQh79YB", isDimension: false, title: "Ngày nhập kết quả XN"
-            , col: 63, convertOutputValue: (data) => {
+            , col: 62, convertOutputValue: (data) => {
                 let { event, jsonHeaders, rawValue, extraInfoTei } = data;
                 let createdDateEvent = extraInfoTei.events.find(e => e.ps == 'On65MQh79YB')?.created;
                 return createdDateEvent ? format(createdDateEvent, 'dd-MM-yyyy') : ""
@@ -417,7 +414,7 @@ export const getDataCommon = async (props) => {
         },
         {
             id: "daysBetween(enrollmentDate_created_date_of_event_On65MQh79YB)", isDimension: false, title: "Số ngày từ khi lấy mẫu đến khi nhập kết quả XN"
-            , col: 64, convertOutputValue: (data) => {
+            , col: 63, convertOutputValue: (data) => {
                 let { event, jsonHeaders, rawValue, extraInfoTei } = data;
                 let createdDateEvent = extraInfoTei.events.find(e => e.ps == 'On65MQh79YB')?.created;
                 let diffDay = differenceInDays(new Date(createdDateEvent), new Date(extraInfoTei.enrollmentDate));

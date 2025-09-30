@@ -7,8 +7,7 @@ import { optionPickerDate, orgPickerConfig } from "./constant";
 import { useCorePickerState } from "@core/stateManage/corePickerState";
 import { useCoreMetaState } from "@core/stateManage/metadataState";
 import { format } from "date-fns";
-export const reportCode = "Phiếu 4"
-export const reportName = "BÁO CÁO QUÝ/NĂM"
+export const reportName = "Phiếu 4 - BÁO CÁO QUÝ/NĂM"
 export default () => {
     const [
         instanceTarget,
@@ -37,7 +36,7 @@ export default () => {
         orgReportName,
         errors,
         dhis2Period
-    } = useLoadData({ reportCode });
+    } = useLoadData({});
 
     // let approvalHook = useApproval();
 
@@ -45,7 +44,6 @@ export default () => {
         () => {
             setExcelOptions({
                 columnWidths: [10, 30, undefined, 30].map(e => !e ? 10 : e).join(','),
-                excelFileName: reportCode.toLocaleLowerCase().replace(/ /g, '_')
             });
             setOrgPickerConfig(orgPickerConfig)
             setAllowPeriodTypes(optionPickerDate);
