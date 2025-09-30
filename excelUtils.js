@@ -40,7 +40,9 @@ export async function exportToExcel() {
         let clone = ori.cloneNode(true);
 
         Array.from(clone.getElementsByClassName('no-print')).forEach(e => e.remove())
-        let { revertConvertNumericCells } = convertNumericCells(clone, 'en');
+
+        let skipConvertNumericCells = excelOptions?.skipConvertNumericCells || false;
+        !skipConvertNumericCells && convertNumericCells(clone, 'en');
 
         //Excel get table only
         if (excelOptions?.excelOnlyTable) clone = document.getElementsByClassName('report-table-main')[0].getElementsByTagName('table')[0];
@@ -56,7 +58,8 @@ export async function exportToExcel() {
         let currentReportData = listReport?.find(e => e.id == reportTarget?.reportID);
         let defaultNameReport =
             [
-                excelOptions.excelFileName
+                currentReportData.title
+                || excelOptions.excelFileName
                 || compareString.cleanStr(
                     currentReportData?.displayName
                 ) || 'BaoCao',
@@ -115,6 +118,7 @@ function convertNumericCells(document, toLocale = 'en',) {
         originalClones[index] = cell.cloneNode(true);
 
         if (text && text != "") {
+            let oriText = '' + text;
             if (toLocale === 'en') {
                 text = text.replace(/\./g, '<<<THOUSAND>>>');
                 text = text.replace(/,/g, decimal);
@@ -122,8 +126,9 @@ function convertNumericCells(document, toLocale = 'en',) {
             }
             if (isFinite(text)) {
                 cell.setAttribute('data-t', 'n');
+            } else {
+                text = oriText
             }
-            cell.textContent = text;
         }
         cell.textContent = text;
     };
