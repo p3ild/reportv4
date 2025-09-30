@@ -291,7 +291,7 @@ export class CompareString {
                     let regex = new RegExp(pattern.from, 'g');
                     let isMatch = input.match(regex);
                     if (isMatch) {
-                        val = input.replace(regex, ' ');
+                        val = input.replace(regex, pattern.to);
                     }
                 })
                 return val
